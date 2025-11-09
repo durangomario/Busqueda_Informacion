@@ -51,6 +51,7 @@ button:hover { background-color: #003a8c; }
 
 <h2>Actividad: Fuentes de Información para la Actualización Tecnológica</h2>
 
+<!-- PREGUNTAS EXISTENTES -->
 <div class="question">
   <p><b>1. Selección múltiple:</b> ¿Cuál de las siguientes es una fuente confiable para actualizar conocimientos tecnológicos?</p>
   <label><input type="radio" name="q1" value="a"> Blogs sin autor identificado</label><br>
@@ -94,6 +95,42 @@ button:hover { background-color: #003a8c; }
   <div class="feedback" id="f5"></div>
 </div>
 
+<!-- NUEVAS PREGUNTAS BASADAS EN EL VIDEO -->
+<div class="question">
+  <p><b>6. Selección múltiple:</b> Según el video, ¿por qué es importante actualizarse tecnológicamente?</p>
+  <label><input type="radio" name="q6" value="a"> Porque la tecnología cambia constantemente</label><br>
+  <label><input type="radio" name="q6" value="b"> Porque es obligatorio en todas las empresas</label><br>
+  <label><input type="radio" name="q6" value="c"> Porque los profesores lo exigen</label><br>
+  <div class="feedback" id="f6"></div>
+</div>
+
+<div class="question">
+  <p><b>7. Verdadero o falso:</b> Las redes sociales como TikTok siempre son fuentes confiables para temas tecnológicos.</p>
+  <label><input type="radio" name="q7" value="v"> Verdadero</label><br>
+  <label><input type="radio" name="q7" value="f"> Falso</label><br>
+  <div class="feedback" id="f7"></div>
+</div>
+
+<div class="question">
+  <p><b>8. Selección múltiple:</b> ¿Cuál es un ejemplo de fuente <u>formal</u> según el video?</p>
+  <label><input type="radio" name="q8" value="a"> Tutorial en YouTube sin autor</label><br>
+  <label><input type="radio" name="q8" value="b"> Página de un fabricante o institución educativa</label><br>
+  <label><input type="radio" name="q8" value="c"> Grupo de WhatsApp</label><br>
+  <div class="feedback" id="f8"></div>
+</div>
+
+<div class="question">
+  <p><b>9. Completa la frase:</b> Para verificar si una fuente es confiable, se debe revisar el __________ y la fecha de publicación.</p>
+  <input type="text" id="q9" placeholder="Escribe tu respuesta aquí">
+  <div class="feedback" id="f9"></div>
+</div>
+
+<div class="question">
+  <p><b>10. Reflexión:</b> Menciona una fuente digital que utilices para aprender sobre programación y explica por qué la consideras confiable.</p>
+  <textarea id="q10" rows="3" style="width:100%;" placeholder="Escribe tu respuesta..."></textarea>
+  <div class="feedback" id="f10"></div>
+</div>
+
 <div style="text-align:center;">
   <button onclick="checkAnswers()">Verificar respuestas</button>
 </div>
@@ -115,7 +152,6 @@ for (let i = 0; i < 100; i++) {
   grid.appendChild(div);
   cells.push(div);
 }
-// Insertar palabras
 cells[0].textContent = "M";
 cells[1].textContent = "D";
 cells[2].textContent = "N";
@@ -138,8 +174,8 @@ function checkAnswers() {
   
   // Pregunta 3
   let q3 = document.getElementById("q3").value.trim().toLowerCase();
-  if (q3 === "actualización tecnológica" || q3.includes("información")) {
-    score++; document.getElementById("f3").textContent = "✅ Correcto. Se refiere a la gestión de la información tecnológica.";
+  if (q3.includes("actualización") || q3.includes("información")) {
+    score++; document.getElementById("f3").textContent = "✅ Correcto. Se refiere a la actualización tecnológica.";
   } else document.getElementById("f3").textContent = "❌ Incorrecto. Se trata de la actualización tecnológica.";
   
   // Pregunta 4
@@ -152,10 +188,37 @@ function checkAnswers() {
   let found = document.querySelectorAll(".found").length;
   if (found >= 6) { score++; document.getElementById("f5").textContent = "✅ ¡Excelente! Encontraste las palabras."; }
   else document.getElementById("f5").textContent = "❌ Intenta encontrar MDN y DEV.";
-  
-  document.getElementById("score").textContent = `Tu calificación: ${score}/5`;
+
+  // Pregunta 6
+  let q6 = document.querySelector('input[name="q6"]:checked');
+  if (q6 && q6.value === "a") { score++; document.getElementById("f6").textContent = "✅ Correcto. La tecnología evoluciona constantemente."; }
+  else document.getElementById("f6").textContent = "❌ Incorrecto. Es importante actualizarse por los cambios constantes.";
+
+  // Pregunta 7
+  let q7 = document.querySelector('input[name="q7"]:checked');
+  if (q7 && q7.value === "f") { score++; document.getElementById("f7").textContent = "✅ Correcto. No todas las redes sociales son confiables."; }
+  else document.getElementById("f7").textContent = "❌ Incorrecto. Debes verificar la fuente.";
+
+  // Pregunta 8
+  let q8 = document.querySelector('input[name="q8"]:checked');
+  if (q8 && q8.value === "b") { score++; document.getElementById("f8").textContent = "✅ Correcto. Las páginas institucionales son formales."; }
+  else document.getElementById("f8").textContent = "❌ Incorrecto. Debe ser una fuente formal.";
+
+  // Pregunta 9
+  let q9 = document.getElementById("q9").value.trim().toLowerCase();
+  if (q9.includes("autor")) { score++; document.getElementById("f9").textContent = "✅ Correcto. El autor y la fecha son claves."; }
+  else document.getElementById("f9").textContent = "❌ Revisa: se debe verificar el autor.";
+
+  // Pregunta 10 (respuesta libre)
+  let q10 = document.getElementById("q10").value.trim();
+  if (q10.length > 10) { score++; document.getElementById("f10").textContent = "✅ Buena reflexión. Se valora tu análisis."; }
+  else document.getElementById("f10").textContent = "💬 Amplía tu respuesta para obtener mejor calificación.";
+
+  // Calificación total
+  document.getElementById("score").textContent = `Tu calificación: ${score}/10`;
 }
 </script>
 
 </body>
 </html>
+
