@@ -3,194 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evaluación: Herramientas Digitales para la Autoformación</title>
+<title>Actividad Interactiva de Autoaprendizaje Digital</title>
 <style>
   body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f0f4f8;
+    font-family: 'Inter', sans-serif;
+    background-color: #f5f7fb;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+  .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
   h1, h2 {
-    color: #004080;
+    color: #1a73e8;
+    text-align: center;
   }
-  .question {
-    margin-bottom: 20px;
-    background: #fff;
+  .instructions {
+    background: #e8f0fe;
+    border-left: 5px solid #1a73e8;
     padding: 15px;
+    margin-bottom: 20px;
+  }
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .dropzone, .draggable {
+    border: 2px dashed #1a73e8;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    margin: 10px;
+    min-width: 150px;
+    text-align: center;
   }
-  .feedback {
-    margin-top: 8px;
-    font-weight: bold;
+  .draggable {
+    background: #e3f2fd;
+    cursor: grab;
   }
-  button {
+  .dropzone {
+    background: #fff;
+    min-height: 40px;
+  }
+  .wordsearch {
+    text-align: center;
     margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #004080;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #0066cc;
   }
   table {
+    margin: 0 auto;
     border-collapse: collapse;
-    margin-top: 20px;
   }
   td {
+    border: 1px solid #ccc;
     width: 30px;
     height: 30px;
     text-align: center;
-    border: 1px solid #ccc;
     font-weight: bold;
+  }
+  input[type="text"] {
+    width: 80%;
+    padding: 6px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  button {
+    background: #1a73e8;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  button:hover {
+    background: #155ab6;
+  }
+  .feedback {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  .correct { color: green; }
+  .incorrect { color: red; }
+  .final-score {
+    background: #e8f0fe;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
   }
 </style>
 </head>
 <body>
 
-<h1>Actividad: Herramientas Digitales para la Autoformación</h1>
-<p>
-Las <strong>herramientas digitales para la autoformación</strong> son plataformas, aplicaciones o entornos tecnológicos 
-que permiten a una persona adquirir conocimientos o desarrollar habilidades de forma autónoma. 
-Ejemplos incluyen <em>Coursera, edX, Platzi, GitHub, W3Schools</em>, entre otros.
-</p>
-
-<hr>
-
-<h2>🧠 Evaluación tipo ICFES</h2>
-
-<div id="quiz">
-  <div class="question" data-correct="b">
-    <p><strong>1.</strong> ¿Qué caracteriza a las herramientas digitales para la autoformación?</p>
-    <label><input type="radio" name="q1" value="a"> Que requieren un instructor presencial</label><br>
-    <label><input type="radio" name="q1" value="b"> Que permiten aprender de forma autónoma y flexible</label><br>
-    <label><input type="radio" name="q1" value="c"> Que solo funcionan en computadoras</label><br>
-    <div class="feedback" id="f1"></div>
+<div class="container">
+  <h1>Actividad Interactiva de Autoaprendizaje Digital</h1>
+  <div class="instructions">
+    <p><strong>Instrucciones:</strong> Lee atentamente y responde las siguientes actividades sobre las herramientas digitales para la autoformación. Arrastra las respuestas correctas, completa los espacios y encuentra las palabras clave en la sopa de letras. Al final podrás ver tu puntaje total.</p>
   </div>
 
-  <div class="question" data-correct="a">
-    <p><strong>2.</strong> ¿Cuál es una característica clave de las herramientas de autoformación?</p>
-    <label><input type="radio" name="q2" value="a"> Accesibilidad e interactividad</label><br>
-    <label><input type="radio" name="q2" value="b"> Limitación y dependencia</label><br>
-    <label><input type="radio" name="q2" value="c"> Exclusividad para expertos</label><br>
-    <div class="feedback" id="f2"></div>
+  <h2>🧩 1. Preguntas de Arrastrar y Soltar</h2>
+  <p>Arrastra la respuesta correcta al recuadro correspondiente:</p>
+  <div id="dragdrop-section">
+    <div class="drag-container">
+      <div class="dropzone" data-answer="Aprendizaje autónomo">1. Proceso donde el estudiante gestiona su propio aprendizaje.</div>
+      <div class="dropzone" data-answer="Herramienta digital">2. Aplicación o plataforma usada para facilitar tareas de aprendizaje.</div>
+      <div class="dropzone" data-answer="Motivación">3. Factor clave para mantener la constancia en el estudio en línea.</div>
+      <div class="dropzone" data-answer="Colaboración">4. Trabajo conjunto entre usuarios mediante plataformas tecnológicas.</div>
+      <div class="dropzone" data-answer="Organización">5. Habilidad para planificar tiempos, tareas y objetivos.</div>
+    </div>
+
+    <div class="drag-container">
+      <div class="draggable" draggable="true">Motivación</div>
+      <div class="draggable" draggable="true">Organización</div>
+      <div class="draggable" draggable="true">Colaboración</div>
+      <div class="draggable" draggable="true">Herramienta digital</div>
+      <div class="draggable" draggable="true">Aprendizaje autónomo</div>
+    </div>
   </div>
 
-  <div class="question" data-correct="c">
-    <p><strong>3.</strong> Un ejemplo de plataforma de cursos en línea (MOOC) es:</p>
-    <label><input type="radio" name="q3" value="a"> Trello</label><br>
-    <label><input type="radio" name="q3" value="b"> Discord</label><br>
-    <label><input type="radio" name="q3" value="c"> Coursera</label><br>
-    <div class="feedback" id="f3"></div>
+  <h2>🔤 2. Sopa de Letras</h2>
+  <div class="wordsearch">
+    <p>Encuentra las siguientes palabras: Coursera, Notion, GitHub, Stack, Udemy, Codecademy, edX, Slack, Trello, Freecodecamp</p>
+    <table id="sopa">
+      <tbody>
+        <tr><td>C</td><td>O</td><td>U</td><td>R</td><td>S</td><td>E</td><td>R</td><td>A</td><td>N</td><td>O</td></tr>
+        <tr><td>T</td><td>R</td><td>E</td><td>L</td><td>L</td><td>O</td><td>P</td><td>E</td><td>D</td><td>X</td></tr>
+        <tr><td>G</td><td>I</td><td>T</td><td>H</td><td>U</td><td>B</td><td>S</td><td>T</td><td>A</td><td>C</td></tr>
+        <tr><td>K</td><td>U</td><td>D</td><td>E</td><td>M</td><td>Y</td><td>C</td><td>A</td><td>D</td><td>E</td></tr>
+        <tr><td>M</td><td>Y</td><td>S</td><td>T</td><td>A</td><td>C</td><td>K</td><td>F</td><td>R</td><td>E</td></tr>
+        <tr><td>E</td><td>C</td><td>O</td><td>D</td><td>E</td><td>C</td><td>A</td><td>M</td><td>P</td><td>N</td></tr>
+        <tr><td>S</td><td>L</td><td>A</td><td>C</td><td>K</td><td>O</td><td>T</td><td>I</td><td>O</td><td>N</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="question" data-correct="a">
-    <p><strong>4.</strong> ¿Qué tipo de herramienta es GitHub Docs?</p>
-    <label><input type="radio" name="q4" value="a"> Repositorio de conocimiento técnico</label><br>
-    <label><input type="radio" name="q4" value="b"> Aplicación de mensajería</label><br>
-    <label><input type="radio" name="q4" value="c"> Plataforma de juegos</label><br>
-    <div class="feedback" id="f4"></div>
+  <h2>✍️ 3. Preguntas de Completar</h2>
+  <div id="complete-section">
+    <p>1. Una __________ digital es una aplicación o software que facilita el aprendizaje.</p>
+    <input type="text" id="c1">
+    <p>2. La __________ permite al estudiante gestionar su propio progreso.</p>
+    <input type="text" id="c2">
+    <p>3. Plataformas como Coursera y Udemy ofrecen cursos en línea llamados __________.</p>
+    <input type="text" id="c3">
+    <p>4. La __________ ayuda a mantener el orden y cumplir metas.</p>
+    <input type="text" id="c4">
   </div>
 
-  <div class="question" data-correct="b">
-    <p><strong>5.</strong> Una herramienta como Trello o Asana se usa para:</p>
-    <label><input type="radio" name="q5" value="a"> Aprender a programar</label><br>
-    <label><input type="radio" name="q5" value="b"> Organizar tareas y tiempos de estudio</label><br>
-    <label><input type="radio" name="q5" value="c"> Realizar videollamadas</label><br>
-    <div class="feedback" id="f5"></div>
-  </div>
+  <button onclick="checkAnswers()">Calificar actividad</button>
 
-  <div class="question" data-correct="c">
-    <p><strong>6.</strong> Una ventaja clave del uso de herramientas digitales es:</p>
-    <label><input type="radio" name="q6" value="a"> La dependencia del profesor</label><br>
-    <label><input type="radio" name="q6" value="b"> La necesidad de conexión constante</label><br>
-    <label><input type="radio" name="q6" value="c"> La flexibilidad y personalización</label><br>
-    <div class="feedback" id="f6"></div>
-  </div>
-
-  <div class="question" data-correct="b">
-    <p><strong>7.</strong> ¿Qué reto es común en la autoformación digital?</p>
-    <label><input type="radio" name="q7" value="a"> Exceso de interacción</label><br>
-    <label><input type="radio" name="q7" value="b"> Falta de disciplina o motivación</label><br>
-    <label><input type="radio" name="q7" value="c"> Abundancia de instructores</label><br>
-    <div class="feedback" id="f7"></div>
-  </div>
-
-  <div class="question" data-correct="a">
-    <p><strong>8.</strong> ¿Cuál de las siguientes herramientas ayuda a practicar programación?</p>
-    <label><input type="radio" name="q8" value="a"> Codewars</label><br>
-    <label><input type="radio" name="q8" value="b"> Notion</label><br>
-    <label><input type="radio" name="q8" value="c"> Google Calendar</label><br>
-    <div class="feedback" id="f8"></div>
-  </div>
-
-  <div class="question" data-correct="c">
-    <p><strong>9.</strong> Una estrategia efectiva para usar herramientas digitales es:</p>
-    <label><input type="radio" name="q9" value="a"> Evitar la planificación</label><br>
-    <label><input type="radio" name="q9" value="b"> Usar todas las plataformas al mismo tiempo</label><br>
-    <label><input type="radio" name="q9" value="c"> Establecer rutinas y objetivos semanales</label><br>
-    <div class="feedback" id="f9"></div>
-  </div>
-
-  <div class="question" data-correct="b">
-    <p><strong>10.</strong> ¿Cuál de las siguientes herramientas es útil para compartir proyectos web?</p>
-    <label><input type="radio" name="q10" value="a"> Duolingo</label><br>
-    <label><input type="radio" name="q10" value="b"> GitHub Pages</label><br>
-    <label><input type="radio" name="q10" value="c"> Discord</label><br>
-    <div class="feedback" id="f10"></div>
-  </div>
-
-  <button onclick="checkAnswers()">Ver resultados</button>
+  <div class="final-score" id="result"></div>
 </div>
 
-<h2>🧩 Crucigrama Digital (10x10)</h2>
-<p>Palabras ocultas: COURERA, UDEMY, NOTION, GITHUB, CODEWARS, STACK, PLATZI, W3SCHOOLS, EDABIT, REPLIT</p>
-
-<table id="crucigrama">
 <script>
-  const grid = [
-    "C O U R S E R A X",
-    "O D E M Y Z L T I",
-    "D G I T H U B A C",
-    "E T A C K N O T I",
-    "W A R S P L A T Z",
-    "I W 3 S C H O O L",
-    "T E D A B I T R E",
-    "N R E P L I T L A",
-    "O O N L I N E X X",
-    "S K I L L S Z Q W"
-  ];
-  document.write(grid.map(row => 
-    `<tr>${row.split(' ').map(ch => `<td>${ch}</td>`).join('')}</tr>`
-  ).join(''));
-</script>
-</table>
+let score = 0;
+let totalQuestions = 10;
 
-<script>
+const draggables = document.querySelectorAll('.draggable');
+const dropzones = document.querySelectorAll('.dropzone');
+
+draggables.forEach(drag => {
+  drag.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text', e.target.textContent);
+  });
+});
+
+dropzones.forEach(zone => {
+  zone.addEventListener('dragover', e => e.preventDefault());
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text');
+    if (!zone.textContent.includes(data)) zone.textContent += " → " + data;
+  });
+});
+
 function checkAnswers() {
-  let correct = 0;
-  document.querySelectorAll(".question").forEach((q, i) => {
-    const correctAnswer = q.dataset.correct;
-    const selected = q.querySelector("input[type=radio]:checked");
-    const feedback = document.getElementById(`f${i+1}`);
-    if (selected) {
-      if (selected.value === correctAnswer) {
-        correct++;
-        feedback.textContent = "✅ Correcto";
-        feedback.style.color = "green";
-      } else {
-        feedback.textContent = "❌ Incorrecto. Revisa el contenido.";
-        feedback.style.color = "red";
-      }
+  score = 0;
+
+  // Drag and Drop
+  dropzones.forEach(z => {
+    if (z.textContent.includes(z.dataset.answer)) score++;
+  });
+
+  // Completar
+  const ans = ["herramienta", "autoaprendizaje", "mooc", "organización"];
+  const ids = ["c1","c2","c3","c4"];
+  ids.forEach((id, i) => {
+    const input = document.getElementById(id);
+    if (input.value.trim().toLowerCase() === ans[i]) {
+      score++;
+      input.style.border = "2px solid green";
     } else {
-      feedback.textContent = "⚠️ No seleccionaste respuesta.";
-      feedback.style.color = "orange";
+      input.style.border = "2px solid red";
     }
   });
-  alert(`Tu calificación es: ${correct}/10`);
+
+  // Resultado final
+  const percent = Math.round((score / totalQuestions) * 100);
+  document.getElementById('result').innerHTML = `<h3>Tu puntuación final:</h3>
+  <p><strong>${score}/${totalQuestions}</strong> — ${percent}%</p>
+  <p>${percent >= 70 ? '¡Excelente trabajo!' : 'Sigue practicando, puedes mejorar.'}</p>`;
 }
 </script>
 
