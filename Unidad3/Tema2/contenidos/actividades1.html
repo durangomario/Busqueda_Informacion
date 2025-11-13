@@ -1,185 +1,183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Actividad: Reflexión continua (Drag & Drop)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Actividad: Fuentes de Información Tecnológica</title>
   <style>
     :root{
-      --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b;
-      --accent:#2563eb; --good:#16a34a; --bad:#dc2626;
+      --bg:#f1f5f9; --card:#fff; --ink:#0f172a; --accent:#2563eb;
+      --good:#16a34a; --bad:#dc2626;
     }
     body{
-      margin:0; font-family:Inter, system-ui, Arial;
-      background:linear-gradient(180deg,#eef6ff 0%, #f8fafc 100%);
-      color:var(--ink); padding:24px;
+      font-family:Inter, system-ui, Arial;
+      margin:0; padding:24px;
+      background:linear-gradient(180deg,#e0f2fe 0%, #f8fafc 100%);
+      color:var(--ink);
     }
-    .container{max-width:940px; margin:0 auto;}
-    .card{background:var(--card); border-radius:16px; padding:24px; box-shadow:0 8px 24px rgba(0,0,0,.08);}
-    h1{font-size:22px; color:var(--accent); margin-bottom:10px;}
-    .lead{color:var(--muted); font-size:14px; margin-bottom:20px;}
-    .q{margin-bottom:30px;}
-    .q h3{font-size:16px; margin-bottom:10px;}
-    .dropzone{
-      min-height:46px; border:2px dashed #cbd5e1; border-radius:10px; padding:10px;
-      display:flex; align-items:center; justify-content:center;
-      background:#f1f5f9; margin-bottom:12px; transition:all .25s ease;
-    }
-    .dropzone.filled{background:#ecfdf5; border-color:#34d399;}
-    .option{
-      display:inline-block; background:#fff; border:1px solid #cbd5e1; padding:8px 12px;
-      border-radius:8px; margin:4px; cursor:grab; font-size:14px;
-      box-shadow:0 2px 6px rgba(0,0,0,.08); transition:transform .2s ease, box-shadow .2s ease;
-    }
-    .option:hover{transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,.15);}
-    .option:active{cursor:grabbing;}
-    .feedback{margin-top:6px; font-size:14px; display:none;}
-    .feedback.ok{color:var(--good); display:block; font-weight:600;}
-    .feedback.bad{color:var(--bad); display:block; font-weight:600;}
-    .controls{margin-top:20px; display:flex; gap:12px; flex-wrap:wrap;}
-    button{padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:700; color:#fff; background:var(--accent);}
-    button.secondary{background:#e2e8f0; color:var(--ink);}
-    #result{font-weight:800; margin-left:auto;}
+    .container{max-width:950px; margin:auto;}
+    .card{background:var(--card); border-radius:16px; padding:24px; box-shadow:0 6px 16px rgba(0,0,0,.1); margin-bottom:24px;}
+    h1{color:var(--accent); text-align:center;}
+    h2{font-size:18px; color:var(--accent);}
+    .dropzone{border:2px dashed #cbd5e1; border-radius:8px; min-height:40px; display:flex; align-items:center; justify-content:center; margin:6px 0; background:#f1f5f9; padding:4px;}
+    .option{display:inline-block; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; background:#fff; margin:4px; cursor:grab; font-size:14px;}
+    .option:hover{background:#e0f2fe;}
+    button{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-weight:700; cursor:pointer;}
+    button.secondary{background:#94a3b8;}
+    .feedback{font-size:14px; display:none;}
+    .feedback.ok{color:var(--good); display:block;}
+    .feedback.bad{color:var(--bad); display:block;}
+    .text-question input{padding:6px; border:1px solid #cbd5e1; border-radius:6px; width:60%;}
+    #result{font-weight:700; font-size:16px; text-align:right; margin-top:10px;}
+    /* Crucigrama simple */
+    .crossword{display:grid; grid-template-columns:repeat(5,40px); gap:4px; justify-content:center;}
+    .cell{width:40px; height:40px; border:1px solid #cbd5e1; text-align:center; font-weight:700; text-transform:uppercase; border-radius:4px;}
+    .cell input{width:100%; height:100%; border:none; text-align:center; font-size:18px; text-transform:uppercase;}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Actividad: Reflexión continua</h1>
-      <div class="lead">Arrastra la opción correcta a cada definición sobre la <b>reflexión continua</b>.</div>
+<div class="container">
+  <div class="card">
+    <h1>Actividad: Fuentes de Información para la Actualización Tecnológica</h1>
+    <p>Desarrolla las siguientes actividades relacionadas con las fuentes confiables de información tecnológica. Al finalizar, haz clic en <b>Calificar</b> para conocer tu puntaje.</p>
+  </div>
 
-      <!-- Preguntas -->
-      <div class="q" data-answer="Diario Reflexivo">
-        <h3>1) Estrategia que consiste en escribir sobre lo que se aprendió, pensó y sintió en clases:</h3>
-        <div class="dropzone"></div>
-        <div id="opts1">
-          <div class="option" draggable="true">Diario reflexivo</div>
-          <div class="option" draggable="true">Técnica del semáforo</div>
-        </div>
-        <div class="feedback"></div>
-      </div>
+  <!-- 1 a 5 Drag & Drop -->
+  <div class="card">
+    <h2>Preguntas de Arrastrar y Soltar</h2>
 
-      <div class="q" data-answer="Rúbricas de Autoevaluación">
-        <h3>2) Herramienta que permite valorar el propio desempeño con criterios claros:</h3>
-        <div class="dropzone"></div>
-        <div id="opts2">
-          <div class="option" draggable="true">Rúbricas de autoevaluación</div>
-          <div class="option" draggable="true">Mapas mentales reflexivos</div>
-        </div>
-        <div class="feedback"></div>
+    <div class="q" data-answer="Blogs Tecnológicos">
+      <p>1) Sitios personales o colaborativos donde expertos publican artículos y análisis de tendencias tecnológicas:</p>
+      <div class="dropzone"></div>
+      <div id="opts1">
+        <div class="option" draggable="true">Blogs Tecnológicos</div>
+        <div class="option" draggable="true">Foros</div>
       </div>
+      <div class="feedback"></div>
+    </div>
 
-      <div class="q" data-answer="Técnica del Semáforo">
-        <h3>3) Estrategia visual que clasifica aprendizajes en: rojo, amarillo y verde:</h3>
-        <div class="dropzone"></div>
-        <div id="opts3">
-          <div class="option" draggable="true">Técnica del semáforo</div>
-          <div class="option" draggable="true">Metacognición</div>
-        </div>
-        <div class="feedback"></div>
+    <div class="q" data-answer="Revistas Científicas">
+      <p>2) Publicaciones revisadas por pares que contienen investigaciones actualizadas en tecnología:</p>
+      <div class="dropzone"></div>
+      <div id="opts2">
+        <div class="option" draggable="true">Redes Sociales</div>
+        <div class="option" draggable="true">Revistas Científicas</div>
       </div>
+      <div class="feedback"></div>
+    </div>
 
-      <div class="q" data-answer="Mapas Mentales Reflexivos">
-        <h3>4) Representación gráfica para reflexionar sobre aprendizajes y conexiones:</h3>
-        <div class="dropzone"></div>
-        <div id="opts4">
-          <div class="option" draggable="true">Mapas mentales reflexivos</div>
-          <div class="option" draggable="true">Espacios de diálogo</div>
-        </div>
-        <div class="feedback"></div>
+    <div class="q" data-answer="Sitios Oficiales de Fabricantes">
+      <p>3) Espacios web donde las empresas tecnológicas publican actualizaciones, manuales y soporte de sus productos:</p>
+      <div class="dropzone"></div>
+      <div id="opts3">
+        <div class="option" draggable="true">Sitios Oficiales de Fabricantes</div>
+        <div class="option" draggable="true">Videos Tutoriales</div>
       </div>
+      <div class="feedback"></div>
+    </div>
 
-      <div class="q" data-answer="Metacognición">
-        <h3>5) Habilidad de pensar sobre cómo pensamos y qué estrategias usamos al aprender:</h3>
-        <div class="dropzone"></div>
-        <div id="opts5">
-          <div class="option" draggable="true">Metacognición</div>
-          <div class="option" draggable="true">Diario reflexivo</div>
-        </div>
-        <div class="feedback"></div>
+    <div class="q" data-answer="Foros de Programadores">
+      <p>4) Comunidades donde los usuarios comparten soluciones, errores y códigos sobre herramientas o lenguajes:</p>
+      <div class="dropzone"></div>
+      <div id="opts4">
+        <div class="option" draggable="true">Foros de Programadores</div>
+        <div class="option" draggable="true">Revistas Digitales</div>
       </div>
+      <div class="feedback"></div>
+    </div>
 
-      <!-- Controles -->
-      <div class="controls">
-        <button id="checkBtn">Calificar</button>
-        <button class="secondary" id="resetBtn">Reiniciar</button>
-        <div id="result"></div>
+    <div class="q" data-answer="Conferencias y Webinars">
+      <p>5) Eventos donde expertos presentan innovaciones tecnológicas, tendencias y buenas prácticas:</p>
+      <div class="dropzone"></div>
+      <div id="opts5">
+        <div class="option" draggable="true">Conferencias y Webinars</div>
+        <div class="option" draggable="true">Chats en Línea</div>
       </div>
+      <div class="feedback"></div>
     </div>
   </div>
 
-  <script>
-    let dragged = null;
+  <!-- 6 a 8 Completar -->
+  <div class="card">
+    <h2>Preguntas de Completar</h2>
 
-    function setDragEvents(){
-      const options = document.querySelectorAll('.option');
-      options.forEach(opt=>{
-        opt.addEventListener('dragstart', e=>{
-          dragged = opt;
-          setTimeout(()=> opt.style.display='none',0);
-        });
-        opt.addEventListener('dragend', e=>{
-          dragged.style.display='inline-block';
-          dragged = null;
-        });
+    <div class="text-question" data-answer="repositorios">
+      <p>6) Los ________ digitales son espacios donde se almacenan y comparten proyectos de software y código abierto.</p>
+      <input type="text" placeholder="Escribe tu respuesta">
+      <div class="feedback"></div>
+    </div>
+
+    <div class="text-question" data-answer="boletines">
+      <p>7) Los ________ informativos permiten recibir actualizaciones periódicas sobre avances tecnológicos por correo electrónico.</p>
+      <input type="text" placeholder="Escribe tu respuesta">
+      <div class="feedback"></div>
+    </div>
+
+    <div class="text-question" data-answer="tutoriales">
+      <p>8) Los ________ en línea ofrecen guías paso a paso para aprender nuevas herramientas o lenguajes de programación.</p>
+      <input type="text" placeholder="Escribe tu respuesta">
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- 9 Crucigrama -->
+  <div class="card">
+    <h2>Crucigrama Interactivo</h2>
+    <p>9) Completa la palabra relacionada con la búsqueda de información académica confiable:</p>
+    <div class="crossword">
+      <div class="cell"><input maxlength="1"></div>
+      <div class="cell"><input maxlength="1"></div>
+      <div class="cell"><input maxlength="1"></div>
+      <div class="cell"><input maxlength="1"></div>
+      <div class="cell"><input maxlength="1"></div>
+    </div>
+    <p style="text-align:center;">Pista: Es un buscador académico reconocido (respuesta: <b>SCIELO</b> sin la última letra “O”)</p>
+    <div class="feedback"></div>
+  </div>
+
+  <!-- 10 Selección única -->
+  <div class="card">
+    <h2>Pregunta de Selección Única</h2>
+    <div class="single-choice" data-answer="Google Scholar">
+      <p>10) ¿Cuál de las siguientes plataformas se considera una fuente confiable para consultar artículos académicos?</p>
+      <label><input type="radio" name="p10" value="YouTube"> YouTube</label><br>
+      <label><input type="radio" name="p10" value="Google Scholar"> Google Scholar</label><br>
+      <label><input type="radio" name="p10" value="Facebook"> Facebook</label>
+      <div class="feedback"></div>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="card">
+    <button id="checkBtn">Calificar</button>
+    <button class="secondary" id="resetBtn">Reiniciar</button>
+    <div id="result"></div>
+  </div>
+</div>
+
+<script>
+  let dragged=null;
+  function setDragEvents(){
+    const options=document.querySelectorAll('.option');
+    options.forEach(opt=>{
+      opt.addEventListener('dragstart', e=>{
+        dragged=opt; setTimeout(()=>opt.style.display='none',0);
       });
-    }
-
-    setDragEvents();
-
-    const dropzones = document.querySelectorAll('.dropzone');
-    dropzones.forEach(zone=>{
-      zone.addEventListener('dragover', e=> e.preventDefault());
-      zone.addEventListener('drop', e=>{
-        e.preventDefault();
-        if(zone.children.length===0 && dragged){
-          zone.appendChild(dragged);
-          zone.classList.add('filled');
-        }
+      opt.addEventListener('dragend', e=>{
+        dragged.style.display='inline-block'; dragged=null;
       });
     });
-
-    document.getElementById('checkBtn').addEventListener('click', ()=>{
-      let correct=0;
-      const qs=document.querySelectorAll('.q');
-      qs.forEach(q=>{
-        const ans=q.dataset.answer;
-        const dropped=q.querySelector('.dropzone .option');
-        const fb=q.querySelector('.feedback');
-        fb.classList.remove('ok','bad'); fb.style.display='none';
-        if(dropped){
-          if(dropped.textContent===ans){
-            fb.textContent="✅ Correcto"; fb.classList.add('ok');
-            correct++;
-          }else{
-            fb.textContent="❌ Incorrecto. Respuesta correcta: "+ans;
-            fb.classList.add('bad');
-          }
-        }else{
-          fb.textContent="⚠️ No respondiste esta pregunta. Respuesta correcta: "+ans;
-          fb.classList.add('bad');
-        }
-        fb.style.display='block';
-      });
-      const total=qs.length;
-      const pct=Math.round((correct/total)*100);
-      document.getElementById('result').textContent=`Puntuación: ${correct}/${total} — ${pct}%`;
+  }
+  setDragEvents();
+  document.querySelectorAll('.dropzone').forEach(zone=>{
+    zone.addEventListener('dragover', e=>e.preventDefault());
+    zone.addEventListener('drop', e=>{
+      e.preventDefault();
+      if(zone.children.length===0 && dragged){
+        zone.appendChild(dragged); zone.style.background="#dcfce7";
+      }
     });
+  });
 
-    document.getElementById('resetBtn').addEventListener('click', ()=>{
-      document.querySelectorAll('.dropzone').forEach(z=>{
-        z.innerHTML=''; z.classList.remove('filled');
-      });
-      // Resetear las opciones bajo cada pregunta
-      document.getElementById('opts1').innerHTML='<div class="option" draggable="true">Diario Reflexivo</div><div class="option" draggable="true">Técnica del Semáforo</div>';
-      document.getElementById('opts2').innerHTML='<div class="option" draggable="true">Rúbricas de Autoevaluación</div><div class="option" draggable="true">Mapas Mentales Reflexivos</div>';
-      document.getElementById('opts3').innerHTML='<div class="option" draggable="true">Técnica del Semáforo</div><div class="option" draggable="true">Metacognición</div>';
-      document.getElementById('opts4').innerHTML='<div class="option" draggable="true">Mapas Mentales Reflexivos</div><div class="option" draggable="true">Espacios de Diálogo</div>';
-      document.getElementById('opts5').innerHTML='<div class="option" draggable="true">Metacognición</div><div class="option" draggable="true">Diario Reflexivo</div>';
-      document.querySelectorAll('.feedback').forEach(f=>{f.textContent=''; f.style.display='none';});
-      document.getElementById('result').textContent='';
-      setDragEvents();
-    });
-  </script>
-</body>
-</html>
+  document.getElementById('checkBtn').addEventListener('click',()=>{
+    let correct=0,total=10;
