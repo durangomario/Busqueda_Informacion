@@ -52,22 +52,17 @@
   <div class="container">
     <div class="card">
       <h1>Actividad interactiva de autoaprendizaje digital</h1>
-      <p class="lead">Lee (o mira el video) y responde. Cada pregunta incluye feedback que explica la respuesta y remite al texto base.</p>
+      <p class="lead">Lee las instrucciones y responde. Cada pregunta incluye feedback explicativo y calificación final.</p>
 
       <div class="instruction">
-        📺 <strong>Video recomendado:</strong> antes de responder puedes ver un video introductorio sobre fuentes y herramientas de aprendizaje.
-        <div style="margin-top:10px; text-align:center;">
-          <iframe width="640" height="360" src="https://www.youtube.com/embed/xpGYo2cTRMI" title="Fuentes de información (tipos, usos y cómo encontrarlas)" frameborder="0" allowfullscreen style="max-width:100%; border-radius:8px;"></iframe>
-        </div>
-        <p class="small" style="margin-top:8px;">Instrucción: Arrastra la opción correcta en las preguntas 1–5, completa el crucigrama (6) y responde las preguntas 7–10 escribiendo la palabra correcta.</p>
+        📘 <strong>Instrucción:</strong> Arrastra la opción correcta en las preguntas 1–5, completa el crucigrama (6) y escribe las respuestas en las preguntas 7–10.
       </div>
 
-      <!-- Drag & Drop preguntas 1-5 -->
+      <!-- Preguntas 1–5 -->
       <div class="question" data-answer="Plataformas de cursos en línea">
         <h3>1) ¿Cómo se llaman los espacios que ofrecen cursos masivos abiertos (por ejemplo Coursera, edX)?</h3>
-        <p class="context">En el texto se agrupan herramientas que ofrecen cursos estructurados de distintas universidades o instructores.</p>
         <div class="dropzone"></div>
-        <div style="margin-top:8px;">
+        <div>
           <span class="option" draggable="true">Plataformas de cursos en línea</span>
           <span class="option" draggable="true">Repositorios técnicos</span>
           <span class="option" draggable="true">Herramientas de organización</span>
@@ -77,9 +72,8 @@
 
       <div class="question" data-answer="Repositorios de conocimiento técnico">
         <h3>2) ¿Qué categoría agrupa MDN, GitHub Docs y Stack Overflow?</h3>
-        <p class="context">El texto menciona sitios que contienen documentación, guías prácticas y preguntas/respuestas técnicas.</p>
         <div class="dropzone"></div>
-        <div style="margin-top:8px;">
+        <div>
           <span class="option" draggable="true">Plataformas de práctica</span>
           <span class="option" draggable="true">Repositorios de conocimiento técnico</span>
           <span class="option" draggable="true">Aplicaciones de comunicación</span>
@@ -89,9 +83,8 @@
 
       <div class="question" data-answer="Plataformas de práctica interactiva">
         <h3>3) ¿Qué tipo de herramientas ofrecen retos de codificación, entornos online y ejercicios (Codewars, LeetCode)?</h3>
-        <p class="context">En el contenido se listan herramientas para practicar algoritmos y poner en práctica lo aprendido.</p>
         <div class="dropzone"></div>
-        <div style="margin-top:8px;">
+        <div>
           <span class="option" draggable="true">Plataformas de práctica interactiva</span>
           <span class="option" draggable="true">Herramientas de planificación</span>
           <span class="option" draggable="true">Canales de video</span>
@@ -101,9 +94,8 @@
 
       <div class="question" data-answer="Herramientas de organización del aprendizaje">
         <h3>4) ¿Cómo se llama el grupo de herramientas que incluye Notion, Trello o Google Calendar?</h3>
-        <p class="context">Estas herramientas ayudan a planificar, gestionar tiempos y organizar apuntes y tareas.</p>
         <div class="dropzone"></div>
-        <div style="margin-top:8px;">
+        <div>
           <span class="option" draggable="true">Herramientas de organización del aprendizaje</span>
           <span class="option" draggable="true">Repositorios técnicos</span>
           <span class="option" draggable="true">Plataformas de streaming</span>
@@ -113,9 +105,8 @@
 
       <div class="question" data-answer="Herramientas de comunicación y colaboración">
         <h3>5) ¿Qué categoría describe Discord, Slack o subreddits técnicos?</h3>
-        <p class="context">Herramientas que permiten interactuar con otros aprendices, compartir dudas y resolver problemas en comunidad.</p>
         <div class="dropzone"></div>
-        <div style="margin-top:8px;">
+        <div>
           <span class="option" draggable="true">Herramientas de comunicación y colaboración</span>
           <span class="option" draggable="true">Plataformas de cursos</span>
           <span class="option" draggable="true">Sistemas operativos</span>
@@ -123,215 +114,118 @@
         <div class="feedback"></div>
       </div>
 
-      <!-- Crucigrama 6 -->
-      <div class="question" id="cruz" style="text-align:center;">
+      <!-- Crucigrama -->
+      <div class="question" id="cruz">
         <h3>6) Crucigrama (completa las letras):</h3>
-        <p class="context">Pistas: <br> Vertical: Aplicación para tomar notas y organizar (NOTION).<br> Horizontal: Plataforma de cursos (COURSERA).</p>
-        <div class="crucigrama" aria-hidden="false">
-          <!-- fila1 -->
+        <p class="context">Pistas: Vertical: aplicación para tomar notas (NOTION). Horizontal: plataforma de cursos (COURSERA).</p>
+        <div class="crucigrama">
           <div class="cell"><input maxlength="1" data-l="N"></div>
           <div class="cell black"></div>
           <div class="cell"><input maxlength="1" data-l="C"></div>
           <div class="cell"><input maxlength="1" data-l="O"></div>
           <div class="cell"><input maxlength="1" data-l="U"></div>
           <div class="cell"><input maxlength="1" data-l="R"></div>
-          <!-- fila2 -->
           <div class="cell"><input maxlength="1" data-l="O"></div>
           <div class="cell black"></div>
           <div class="cell"><input maxlength="1" data-l="S"></div>
           <div class="cell"><input maxlength="1" data-l="E"></div>
           <div class="cell"><input maxlength="1" data-l="R"></div>
           <div class="cell"><input maxlength="1" data-l="A"></div>
-          <!-- fila3 -->
-          <div class="cell"><input maxlength="1" data-l="T"></div>
-          <div class="cell black"></div>
-          <div class="cell black"></div>
-          <div class="cell black"></div>
-          <div class="cell black"></div>
-          <div class="cell black"></div>
         </div>
         <div class="feedback"></div>
       </div>
 
-      <!-- Completar 7-10 -->
+      <!-- Completar -->
       <div class="question" data-answer="flexibilidad">
-        <h3>7) Completa: Una ventaja clave de las herramientas digitales es la ________, que permite estudiar desde cualquier lugar y en distintos horarios.</h3>
+        <h3>7) Una ventaja clave de las herramientas digitales es la ________, que permite estudiar desde cualquier lugar y horario.</h3>
         <input type="text" placeholder="Escribe la palabra">
         <div class="feedback"></div>
       </div>
 
       <div class="question" data-answer="autonomía">
-        <h3>8) Completa: El aprendizaje que permite al usuario decidir ritmo, contenido y proceso se relaciona con la ________.</h3>
+        <h3>8) El aprendizaje que permite decidir ritmo, contenido y proceso se relaciona con la ________.</h3>
         <input type="text" placeholder="Escribe la palabra">
         <div class="feedback"></div>
       </div>
 
       <div class="question" data-answer="sobrecarga de información">
-        <h3>9) Completa: Un reto que mencionó el texto y que puede generar confusión por exceso de recursos es la ________.</h3>
+        <h3>9) Un reto que puede generar confusión por exceso de recursos es la ________.</h3>
         <input type="text" placeholder="Escribe la expresión">
         <div class="feedback"></div>
       </div>
 
       <div class="question" data-answer="planificación">
-        <h3>10) Completa: Una estrategia sugerida para integrar herramientas digitales es la ________, usando calendarios y objetivos medibles.</h3>
+        <h3>10) Una estrategia para integrar herramientas digitales es la ________, usando calendarios y objetivos medibles.</h3>
         <input type="text" placeholder="Escribe la palabra">
         <div class="feedback"></div>
       </div>
 
-      <!-- Controles -->
       <div class="controls">
-        <button id="checkBtn">Calificar y mostrar feedback</button>
+        <button id="checkBtn">Calificar</button>
         <button class="secondary" id="resetBtn">Reiniciar</button>
-        <div id="result" aria-live="polite"></div>
+        <div id="result"></div>
       </div>
     </div>
   </div>
 
 <script>
-/* Drag & Drop setup */
 let dragged = null;
-function initDragOptions() {
-  document.querySelectorAll('.option').forEach(opt=>{
-    opt.addEventListener('dragstart', e=>{
-      dragged = opt;
-      setTimeout(()=> opt.style.display='none', 0);
-    });
-    opt.addEventListener('dragend', e=>{
-      setTimeout(()=> {
-        if (dragged) dragged.style.display='inline-block';
-        dragged = null;
-      }, 0);
-    });
-  });
-}
-initDragOptions();
+function norm(s){return s.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
 
-document.querySelectorAll('.dropzone').forEach(zone=>{
-  zone.addEventListener('dragover', e => e.preventDefault());
-  zone.addEventListener('drop', e=>{
+document.querySelectorAll(".option").forEach(o=>{
+  o.addEventListener("dragstart",e=>{dragged=o;setTimeout(()=>o.style.display="none",0)});
+  o.addEventListener("dragend",e=>{setTimeout(()=>o.style.display="inline-block",0);dragged=null});
+});
+
+document.querySelectorAll(".dropzone").forEach(z=>{
+  z.addEventListener("dragover",e=>e.preventDefault());
+  z.addEventListener("drop",e=>{
     e.preventDefault();
-    if (!dragged) return;
-    if (zone.children.length === 0) {
-      zone.appendChild(dragged);
-      zone.classList.add('filled');
-    }
+    if(dragged){z.innerHTML="";z.appendChild(dragged);z.classList.add("filled");}
   });
 });
 
-/* Utility: normalize text for comparison */
-function norm(s){
-  if(!s) return '';
-  return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-/* Feedback texts based on content */
-const feedbackExplanations = {
-  "Plataformas de cursos en línea": "Correcto. Las plataformas tipo Coursera, edX o Udemy son MOOCs que ofrecen cursos estructurados y, a menudo, certificaciones.",
-  "Repositorios de conocimiento técnico": "Correcto. MDN, GitHub Docs y Stack Overflow proveen documentación, guías y respuestas técnicas.",
-  "Plataformas de práctica interactiva": "Correcto. Herramientas como Codewars o LeetCode permiten practicar algoritmos y resolver retos en un entorno interactivo.",
-  "Herramientas de organización del aprendizaje": "Correcto. Notion, Trello y Google Calendar ayudan a planificar tareas, gestionar tiempos y organizar recursos de estudio.",
-  "Herramientas de comunicación y colaboración": "Correcto. Discord, Slack y Reddit facilitan la interacción con otros aprendices y expertos para resolver dudas y colaborar.",
-  "flexibilidad": "Flexibilidad: permite estudiar desde cualquier lugar y en horarios adaptables, una ventaja clave de la autoformación digital.",
-  "autonomia": "Autonomía: el usuario controla ritmo, contenido y proceso, alineado con el aprendizaje autónomo.",
-  "sobrecarga de informacion": "Sobrecarga de información: efectivamente, existen demasiadas herramientas y recursos; la solución es curar y priorizar pocas de calidad.",
-  "planificacion": "Planificación: usar calendarios y objetivos medibles ayuda a mantener disciplina y constancia en la autoformación."
+const feedbackExplanations={
+"Plataformas de cursos en línea":"Correcto. Coursera y edX son ejemplos de MOOCs.",
+"Repositorios de conocimiento técnico":"Correcto. MDN y GitHub Docs son fuentes de documentación y preguntas técnicas.",
+"Plataformas de práctica interactiva":"Correcto. Codewars y LeetCode permiten practicar algoritmos.",
+"Herramientas de organización del aprendizaje":"Correcto. Notion y Trello ayudan a organizar tareas y tiempos.",
+"Herramientas de comunicación y colaboración":"Correcto. Discord y Slack facilitan la interacción entre aprendices.",
+"flexibilidad":"Permite estudiar desde cualquier lugar y horario.",
+"autonomia":"Implica controlar ritmo, contenido y proceso.",
+"sobrecarga de informacion":"Exceso de recursos que puede confundir al aprendiz.",
+"planificacion":"Uso de calendarios y metas para mantener disciplina."
 };
 
-/* Check / grade function */
-document.getElementById('checkBtn').addEventListener('click', ()=>{
-  let correct = 0;
-  const total = 10;
+document.getElementById("checkBtn").onclick=()=>{
+ let correct=0,total=10;
+ document.querySelectorAll(".question").forEach(q=>{
+  const fb=q.querySelector(".feedback");fb.className="feedback";fb.style.display="none";
+  const ans=norm(q.dataset.answer||"");
+  if(q.querySelector(".dropzone")){
+    const opt=q.querySelector(".dropzone .option");
+    if(opt && norm(opt.textContent)===ans){fb.textContent="✅ "+feedbackExplanations[q.dataset.answer];fb.classList.add("ok");correct++;}
+    else fb.textContent="❌ Incorrecto. "+(feedbackExplanations[q.dataset.answer]||"");fb.classList.add("bad");
+    fb.style.display="block";
+  }
+  else if(q.id==="cruz"){
+    const ok=[...q.querySelectorAll("input[data-l]")].every(i=>norm(i.value)===norm(i.dataset.l));
+    if(ok){fb.textContent="✅ Crucigrama correcto.";fb.classList.add("ok");correct++;}
+    else{fb.textContent="❌ Crucigrama incorrecto. Solución: NOTION y COURSERA.";fb.classList.add("bad");}
+    fb.style.display="block";
+  }
+  else if(q.querySelector("input[type=text]")){
+    const val=norm(q.querySelector("input").value);
+    if(val===ans){fb.textContent="✅ "+(feedbackExplanations[ans]||"Correcto.");fb.classList.add("ok");correct++;}
+    else{fb.textContent="❌ Incorrecto. "+(feedbackExplanations[ans]||"");fb.classList.add("bad");}
+    fb.style.display="block";
+  }
+ });
+ const pct=Math.round(correct/total*100);
+ document.getElementById("result").textContent=`Puntuación: ${correct}/${total} — ${pct}%`;
+};
 
-  // Handle drag & drop questions (1-5)
-  document.querySelectorAll('.question').forEach((q, idx) => {
-    const ans = norm(q.dataset.answer || '');
-    const fb = q.querySelector('.feedback');
-    fb.className = 'feedback'; fb.style.display='none'; fb.textContent='';
-
-    // crucigrama handled separately
-    if (q.id === 'cruz') return;
-    
-    // If question contains a dropzone -> drag & drop
-    const dz = q.querySelector('.dropzone');
-    if (dz) {
-      const opt = dz.querySelector('.option');
-      if (opt) {
-        const txt = norm(opt.textContent);
-        if (txt === ans) {
-          fb.textContent = '✅ ' + feedbackExplanations[q.dataset.answer] || '✅ Correcto.';
-          fb.classList.add('ok');
-          correct++;
-        } else {
-          fb.textContent = `❌ Incorrecto. ${q.dataset.answer}: ${feedbackExplanations[q.dataset.answer] ? feedbackExplanations[q.dataset.answer] : ''}`;
-          fb.classList.add('bad');
-        }
-      } else {
-        fb.textContent = `⚠️ No respondiste. Respuesta esperada: ${q.dataset.answer}.`;
-        fb.classList.add('bad');
-      }
-      fb.style.display='block';
-    }
-  });
-
-  // Crucigrama validation (6)
-  (function(){
-    const q = document.getElementById('cruz');
-    const fb = q.querySelector('.feedback');
-    fb.className = 'feedback'; fb.style.display='none'; fb.textContent='';
-    // collect only inputs that have data-l attribute (the pattern)
-    const inputs = Array.from(q.querySelectorAll('.cell input[data-l]'));
-    const allMatch = inputs.every(inp => norm(inp.value) === norm(inp.dataset.l));
-    if (allMatch) {
-      fb.textContent = "✅ Crucigrama correcto. NOTION y COURSERA aparecen como recursos recomendados en el texto.";
-      fb.classList.add('ok');
-      correct++;
-    } else {
-      fb.textContent = "❌ Crucigrama incorrecto o incompleto. Solución: NOTION (vertical) y COURSERA (horizontal). Revisa las pistas.";
-      fb.classList.add('bad');
-    }
-    fb.style.display='block';
-  })();
-
-  // Fill-in questions 7-10
-  document.querySelectorAll('.question').forEach(q => {
-    const isFill = q.querySelector('input[type="text"]') && q.dataset.answer;
-    if (!isFill) return;
-    const fb = q.querySelector('.feedback');
-    fb.className = 'feedback'; fb.style.display='none'; fb.textContent='';
-    const val = norm(q.querySelector('input').value);
-    const expected = norm(q.dataset.answer);
-    // Accept short variants (e.g., "autonomía" -> "autonomia")
-    if (val === expected) {
-      fb.textContent = "✅ " + (feedbackExplanations[expected] || "Correcto.");
-      fb.classList.add('ok');
-      correct++;
-    } else {
-      // Some tolerance for common variants: accept phrases with/without accents, allow "sobrecarga de información" vs "sobrecarga de informacion"
-      if (expected.includes(' ') && expected.replace(/\s+/g,'') === val.replace(/\s+/g,'')) {
-        fb.textContent = "✅ " + (feedbackExplanations[expected] || "Correcto.");
-        fb.classList.add('ok'); correct++;
-      } else {
-        fb.textContent = `❌ Incorrecto. Respuesta esperada: "${q.dataset.answer}". ${feedbackExplanations[expected] ? feedbackExplanations[expected] : ''}`;
-        fb.classList.add('bad');
-      }
-    }
-    fb.style.display='block';
-  });
-
-  // Show total
-  const pct = Math.round((correct/total) * 100);
-  const resultEl = document.getElementById('result');
-  resultEl.textContent = `Puntuación: ${correct}/${total} — ${pct}%`;
-});
-
-/* Reset: return page to initial state */
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  // Remove options from dropzones and put them back under original questions (simple reload for reliable reset)
-  location.reload();
-});
-
-/* Re-initialize drag events for dynamically moved options (after reload not needed) */
-initDragOptions();
+document.getElementById("resetBtn").onclick=()=>location.reload();
 </script>
 </body>
 </html>
