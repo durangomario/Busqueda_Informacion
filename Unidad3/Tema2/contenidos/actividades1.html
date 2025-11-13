@@ -1,183 +1,215 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Actividad: Fuentes de Información Tecnológica</title>
-  <style>
-    :root{
-      --bg:#f1f5f9; --card:#fff; --ink:#0f172a; --accent:#2563eb;
-      --good:#16a34a; --bad:#dc2626;
-    }
-    body{
-      font-family:Inter, system-ui, Arial;
-      margin:0; padding:24px;
-      background:linear-gradient(180deg,#e0f2fe 0%, #f8fafc 100%);
-      color:var(--ink);
-    }
-    .container{max-width:950px; margin:auto;}
-    .card{background:var(--card); border-radius:16px; padding:24px; box-shadow:0 6px 16px rgba(0,0,0,.1); margin-bottom:24px;}
-    h1{color:var(--accent); text-align:center;}
-    h2{font-size:18px; color:var(--accent);}
-    .dropzone{border:2px dashed #cbd5e1; border-radius:8px; min-height:40px; display:flex; align-items:center; justify-content:center; margin:6px 0; background:#f1f5f9; padding:4px;}
-    .option{display:inline-block; padding:8px 12px; border:1px solid #cbd5e1; border-radius:6px; background:#fff; margin:4px; cursor:grab; font-size:14px;}
-    .option:hover{background:#e0f2fe;}
-    button{background:var(--accent); color:#fff; border:none; border-radius:8px; padding:10px 18px; font-weight:700; cursor:pointer;}
-    button.secondary{background:#94a3b8;}
-    .feedback{font-size:14px; display:none;}
-    .feedback.ok{color:var(--good); display:block;}
-    .feedback.bad{color:var(--bad); display:block;}
-    .text-question input{padding:6px; border:1px solid #cbd5e1; border-radius:6px; width:60%;}
-    #result{font-weight:700; font-size:16px; text-align:right; margin-top:10px;}
-    /* Crucigrama simple */
-    .crossword{display:grid; grid-template-columns:repeat(5,40px); gap:4px; justify-content:center;}
-    .cell{width:40px; height:40px; border:1px solid #cbd5e1; text-align:center; font-weight:700; text-transform:uppercase; border-radius:4px;}
-    .cell input{width:100%; height:100%; border:none; text-align:center; font-size:18px; text-transform:uppercase;}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluación: Herramientas digitales para la autoformación</title>
+<style>
+:root{
+  --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b;
+  --accent:#2563eb; --good:#16a34a; --bad:#dc2626;
+}
+body{
+  font-family:'Inter',Arial,sans-serif;
+  background:linear-gradient(180deg,#dbeafe 0%,#f8fafc 100%);
+  margin:0; padding:24px; color:var(--ink);
+}
+.container{max-width:980px;margin:auto;}
+.card{background:var(--card);border-radius:16px;padding:24px;box-shadow:0 8px 24px rgba(0,0,0,.08);}
+h1{color:var(--accent);}
+.q{margin-bottom:30px;}
+.dropzone{
+  min-height:40px;border:2px dashed #cbd5e1;border-radius:10px;padding:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f1f5f9;margin-bottom:10px;
+}
+.option{
+  display:inline-block;background:#fff;border:1px solid #cbd5e1;
+  border-radius:8px;padding:8px 12px;margin:4px;cursor:grab;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);font-size:14px;
+}
+.option:hover{transform:scale(1.05);}
+.feedback{margin-top:6px;font-size:14px;display:none;}
+.feedback.ok{color:var(--good);display:block;}
+.feedback.bad{color:var(--bad);display:block;}
+input[type=text]{padding:8px;width:60%;border-radius:6px;border:1px solid #cbd5e1;}
+.crucigrama{
+  display:grid;
+  grid-template-columns:repeat(6,40px);
+  gap:4px;
+  justify-content:center;
+  margin:10px 0;
+}
+.cell{
+  width:40px;height:40px;border:1px solid #cbd5e1;text-align:center;font-size:16px;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+}
+.cell.black{background:#cbd5e1;}
+.cell input{
+  width:100%;height:100%;border:none;text-align:center;font-size:16px;text-transform:uppercase;
+}
+.controls{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px;}
+button{padding:10px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:700;color:#fff;background:var(--accent);}
+button.secondary{background:#e2e8f0;color:var(--ink);}
+#result{font-weight:800;margin-left:auto;}
+</style>
 </head>
 <body>
 <div class="container">
-  <div class="card">
-    <h1>Actividad: Fuentes de Información para la Actualización Tecnológica</h1>
-    <p>Desarrolla las siguientes actividades relacionadas con las fuentes confiables de información tecnológica. Al finalizar, haz clic en <b>Calificar</b> para conocer tu puntaje.</p>
-  </div>
+<div class="card">
+<h1>Evaluación: Herramientas digitales para la autoformación</h1>
+<p>Responde las siguientes actividades para evaluar tu comprensión sobre las <b>herramientas digitales</b> que fortalecen la autoformación y el aprendizaje autónomo.</p>
 
-  <!-- 1 a 5 Drag & Drop -->
-  <div class="card">
-    <h2>Preguntas de Arrastrar y Soltar</h2>
+<!-- 5 preguntas drag & drop -->
+<div class="q" data-answer="Plataformas de aprendizaje en línea">
+<h3>1) Espacios virtuales donde puedes realizar cursos y certificaciones, como Coursera o Udemy:</h3>
+<div class="dropzone"></div>
+<div class="option" draggable="true">Plataformas de aprendizaje en línea</div>
+<div class="option" draggable="true">Blogs educativos</div>
+<div class="feedback"></div>
+</div>
 
-    <div class="q" data-answer="Blogs Tecnológicos">
-      <p>1) Sitios personales o colaborativos donde expertos publican artículos y análisis de tendencias tecnológicas:</p>
-      <div class="dropzone"></div>
-      <div id="opts1">
-        <div class="option" draggable="true">Blogs Tecnológicos</div>
-        <div class="option" draggable="true">Foros</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Foros y comunidades virtuales">
+<h3>2) Espacios colaborativos donde los usuarios comparten dudas y experiencias de aprendizaje:</h3>
+<div class="dropzone"></div>
+<div class="option" draggable="true">Foros y comunidades virtuales</div>
+<div class="option" draggable="true">Gestores de notas</div>
+<div class="feedback"></div>
+</div>
 
-    <div class="q" data-answer="Revistas Científicas">
-      <p>2) Publicaciones revisadas por pares que contienen investigaciones actualizadas en tecnología:</p>
-      <div class="dropzone"></div>
-      <div id="opts2">
-        <div class="option" draggable="true">Redes Sociales</div>
-        <div class="option" draggable="true">Revistas Científicas</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Gestores de notas">
+<h3>3) Aplicaciones como Notion o Evernote que permiten organizar información y reflexiones:</h3>
+<div class="dropzone"></div>
+<div class="option" draggable="true">Gestores de notas</div>
+<div class="option" draggable="true">Videotutoriales</div>
+<div class="feedback"></div>
+</div>
 
-    <div class="q" data-answer="Sitios Oficiales de Fabricantes">
-      <p>3) Espacios web donde las empresas tecnológicas publican actualizaciones, manuales y soporte de sus productos:</p>
-      <div class="dropzone"></div>
-      <div id="opts3">
-        <div class="option" draggable="true">Sitios Oficiales de Fabricantes</div>
-        <div class="option" draggable="true">Videos Tutoriales</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Canales educativos de video">
+<h3>4) Herramientas como YouTube Edu o Khan Academy que facilitan el aprendizaje visual:</h3>
+<div class="dropzone"></div>
+<div class="option" draggable="true">Canales educativos de video</div>
+<div class="option" draggable="true">Redes profesionales</div>
+<div class="feedback"></div>
+</div>
 
-    <div class="q" data-answer="Foros de Programadores">
-      <p>4) Comunidades donde los usuarios comparten soluciones, errores y códigos sobre herramientas o lenguajes:</p>
-      <div class="dropzone"></div>
-      <div id="opts4">
-        <div class="option" draggable="true">Foros de Programadores</div>
-        <div class="option" draggable="true">Revistas Digitales</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Aplicaciones de gestión del tiempo">
+<h3>5) Herramientas como Trello o Google Calendar que ayudan a planificar el estudio:</h3>
+<div class="dropzone"></div>
+<div class="option" draggable="true">Aplicaciones de gestión del tiempo</div>
+<div class="option" draggable="true">Plataformas de aprendizaje en línea</div>
+<div class="feedback"></div>
+</div>
 
-    <div class="q" data-answer="Conferencias y Webinars">
-      <p>5) Eventos donde expertos presentan innovaciones tecnológicas, tendencias y buenas prácticas:</p>
-      <div class="dropzone"></div>
-      <div id="opts5">
-        <div class="option" draggable="true">Conferencias y Webinars</div>
-        <div class="option" draggable="true">Chats en Línea</div>
-      </div>
-      <div class="feedback"></div>
-    </div>
-  </div>
+<!-- Crucigrama -->
+<div class="q" id="crucigramaQ">
+<h3>6) Crucigrama: completa con los nombres de herramientas digitales.</h3>
+<p><b>Pistas:</b><br>
+1. Vertical: Aplicación para organizar ideas (NOTION).<br>
+2. Horizontal: Plataforma de cursos (COURSERA).
+</p>
+<div class="crucigrama">
+  <div class="cell"><input maxlength="1" data-l="N"></div>
+  <div class="cell black"></div>
+  <div class="cell"><input maxlength="1" data-l="C"></div>
+  <div class="cell"><input maxlength="1" data-l="O"></div>
+  <div class="cell"><input maxlength="1" data-l="U"></div>
+  <div class="cell"><input maxlength="1" data-l="R"></div>
+  <div class="cell"><input maxlength="1" data-l="O"></div>
+  <div class="cell black"></div>
+  <div class="cell"><input maxlength="1" data-l="S"></div>
+  <div class="cell"><input maxlength="1" data-l="E"></div>
+  <div class="cell"><input maxlength="1" data-l="R"></div>
+  <div class="cell"><input maxlength="1" data-l="A"></div>
+</div>
+<div class="feedback"></div>
+</div>
 
-  <!-- 6 a 8 Completar -->
-  <div class="card">
-    <h2>Preguntas de Completar</h2>
+<!-- Preguntas de completar -->
+<div class="q" data-answer="Khan Academy">
+<h3>7) Completa: Una plataforma gratuita con lecciones en video de múltiples temas es __________.</h3>
+<input type="text" placeholder="Escribe tu respuesta">
+<div class="feedback"></div>
+</div>
 
-    <div class="text-question" data-answer="repositorios">
-      <p>6) Los ________ digitales son espacios donde se almacenan y comparten proyectos de software y código abierto.</p>
-      <input type="text" placeholder="Escribe tu respuesta">
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Google Drive">
+<h3>8) Completa: Herramienta de almacenamiento en la nube para guardar y compartir archivos: __________.</h3>
+<input type="text" placeholder="Escribe tu respuesta">
+<div class="feedback"></div>
+</div>
 
-    <div class="text-question" data-answer="boletines">
-      <p>7) Los ________ informativos permiten recibir actualizaciones periódicas sobre avances tecnológicos por correo electrónico.</p>
-      <input type="text" placeholder="Escribe tu respuesta">
-      <div class="feedback"></div>
-    </div>
+<div class="q" data-answer="Duolingo">
+<h3>9) Completa: Aplicación gratuita para el aprendizaje de idiomas: __________.</h3>
+<input type="text" placeholder="Escribe tu respuesta">
+<div class="feedback"></div>
+</div>
 
-    <div class="text-question" data-answer="tutoriales">
-      <p>8) Los ________ en línea ofrecen guías paso a paso para aprender nuevas herramientas o lenguajes de programación.</p>
-      <input type="text" placeholder="Escribe tu respuesta">
-      <div class="feedback"></div>
-    </div>
-  </div>
+<div class="q" data-answer="Podcast">
+<h3>10) Completa: Contenido de audio educativo que puedes escuchar mientras haces otras tareas: __________.</h3>
+<input type="text" placeholder="Escribe tu respuesta">
+<div class="feedback"></div>
+</div>
 
-  <!-- 9 Crucigrama -->
-  <div class="card">
-    <h2>Crucigrama Interactivo</h2>
-    <p>9) Completa la palabra relacionada con la búsqueda de información académica confiable:</p>
-    <div class="crossword">
-      <div class="cell"><input maxlength="1"></div>
-      <div class="cell"><input maxlength="1"></div>
-      <div class="cell"><input maxlength="1"></div>
-      <div class="cell"><input maxlength="1"></div>
-      <div class="cell"><input maxlength="1"></div>
-    </div>
-    <p style="text-align:center;">Pista: Es un buscador académico reconocido (respuesta: <b>SCIELO</b> sin la última letra “O”)</p>
-    <div class="feedback"></div>
-  </div>
-
-  <!-- 10 Selección única -->
-  <div class="card">
-    <h2>Pregunta de Selección Única</h2>
-    <div class="single-choice" data-answer="Google Scholar">
-      <p>10) ¿Cuál de las siguientes plataformas se considera una fuente confiable para consultar artículos académicos?</p>
-      <label><input type="radio" name="p10" value="YouTube"> YouTube</label><br>
-      <label><input type="radio" name="p10" value="Google Scholar"> Google Scholar</label><br>
-      <label><input type="radio" name="p10" value="Facebook"> Facebook</label>
-      <div class="feedback"></div>
-    </div>
-  </div>
-
-  <!-- Botones -->
-  <div class="card">
-    <button id="checkBtn">Calificar</button>
-    <button class="secondary" id="resetBtn">Reiniciar</button>
-    <div id="result"></div>
-  </div>
+<!-- Controles -->
+<div class="controls">
+<button id="checkBtn">Calificar</button>
+<button class="secondary" id="resetBtn">Reiniciar</button>
+<div id="result"></div>
+</div>
+</div>
 </div>
 
 <script>
-  let dragged=null;
-  function setDragEvents(){
-    const options=document.querySelectorAll('.option');
-    options.forEach(opt=>{
-      opt.addEventListener('dragstart', e=>{
-        dragged=opt; setTimeout(()=>opt.style.display='none',0);
-      });
-      opt.addEventListener('dragend', e=>{
-        dragged.style.display='inline-block'; dragged=null;
-      });
-    });
-  }
-  setDragEvents();
-  document.querySelectorAll('.dropzone').forEach(zone=>{
-    zone.addEventListener('dragover', e=>e.preventDefault());
-    zone.addEventListener('drop', e=>{
-      e.preventDefault();
-      if(zone.children.length===0 && dragged){
-        zone.appendChild(dragged); zone.style.background="#dcfce7";
-      }
-    });
+let dragged=null;
+function setDragEvents(){
+  document.querySelectorAll('.option').forEach(opt=>{
+    opt.addEventListener('dragstart',()=>{dragged=opt;setTimeout(()=>opt.style.display='none',0);});
+    opt.addEventListener('dragend',()=>{dragged.style.display='inline-block';dragged=null;});
   });
+}
+setDragEvents();
 
-  document.getElementById('checkBtn').addEventListener('click',()=>{
-    let correct=0,total=10;
+document.querySelectorAll('.dropzone').forEach(zone=>{
+  zone.addEventListener('dragover',e=>e.preventDefault());
+  zone.addEventListener('drop',e=>{
+    e.preventDefault();
+    if(zone.children.length===0&&dragged){zone.appendChild(dragged);}
+  });
+});
+
+document.getElementById('checkBtn').addEventListener('click',()=>{
+  let correct=0;const total=10;
+  document.querySelectorAll('.q').forEach(q=>{
+    const ans=q.dataset.answer;
+    const fb=q.querySelector('.feedback');
+    fb.classList.remove('ok','bad');fb.style.display='none';
+    if(q.querySelector('.dropzone')){
+      const opt=q.querySelector('.dropzone .option');
+      if(opt && opt.textContent.trim().toLowerCase()===ans.toLowerCase()){
+        fb.textContent="✅ Correcto. Estas plataformas permiten el acceso autónomo a contenidos y certificaciones en línea.";
+        fb.classList.add('ok');correct++;
+      }else fb.textContent="❌ Incorrecto. "+ans+" son herramientas clave para la autoformación virtual.";
+    } else if(q.id==="crucigramaQ"){
+      const cells=[...q.querySelectorAll('.cell input[data-l]')];
+      const allCorrect=cells.every(c=>c.value.toUpperCase()===c.dataset.l.toUpperCase());
+      if(allCorrect){fb.textContent="✅ Excelente. NOTION y COURSERA son recursos fundamentales para la organización y el aprendizaje.";fb.classList.add('ok');correct++;}
+      else fb.textContent="❌ Verifica. Las respuestas correctas son NOTION y COURSERA.";
+    } else if(q.querySelector('input[type=text]')){
+      const val=q.querySelector('input').value.trim().toLowerCase();
+      if(val===ans.toLowerCase()){
+        fb.textContent="✅ Correcto. "+ans+" es una de las herramientas más reconocidas en su categoría.";
+        fb.classList.add('ok');correct++;
+      } else {
+        fb.textContent="❌ Incorrecto. La respuesta correcta es "+ans+". Revisa esta herramienta y su uso en la autoformación.";
+      }
+    }
+    fb.style.display='block';
+  });
+  const pct=Math.round((correct/total)*100);
+  document.getElementById('result').textContent=`Puntuación: ${correct}/${total} — ${pct}%`;
+});
+
+document.getElementById('resetBtn').addEventListener('click',()=>location.reload());
+</script>
+</body>
+</html>
