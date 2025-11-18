@@ -6,340 +6,386 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-:root{
-  --bg:#f1f5f9;
-  --card:#ffffff;
-  --primary:#1d4ed8;
-  --ok:#15803d;
-  --bad:#dc2626;
-  --muted:#475569;
-}
-body{
-  background:var(--bg);
-  font-family: Poppins, sans-serif;
-  padding:25px;
-  color:var(--muted);
-}
-.container{
-  max-width:1000px;
-  margin:0 auto;
-}
-.actividad{
-  background:var(--card);
-  padding:25px;
-  border-radius:14px;
-  box-shadow:0 6px 16px rgba(0,0,0,0.1);
-}
-h1{
-  text-align:center;
-  color:var(--primary);
-}
-.pregunta{
-  background:#e2e8f0;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:18px;
-}
-.retro{margin-top:6px;font-weight:600;}
-.correcto{color:var(--ok);}
-.incorrecto{color:var(--bad);}
-.choice{display:block;margin-bottom:6px;cursor:pointer;}
-.short{width:100%;padding:8px;border-radius:8px;border:1px solid #94a3b8;}
+    body{
+        font-family: Arial, sans-serif;
+        background:#f2f5fa;
+        padding:20px;
+        color:#333;
+    }
+    .container{
+        max-width:1100px;
+        margin:0 auto;
+        background:white;
+        padding:25px;
+        border-radius:12px;
+        box-shadow:0 4px 14px rgba(0,0,0,0.12);
+    }
+    h1{
+        text-align:center;
+        color:#1d4ed8;
+    }
+    .pregunta{
+        background:#eef2f7;
+        padding:15px;
+        border-radius:10px;
+        margin-bottom:18px;
+    }
+    .retro{
+        font-weight:bold;
+        margin-top:8px;
+    }
+    .correcto{color:#15803d;}
+    .incorrecto{color:#dc2626;}
 
-button{
-  padding:12px 20px;
-  border:none;
-  background:var(--primary);
-  color:white;
-  border-radius:10px;
-  cursor:pointer;
-  margin-top:15px;
-  display:block;
-  margin-left:auto;margin-right:auto;
-}
+    /* SOPA DE LETRAS */
+    .sopa{
+        display:grid;
+        grid-template-columns:repeat(15, 28px);
+        gap:3px;
+        justify-content:center;
+        margin-bottom:15px;
+    }
+    .sopa div{
+        width:28px;
+        height:28px;
+        background:white;
+        border:1px solid #cbd5e1;
+        text-align:center;
+        line-height:28px;
+        user-select:none;
+        cursor:pointer;
+        border-radius:4px;
+        font-weight:600;
+    }
+    .selected{ background:#fde047 !important;}
+    .found{ background:#86efac !important;}
 
-/* Crucigrama */
-.crossword{
-  display:grid;
-  grid-template-columns: repeat(15, 30px);
-  grid-template-rows: repeat(15, 30px);
-  gap:2px;
-  margin:20px auto;
-  width:max-content;
-}
-.cell{
-  width:30px; height:30px;
-  text-transform:uppercase;
-  text-align:center;
-  font-weight:600;
-  font-size:16px;
-  border:1px solid #cbd5e1;
-}
-.block{
-  background:#0f172a;
-}
+    /* Drag & drop */
+    .zona-soltar{
+        border:2px dashed #888;
+        padding:10px;
+        min-height:40px;
+        border-radius:8px;
+        text-align:center;
+        background:white;
+    }
+    .opciones{
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+        margin-top:8px;
+    }
+    .opcion{
+        padding:6px 10px;
+        background:#dbeafe;
+        border:1px solid #60a5fa;
+        border-radius:6px;
+        cursor:grab;
+    }
+    .choices label{
+        display:block;
+        background:white;
+        padding:8px;
+        border-radius:6px;
+        margin:5px 0;
+        border:1px solid #d1d5db;
+    }
+
+    button{
+        padding:12px 20px;
+        background:#1d4ed8;
+        color:white;
+        border:0;
+        border-radius:8px;
+        display:block;
+        margin:20px auto;
+        cursor:pointer;
+    }
+
+    #resultado{
+        font-size:20px;
+        text-align:center;
+        margin-top:15px;
+        font-weight:bold;
+    }
 </style>
 </head>
 
 <body>
 <div class="container">
-<div class="actividad">
-
 <h1>Actividad: Aprendizaje Continuo</h1>
-<p>Responde las 10 preguntas y completa el crucigrama de 15×15 con términos del aprendizaje continuo.</p>
+<p>Responde las 10 preguntas. Obtendrás retroalimentación inmediata.</p>
 
-<!------------------------------- PREGUNTAS ------------------------------->
+<!-- █████████████████████ PREGUNTA 1 – SOPA DE LETRAS █████████████████████ -->
 
-<!-- P1 -->
-<div class="pregunta" id="q1">
-<p><strong>1.</strong> El aprendizaje continuo implica mantener el desarrollo personal, profesional y _________ a lo largo de la vida.</p>
-<input class="short" id="p1">
-<div class="retro"></div>
+<div class="pregunta" id="p1">
+<p><strong>1. Sopa de letras (15×15):</strong> Encuentra estas palabras relacionadas con estrategias del aprendizaje continuo:</p>
+<p><strong>APRENDIZAJE, CONTINUO, MOTIVACION, OBJETIVOS, AUTONOMIA, PROYECTOS, RUTINA, COMUNIDAD, REFLEXION, BITACORA, PLATAFORMAS, HABITOS</strong></p>
+
+<div class="sopa" id="sopa"></div>
+<div class="retro" id="retro1"></div>
 </div>
 
-<!-- P2 -->
-<div class="pregunta" id="q2">
-<p><strong>2.</strong> ¿Cuál es una razón clave para practicar aprendizaje continuo en programación web?</p>
-<label class="choice"><input type="radio" name="p2" value="a"> a) Evitar aprender nuevas tecnologías</label>
-<label class="choice"><input type="radio" name="p2" value="b"> b) Las herramientas cambian constantemente</label>
-<label class="choice"><input type="radio" name="p2" value="c"> c) No existen nuevas tendencias</label>
-<div class="retro"></div>
-</div>
+<!-- █████████████████████ RESTO DE PREGUNTAS █████████████████████ -->
 
-<!-- P3 -->
-<div class="pregunta" id="q3">
-<p><strong>3.</strong> La falta de motivación, la mala gestión del tiempo y la desorganización son ejemplos de _________ del aprendizaje continuo.</p>
-<input class="short" id="p3">
-<div class="retro"></div>
-</div>
-
-<!-- P4 -->
-<div class="pregunta" id="q4">
-<p><strong>4.</strong> (V/F) Establecer objetivos de aprendizaje ayuda a tener claridad sobre qué aprender y por qué.</p>
-<label class="choice"><input type="radio" name="p4" value="V"> Verdadero</label>
-<label class="choice"><input type="radio" name="p4" value="F"> Falso</label>
-<div class="retro"></div>
-</div>
-
-<!-- P5 -->
-<div class="pregunta" id="q5">
-<p><strong>5.</strong> Selecciona la plataforma que forma parte del aprendizaje online:</p>
-<label class="choice"><input type="radio" name="p5" value="a"> a) Coursera</label>
-<label class="choice"><input type="radio" name="p5" value="b"> b) WhatsApp</label>
-<label class="choice"><input type="radio" name="p5" value="c"> c) TikTok</label>
-<div class="retro"></div>
-</div>
-
-<!-- P6 Drag -->
-<div class="pregunta" id="q6">
-<p><strong>6.</strong> Arrastra la herramienta digital con su función:</p>
-
-<div style="display:flex;gap:10px;flex-wrap:wrap">
-  <div style="flex:1">
-    <p><b>Herramienta</b></p>
-    <div class="drop" data-correct="Notion" style="background:white;border:1px dashed #475569;padding:8px;border-radius:10px;">Organización de tareas</div>
-    <div class="drop" data-correct="GitHub" style="background:white;margin-top:10px;border:1px dashed #475569;padding:8px;border-radius:10px;">Control de versiones</div>
-  </div>
-
-  <div style="flex:1">
-    <p><b>Opciones</b></p>
-    <div draggable="true" class="opcion" style="background:#93c5fd;padding:6px;border-radius:6px;margin-bottom:6px;">Notion</div>
-    <div draggable="true" class="opcion" style="background:#93c5fd;padding:6px;border-radius:6px;margin-bottom:6px;">GitHub</div>
-  </div>
+<!-- 2 Drag -->
+<div class="pregunta" id="p2">
+<p><strong>2.</strong> Arrastra la opción que describe mejor qué es el aprendizaje continuo:</p>
+<div class="zona-soltar" data-correcto="Proceso permanente de actualización y mejora personal"></div>
+<div class="opciones">
+<div class="opcion" draggable="true">Proceso permanente de actualización y mejora personal</div>
+<div class="opcion" draggable="true">Estudiar solo para aprobar exámenes</div>
+<div class="opcion" draggable="true">Aprender únicamente en el aula</div>
 </div>
 <div class="retro"></div>
 </div>
 
-<!-- P7 -->
-<div class="pregunta" id="q7">
-<p><strong>7.</strong> (V/F) El aprendizaje basado en proyectos ayuda a reforzar conocimientos mediante la práctica.</p>
-<label class="choice"><input type="radio" name="p7" value="V"> Verdadero</label>
-<label class="choice"><input type="radio" name="p7" value="F"> Falso</label>
+<!-- 3 Multiple choice -->
+<div class="pregunta" id="p3">
+<p><strong>3.</strong> ¿Cuál es una razón clave para practicar el aprendizaje continuo en programación web?</p>
+<div class="choices">
+<label><input type="radio" name="p3" value="a"> Porque la tecnología cambia constantemente</label>
+<label><input type="radio" name="p3" value="b"> Para evitar usar Internet</label>
+<label><input type="radio" name="p3" value="c"> Porque aprender menos es mejor</label>
+</div>
 <div class="retro"></div>
 </div>
 
-<!-- P8 -->
-<div class="pregunta" id="q8">
-<p><strong>8.</strong> Una estrategia para reflexionar sobre lo aprendido es:</p>
-<label class="choice"><input type="radio" name="p8" value="a"> a) No tomar notas</label>
-<label class="choice"><input type="radio" name="p8" value="b"> b) Escribir resúmenes o ideas clave</label>
-<label class="choice"><input type="radio" name="p8" value="c"> c) Evitar comparar ideas</label>
+<!-- 4 V/F -->
+<div class="pregunta" id="p4">
+<p><strong>4.</strong> (V/F) La falta de motivación y una mala gestión del tiempo pueden ser obstáculos para el aprendizaje continuo.</p>
+<label><input type="radio" name="p4" value="V"> Verdadero</label>
+<label><input type="radio" name="p4" value="F"> Falso</label>
 <div class="retro"></div>
 </div>
 
-<!-- P9 Drag -->
-<div class="pregunta" id="q9">
-<p><strong>9.</strong> Arrastra la acción correcta para mantener una bitácora:</p>
-
-<div style="display:flex;gap:10px;flex-wrap:wrap">
-  <div class="drop" data-correct="Registrar aprendizajes" style="background:white;border:1px dashed #475569;padding:10px;border-radius:10px;flex:1">Bitácora</div>
-
-  <div style="flex:1">
-    <div draggable="true" class="opcion" style="background:#93c5fd;padding:6px;border-radius:8px;margin-bottom:6px;">Registrar aprendizajes</div>
-    <div draggable="true" class="opcion" style="background:#93c5fd;padding:6px;border-radius:8px;margin-bottom:6px;">Ignorar información</div>
-  </div>
+<!-- 5 Multiple -->
+<div class="pregunta" id="p5">
+<p><strong>5.</strong> Selecciona la plataforma que <strong>sÍ</strong> es un recurso de aprendizaje online:</p>
+<div class="choices">
+<label><input type="radio" name="p5" value="a"> Coursera</label>
+<label><input type="radio" name="p5" value="b"> TikTok de memes</label>
+<label><input type="radio" name="p5" value="c"> Netflix</label>
 </div>
-
 <div class="retro"></div>
 </div>
 
-<!-- P10 -->
-<div class="pregunta" id="q10">
-<p><strong>10.</strong> Una práctica para integrar aprendizaje al día a día puede ser:</p>
-<label class="choice"><input type="radio" name="p10" value="a"> a) Escuchar un podcast educativo</label>
-<label class="choice"><input type="radio" name="p10" value="b"> b) No revisar contenido académico</label>
-<label class="choice"><input type="radio" name="p10" value="c"> c) Evitar lecturas técnicas</label>
+<!-- 6 Drag -->
+<div class="pregunta" id="p6">
+<p><strong>6.</strong> Arrastra la herramienta digital que sirve para tomar notas:</p>
+<div class="zona-soltar" data-correcto="Evernote"></div>
+<div class="opciones">
+<div class="opcion" draggable="true">GitHub</div>
+<div class="opcion" draggable="true">Evernote</div>
+<div class="opcion" draggable="true">Anki</div>
+</div>
 <div class="retro"></div>
 </div>
 
-<hr>
-
-<!------------------------------- CRUCIGRAMA ------------------------------->
-
-<h2 style="text-align:center;margin-top:30px;">Crucigrama 15×15 – Estrategias del aprendizaje continuo</h2>
-
-<div class="crossword" id="cw"></div>
-
-<p><b>Palabras a encontrar:</b> NOTION, GITHUB, MOOCS, BITACORA, OBJETIVOS, REFLEXION, ANKI, RUTINA, HACKATON, APRENDER</p>
-
-<button id="checkCW">Verificar crucigrama</button>
-<p id="cwResult" style="text-align:center;font-weight:bold;"></p>
-
-<!------------------------------- RESULTADO GENERAL ------------------------------->
-
-<button id="verificar">Verificar Preguntas</button>
-<p id="resultado" style="text-align:center;font-weight:bold;"></p>
-
+<!-- 7 Multiple -->
+<div class="pregunta" id="p7">
+<p><strong>7.</strong> ¿Cuál es una estrategia de aprendizaje basada en proyectos?</p>
+<div class="choices">
+<label><input type="radio" name="p7" value="a"> Crear una página web real</label>
+<label><input type="radio" name="p7" value="b"> Leer sin practicar nunca</label>
+<label><input type="radio" name="p7" value="c"> Evitar programar</label>
 </div>
+<div class="retro"></div>
+</div>
+
+<!-- 8 V/F -->
+<div class="pregunta" id="p8">
+<p><strong>8.</strong> (V/F) Mantener una bitácora de aprendizaje ayuda a consolidar lo aprendido y ver el progreso.</p>
+<label><input type="radio" name="p8" value="V"> Verdadero</label>
+<label><input type="radio" name="p8" value="F"> Falso</label>
+<div class="retro"></div>
+</div>
+
+<!-- 9 Drag -->
+<div class="pregunta" id="p9">
+<p><strong>9.</strong> Arrastra una acción que ayuda a integrar el aprendizaje continuo en la vida diaria:</p>
+<div class="zona-soltar" data-correcto="Leer artículos técnicos diariamente"></div>
+<div class="opciones">
+<div class="opcion" draggable="true">Leer artículos técnicos diariamente</div>
+<div class="opcion" draggable="true">No aprender nada nuevo</div>
+<div class="opcion" draggable="true">Evitar la tecnología</div>
+</div>
+<div class="retro"></div>
+</div>
+
+<!-- 10 Multiple -->
+<div class="pregunta" id="p10">
+<p><strong>10.</strong> ¿Qué indicador muestra impacto real del aprendizaje continuo?</p>
+<div class="choices">
+<label><input type="radio" name="p10" value="a"> Poder aplicar nuevos conocimientos en proyectos</label>
+<label><input type="radio" name="p10" value="b"> No recordar lo aprendido</label>
+<label><input type="radio" name="p10" value="c"> Evitar desafíos</label>
+</div>
+<div class="retro"></div>
+</div>
+
+<button id="verificar">Verificar respuestas</button>
+<div id="resultado"></div>
+
 </div>
 
 <script>
-// ---------------------- GENERAR CRUCIGRAMA -------------------------
-const plantilla = [
-"NOTION#######OBJ",
-"###A##########E",
-"###P##########T",
-"###R##########I",
-"###E##########V",
-"BITACORA######O",
-"###N##########S",
-"##########MOOCS",
-"######GITHUB###",
-"###RUTINA######",
-"#####REFLEXION#",
-"###H###########",
-"###A###########",
-"###C###########",
-"###K###########",
+/* █████████████████████████ SOPA DE LETRAS █████████████████████████ */
+
+const palabras = [
+ "APRENDIZAJE","CONTINUO","MOTIVACION","OBJETIVOS","AUTONOMIA",
+ "PROYECTOS","RUTINA","COMUNIDAD","REFLEXION","BITACORA",
+ "PLATAFORMAS","HABITOS"
 ];
 
-const cw = document.getElementById("cw");
+// Mapa 15x15 generada manualmente con palabras incluidas horizontal/vertical
+const sopaData = [
+"APRENDIZAJEAB",
+"ZPLATAFORMASS",
+"XYHABITOSQWERT",
+"REFLEXIONBNMAS",
+"LKJHGFDSPROYE",
+"ARUTINAZXCVBN",
+"COMUNIDADHGFE",
+"OBJETIVOSRTYU",
+"CONTINUOASDFG",
+"BITACORAZXCVL",
+"YUIMOTIVACION",
+"PASDERTYULKJP",
+"QWERTYUIMNBVC",
+"ASDFGHJKLOPIU",
+"ZXCVBNMASDFGH"
+];
 
-plantilla.forEach(fila=>{
-  fila.split("").forEach(c=>{
-    if(c === "#"){
-      const b = document.createElement("div");
-      b.className="cell block";
-      cw.appendChild(b);
-    } else {
-      const i = document.createElement("input");
-      i.maxLength = 1;
-      i.className="cell";
-      i.dataset.solution = c;
-      cw.appendChild(i);
-    }
-  });
+const sopa = document.getElementById("sopa");
+
+// pintar sopa
+sopaData.forEach(row=>{
+    row.split("").forEach(letra=>{
+        let div = document.createElement("div");
+        div.textContent = letra;
+        sopa.appendChild(div);
+    });
 });
 
-// ---------------------- DRAG & DROP -------------------------
-let opcion = null;
+let seleccion = [];
+let encontrados = [];
+
+sopa.addEventListener("click", e=>{
+    if(e.target.tagName !== "DIV") return;
+    e.target.classList.toggle("selected");
+    actualizarSeleccion();
+});
+
+function actualizarSeleccion(){
+    let sel = Array.from(document.querySelectorAll(".selected")).map(d=>d.textContent).join("");
+    palabras.forEach(p=>{
+        if(sel.includes(p)){
+            encontrados.push(p);
+            document.querySelectorAll(".selected").forEach(c=>{
+                c.classList.remove("selected");
+                c.classList.add("found");
+            });
+        }
+    });
+
+    if(encontrados.length === palabras.length){
+        document.getElementById("retro1").textContent = "¡Excelente! Encontraste todas las palabras.";
+        document.getElementById("retro1").className = "retro correcto";
+    }
+}
+
+/* █████████████████████ DRAG & DROP █████████████████████ */
+
 document.querySelectorAll(".opcion").forEach(op=>{
-  op.addEventListener("dragstart", e=>{
-    opcion = e.target.textContent.trim();
-  });
+    op.addEventListener("dragstart", e=>{
+        e.dataTransfer.setData("text", e.target.textContent);
+    });
 });
 
-document.querySelectorAll(".drop").forEach(dp=>{
-  dp.addEventListener("dragover", e=>e.preventDefault());
-  dp.addEventListener("drop", e=>{
-    e.target.textContent = opcion;
-  });
+document.querySelectorAll(".zona-soltar").forEach(z=>{
+    z.addEventListener("dragover", e=> e.preventDefault());
+    z.addEventListener("drop", e=>{
+        e.preventDefault();
+        e.target.textContent = e.dataTransfer.getData("text");
+    });
 });
 
-// ---------------------- VERIFICAR CRUCIGRAMA -------------------------
-document.getElementById("checkCW").onclick = ()=>{
-  let correct = 0, total = 0;
-  document.querySelectorAll(".cell").forEach(c=>{
-    if(!c.classList.contains("block")){
-      total++;
-      if(c.value.toUpperCase() === c.dataset.solution) correct++;
-    }
-  });
-  document.getElementById("cwResult").textContent = 
-    `Correctas: ${correct} / ${total}`;
-};
+/* █████████████████████ VERIFICACIÓN █████████████████████ */
 
-// ---------------------- VERIFICAR PREGUNTAS -------------------------
 document.getElementById("verificar").onclick = ()=>{
-  let puntos = 0;
+    let correctas = 0;
 
-  // P1
-  const p1 = document.getElementById("p1").value.trim().toLowerCase();
-  document.querySelector("#q1 .retro").textContent =
-    p1.includes("intelectual") ? (puntos++, "Correcto") : "Incorrecto";
+    // Pregunta 1
+    if(encontrados.length === palabras.length){
+        correctas++;
+        document.getElementById("retro1").textContent = "Correcto.";
+        document.getElementById("retro1").className = "retro correcto";
+    }else{
+        document.getElementById("retro1").textContent = "Aún faltan palabras.";
+        document.getElementById("retro1").className = "retro incorrecto";
+    }
 
-  // P2
-  const p2 = document.querySelector("input[name='p2']:checked");
-  document.querySelector("#q2 .retro").textContent =
-    p2 && p2.value==="b" ? (puntos++, "Correcto") : "Incorrecto";
+    // Función genérica drag
+    function checkDrag(id){
+        let z = document.querySelector(id+" .zona-soltar");
+        let r = document.querySelector(id+" .retro");
+        if(z.textContent === z.dataset.correcto){
+            r.textContent = "Correcto.";
+            r.className = "retro correcto";
+            correctas++;
+        }else{
+            r.textContent = "Incorrecto. La respuesta correcta es: "+z.dataset.correcto;
+            r.className = "retro incorrecto";
+        }
+    }
 
-  // P3
-  const p3 = document.getElementById("p3").value.trim().toLowerCase();
-  document.querySelector("#q3 .retro").textContent =
-    p3.includes("obst") ? (puntos++, "Correcto") : "Incorrecto";
+    checkDrag("#p2");
+    checkDrag("#p6");
+    checkDrag("#p9");
 
-  // P4
-  const p4 = document.querySelector("input[name='p4']:checked");
-  document.querySelector("#q4 .retro").textContent =
-    p4 && p4.value==="V" ? (puntos++, "Correcto") : "Incorrecto";
+    // Multiple choice
+    function checkMC(id, correcta){
+        let val = document.querySelector(`input[name="${id}"]:checked`);
+        let r = document.querySelector(`#${id} ~ .retro`);
+        if(val && val.value === correcta){
+            r.textContent = "Correcto.";
+            r.className = "retro correcto";
+            correctas++;
+        }else{
+            r.textContent = "Incorrecto.";
+            r.className = "retro incorrecto";
+        }
+    }
 
-  // P5
-  const p5 = document.querySelector("input[name='p5']:checked");
-  document.querySelector("#q5 .retro").textContent =
-    p5 && p5.value==="a" ? (puntos++, "Correcto") : "Incorrecto";
+    checkMC("p3","a");
+    checkMC("p5","a");
+    checkMC("p7","a");
+    checkMC("p10","a");
 
-  // P6
-  let ok6 = 0;
-  document.querySelectorAll("#q6 .drop").forEach(d=>{
-    if(d.textContent.trim() === d.dataset.correct) ok6++;
-  });
-  document.querySelector("#q6 .retro").textContent =
-    ok6===2 ? (puntos++, "Correcto") : "Incorrecto";
+    // VF
+    function checkVF(id, correcta){
+        let val = document.querySelector(`input[name="${id}"]:checked`);
+        let r = document.querySelector(`#${id} ~ .retro`);
+        if(val && val.value === correcta){
+            r.textContent = "Correcto.";
+            r.className = "retro correcto";
+            correctas++;
+        }else{
+            r.textContent = "Incorrecto.";
+            r.className = "retro incorrecto";
+        }
+    }
 
-  // P7
-  const p7 = document.querySelector("input[name='p7']:checked");
-  document.querySelector("#q7 .retro").textContent =
-    p7 && p7.value==="V" ? (puntos++, "Correcto") : "Incorrecto";
+    checkVF("p4","V");
+    checkVF("p8","V");
 
-  // P8
-  const p8 = document.querySelector("input[name='p8']:checked");
-  document.querySelector("#q8 .retro").textContent =
-    p8 && p8.value==="b" ? (puntos++, "Correcto") : "Incorrecto";
-
-  // P9
-  const p9 = document.querySelector("#q9 .drop");
-  document.querySelector("#q9 .retro").textContent =
-    p9.textContent.trim()==="Registrar aprendizajes" ? (puntos++, "Correcto") : "Incorrecto";
-
-  // P10
-  const p10 = document.querySelector("input[name='p10']:checked");
-  document.querySelector("#q10 .retro").textContent =
-    p10 && p10.value==="a" ? (puntos++, "Correcto") : "Incorrecto";
-
-  document.getElementById("resultado").textContent =
-    `Puntaje total: ${puntos} / 10`;
+    // Resultado final
+    document.getElementById("resultado").textContent = 
+        "Puntaje final: " + correctas + "/10";
 };
 </script>
 
 </body>
 </html>
+
