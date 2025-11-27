@@ -1,235 +1,265 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Actividad Interactiva: Evaluación del Progreso en el Aprendizaje</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Actividad: Fiabilidad de Fuentes</title>
+
 <style>
-:root{
-  --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b;
-  --accent:#2563eb; --good:#16a34a; --bad:#dc2626;
-}
-body{
-  margin:0; font-family:Inter,system-ui,Arial;
-  background:linear-gradient(180deg,#eef6ff 0%, #f8fafc 100%);
-  color:var(--ink); padding:24px;
-}
-.container{max-width:940px; margin:0 auto;}
-.card{
-  background:var(--card); border-radius:16px;
-  padding:24px; box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-h1{font-size:22px; color:var(--accent); margin-bottom:10px;}
-.lead{color:var(--muted); font-size:14px; margin-bottom:20px;}
-.grid{
-  display:grid; grid-template-columns:repeat(12,30px);
-  gap:4px; justify-content:center; margin-bottom:20px;
-}
-.cell{
-  width:30px; height:30px; display:flex; align-items:center; justify-content:center;
-  background:#e2e8f0; border-radius:6px; font-weight:600; cursor:pointer;
-  user-select:none; transition:all .2s;
-}
-.cell.selected{background:#2563eb; color:white;}
-.cell.found{background:#16a34a; color:white;}
-.words{margin-bottom:12px;}
-.words span{display:inline-block; background:#f1f5f9; margin:4px; padding:6px 10px; border-radius:6px;}
-.timer{font-weight:700; color:var(--accent); text-align:right; margin-bottom:10px;}
-textarea{
-  width:100%; height:80px; border:1px solid #cbd5e1; border-radius:8px;
-  padding:8px; resize:none; margin-bottom:10px; font-family:inherit;
-}
-button{
-  padding:10px 16px; border:none; border-radius:8px; cursor:pointer;
-  font-weight:700; color:#fff; background:var(--accent);
-}
-button.secondary{background:#e2e8f0; color:var(--ink);}
-.feedback{margin-top:10px; font-weight:600; display:none;}
-.feedback.ok{color:var(--good); display:block;}
-.feedback.bad{color:var(--bad); display:block;}
+  :root{
+    --bg:#f3f4f6; --card:#ffffff; --ink:#1f2937; --muted:#4b5563;
+    --accent:#2563eb; --good:#059669; --bad:#dc2626;
+  }
+  body{margin:0; background:var(--bg); font-family:system-ui; color:var(--ink); padding:20px;}
+  .wrap{max-width:1100px; margin:12px auto; padding:18px;}
+  .card{background:var(--card); padding:18px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.04);}
+  h1{margin:0 0 6px; color:var(--accent);}
+  p.lead{color:var(--muted); margin-top:0;}
+  .section{margin-top:18px;}
+  .preg{background:#f9fafb; border-radius:10px; padding:12px; margin-bottom:12px; border:1px solid #e8eef5;}
+  .preg h3{margin:0 0 8px; font-size:16px;}
+  .retro{margin-top:8px; font-weight:700;}
+  .ok{color:var(--good)} .bad{color:var(--bad)}
+  
+  /* Drag & drop */
+  .zona{ border:2px dashed #cbd5e1; padding:12px; border-radius:8px; min-height:46px; background:white;}
+  .opciones{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
+  .op{ background:#e8f0ff; padding:8px 10px; border-radius:8px; border:1px solid #bcd9ff; cursor:grab; }
+
+  /* Multiple choice */
+  .choices label{display:block; padding:8px; background:white; border-radius:8px; border:1px solid #e6eef7; margin-top:6px; cursor:pointer;}
+
+  /* Emparejar */
+  .pair-row{display:flex; gap:10px; align-items:center; margin-bottom:8px;}
+  .pair-target{flex:1; padding:6px; border-bottom:2px dashed #2563eb; min-height:22px;}
+  .pair-options{margin-top:10px; display:flex; flex-wrap:wrap; gap:10px;}
+
+  /* botones */
+  .actions{display:flex; gap:10px; margin-top:12px; align-items:center;}
+  button{background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700;}
+  button.secondary{background:#eef2ff; color:var(--accent); border:1px solid #dbe7f7;}
+  #resultado{font-weight:800; margin-left:16px;}
 </style>
 </head>
+
 <body>
-<div class="container">
-  <div class="card">
-    <h1>Actividad Interactiva: Evaluación del Progreso en el Aprendizaje</h1>
-    <div class="lead">Encuentra las palabras relacionadas con la <b>evaluación del progreso</b> en la siguiente sopa de letras. Tienes <b>5 minutos</b>.</div>
-    
-    <div class="timer" id="timer">Tiempo restante: 5:00</div>
+<div class="wrap card">
+<h1>Actividad: Evaluación de la Fiabilidad de las Fuentes</h1>
+<p class="lead">Responde las 10 preguntas. Cada una da retroalimentación inmediata. Al finalizar, presiona "Calificar".</p>
 
-    <!-- Palabras -->
-    <div class="words" id="wordList">
-      <span>REFLEXION</span>
-      <span>AUTONOMIA</span>
-      <span>MEJORA</span>
-      <span>FORTALEZAS</span>
-      <span>APRENDIZAJE</span>
-    </div>
-
-    <!-- Sopa de letras -->
-    <div class="grid" id="grid"></div>
-
-    <!-- Preguntas reflexivas -->
-    <h3>Preguntas reflexivas:</h3>
-    <p>1️⃣ ¿Qué aprendiste sobre la importancia de evaluar tu propio progreso en el aprendizaje?</p>
-    <textarea id="resp1" placeholder="Escribe tu respuesta aquí..."></textarea>
-    <p>2️⃣ ¿Qué estrategias personales podrías aplicar para mejorar tu proceso de aprendizaje?</p>
-    <textarea id="resp2" placeholder="Escribe tu respuesta aquí..."></textarea>
-
-    <!-- Botones -->
-    <button id="checkBtn">Calificar</button>
-    <button class="secondary" id="resetBtn">Reiniciar</button>
-
-    <div class="feedback" id="feedback"></div>
+<!-- PREGUNTA 1 - Drag & Drop -->
+<div class="preg" id="p1" data-correct="Analizar si una fuente es verdadera, objetiva y verificable">
+  <h3>1) Arrastra la respuesta correcta</h3>
+  <p>¿Qué significa evaluar la fiabilidad de una fuente?</p>
+  <div class="zona"></div>
+  <div class="opciones">
+    <div class="op" draggable="true">Analizar si una fuente es verdadera, objetiva y verificable</div>
+    <div class="op" draggable="true">Leer cualquier información sin cuestionarla</div>
+    <div class="op" draggable="true">Aceptar contenido popular sin revisar su origen</div>
   </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 2 - Opción múltiple -->
+<div class="preg" id="p2" data-correct="c">
+  <h3>2) Pregunta de selección múltiple</h3>
+  <p>¿Cuál de las siguientes afirmaciones describe mejor una fuente primaria?</p>
+  <div class="choices">
+    <label><input type="radio" name="p2" value="a"> Artículos de opinión sin sustento científico.</label>
+    <label><input type="radio" name="p2" value="b"> Tutoriales creados por terceros.</label>
+    <label><input type="radio" name="p2" value="c"> Información original como artículos científicos y documentación técnica oficial.</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 3 - Verdadero / Falso -->
+<div class="preg" id="p3" data-correct="V">
+  <h3>3) Verdadero / Falso</h3>
+  <p>Las fuentes secundarias interpretan y analizan información proveniente de fuentes primarias.</p>
+  <div class="choices">
+    <label><input type="radio" name="p3" value="V"> Verdadero</label>
+    <label><input type="radio" name="p3" value="F"> Falso</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 4 - Escenario estilo ICFES -->
+<div class="preg" id="p4" data-correct="b">
+  <h3>4) Pregunta tipo ICFES</h3>
+  <p>
+    Luciana necesita investigar sobre tendencias en desarrollo web. Encuentra un artículo publicado en 2019, escrito bajo un seudónimo, sin fuentes citadas y con errores gramaticales.  
+    Además, el autor promueve un producto comercial con enlaces directos a su tienda.  
+    Antes de usarlo, Luciana evalúa la fiabilidad según los criterios estudiados:  
+    - **Autoridad:** no hay datos del autor  
+    - **Actualidad:** información desactualizada  
+    - **Propósito:** tendencia comercial  
+    - **Precisión:** sin citas ni referencias  
+    - **Diseño:** errores y baja calidad  
+    ¿Qué decisión debería tomar?
+  </p>
+  <div class="choices">
+    <label><input type="radio" name="p4" value="a"> Usar la fuente porque los enlaces comerciales garantizan su veracidad.</label>
+    <label><input type="radio" name="p4" value="b"> No usar la fuente porque no cumple con los criterios de fiabilidad.</label>
+    <label><input type="radio" name="p4" value="c"> Usar solo los fragmentos que contienen enlaces de compra.</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 5 - Verdadero / Falso -->
+<div class="preg" id="p5" data-correct="F">
+  <h3>5) Verdadero / Falso</h3>
+  <p>Wikipedia siempre puede usarse como fuente académica principal en trabajos formales.</p>
+  <div class="choices">
+    <label><input type="radio" name="p5" value="V"> Verdadero</label>
+    <label><input type="radio" name="p5" value="F"> Falso</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 6 - Drag & Drop (Herramientas) -->
+<div class="preg" id="p6" data-correct="Wayback Machine">
+  <h3>6) Arrastra la herramienta adecuada</h3>
+  <p>¿Qué herramienta permite ver el historial de un sitio web y cómo ha cambiado en el tiempo?</p>
+  <div class="zona"></div>
+  <div class="opciones">
+    <div class="op" draggable="true">Whois Lookup</div>
+    <div class="op" draggable="true">Wayback Machine</div>
+    <div class="op" draggable="true">Google Scholar</div>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 7 - Opción múltiple -->
+<div class="preg" id="p7" data-correct="a">
+  <h3>7) Selección múltiple</h3>
+  <p>¿Cuál es la fuente más confiable para aprender React?</p>
+  <div class="choices">
+    <label><input type="radio" name="p7" value="a"> La documentación oficial publicada por Meta.</label>
+    <label><input type="radio" name="p7" value="b"> Un video aislado sin autor identificado.</label>
+    <label><input type="radio" name="p7" value="c"> Un tutorial con muchos errores conceptuales.</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 8 - Emparejamiento -->
+<div class="preg" id="p8" data-correct="CRAAP">
+  <h3>8) Arrastra para completar</h3>
+  <p>Selecciona el método que evalúa **Actualidad, Relevancia, Autoridad, Precisión y Propósito**.</p>
+  <div class="zona"></div>
+  <div class="opciones">
+    <div class="op" draggable="true">CRAAP</div>
+    <div class="op" draggable="true">HTML5</div>
+    <div class="op" draggable="true">SEO</div>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 9 - Verdadero / Falso -->
+<div class="preg" id="p9" data-correct="V">
+  <h3>9) Verdadero / Falso</h3>
+  <p>La triangulación de información consiste en verificar un dato en al menos tres fuentes confiables diferentes.</p>
+  <div class="choices">
+    <label><input type="radio" name="p9" value="V"> Verdadero</label>
+    <label><input type="radio" name="p9" value="F"> Falso</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<!-- PREGUNTA 10 - Opción múltiple -->
+<div class="preg" id="p10" data-correct="c">
+  <h3>10) Selección múltiple</h3>
+  <p>¿Cuál es una responsabilidad del estudiante al validar información?</p>
+  <div class="choices">
+    <label><input type="radio" name="p10" value="a"> Copiar contenido sin revisar su origen.</label>
+    <label><input type="radio" name="p10" value="b"> Elegir siempre la primera fuente que aparece en Google.</label>
+    <label><input type="radio" name="p10" value="c"> Mantener una actitud crítica y justificar por qué una fuente es confiable.</label>
+  </div>
+  <div class="retro"></div>
+</div>
+
+<div class="actions">
+  <button id="grade">Calificar</button>
+  <button id="reset" class="secondary">Reiniciar</button>
+  <div id="resultado"></div>
+</div>
+
 </div>
 
 <script>
-// Palabras ocultas
-const words = ["REFLEXION","AUTONOMIA","MEJORA","FORTALEZAS","APRENDIZAJE"];
-const gridSize = 12;
-const gridContainer = document.getElementById('grid');
-let grid = Array.from({length:gridSize},()=>Array(gridSize).fill(''));
-let found = [];
-
-// Generar sopa de letras
-function placeWord(word){
-  let placed=false;
-  while(!placed){
-    let dir=Math.random()<0.5?'H':'V';
-    let row=Math.floor(Math.random()*gridSize);
-    let col=Math.floor(Math.random()*gridSize);
-    if(dir==='H' && col+word.length<=gridSize){
-      if(grid[row].slice(col,col+word.length).every(c=>!c)){
-        for(let i=0;i<word.length;i++) grid[row][col+i]=word[i];
-        placed=true;
-      }
-    } else if(dir==='V' && row+word.length<=gridSize){
-      if(grid.slice(row,row+word.length).every(r=>!r[col])){
-        for(let i=0;i<word.length;i++) grid[row+i][col]=word[i];
-        placed=true;
-      }
-    }
-  }
-}
-
-// Rellenar con letras aleatorias
-function fillGrid(){
-  grid=Array.from({length:gridSize},()=>Array(gridSize).fill(''));
-  words.forEach(w=>placeWord(w));
-  const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for(let r=0;r<gridSize;r++){
-    for(let c=0;c<gridSize;c++){
-      if(!grid[r][c]) grid[r][c]=letters[Math.floor(Math.random()*letters.length)];
-    }
-  }
-  renderGrid();
-}
-
-// Mostrar sopa en pantalla
-function renderGrid(){
-  gridContainer.innerHTML='';
-  grid.forEach((row,r)=>{
-    row.forEach((letter,c)=>{
-      const cell=document.createElement('div');
-      cell.classList.add('cell');
-      cell.textContent=letter;
-      cell.dataset.row=r; cell.dataset.col=c;
-      cell.addEventListener('click',()=>selectCell(cell));
-      gridContainer.appendChild(cell);
-    });
+/* DRAG & DROP BASICO */
+document.querySelectorAll(".op").forEach(op=>{
+  op.addEventListener("dragstart", e=>{
+    e.dataTransfer.setData("text/plain", e.target.textContent);
   });
-}
-
-let selected=[];
-function selectCell(cell){
-  if(cell.classList.contains('found')) return;
-  cell.classList.toggle('selected');
-  const coord=cell.dataset.row+"-"+cell.dataset.col;
-  if(selected.includes(coord)) selected=selected.filter(x=>x!==coord);
-  else selected.push(coord);
-  checkSelection();
-}
-
-function checkSelection(){
-  let letters=selected.map(c=>{
-    const [r,c2]=c.split('-').map(Number);
-    return grid[r][c2];
-  }).join('');
-  for(let w of words){
-    if(letters===w){
-      selected.forEach(c=>{
-        const el=document.querySelector(`.cell[data-row='${c.split('-')[0]}'][data-col='${c.split('-')[1]}']`);
-        el.classList.remove('selected');
-        el.classList.add('found');
-      });
-      found.push(w);
-      selected=[];
-      updateWordList();
-    }
-  }
-}
-
-function updateWordList(){
-  const spans=document.querySelectorAll('#wordList span');
-  spans.forEach(s=>{
-    if(found.includes(s.textContent)) s.style.textDecoration="line-through";
-  });
-}
-
-// Temporizador
-let timeLeft=300; // 5 min
-let timer=setInterval(()=>{
-  timeLeft--;
-  let min=Math.floor(timeLeft/60);
-  let sec=timeLeft%60;
-  document.getElementById('timer').textContent=`Tiempo restante: ${min}:${sec.toString().padStart(2,'0')}`;
-  if(timeLeft<=0){
-    clearInterval(timer);
-    document.getElementById('checkBtn').click();
-  }
-},1000);
-
-// Calificar
-document.getElementById('checkBtn').addEventListener('click',()=>{
-  let fb=document.getElementById('feedback');
-  const score=found.length;
-  if(score===words.length){
-    fb.textContent="✅ ¡Excelente! Has encontrado todas las palabras relacionadas con la evaluación del progreso.";
-    fb.className='feedback ok';
-  } else if(score>=3){
-    fb.textContent="🟡 Buen trabajo, pero puedes repasar los conceptos que te faltaron.";
-    fb.className='feedback bad';
-  } else {
-    fb.textContent="❌ Revisa nuevamente los conceptos. Intenta identificar las palabras clave.";
-    fb.className='feedback bad';
-  }
-  fb.style.display='block';
-  clearInterval(timer);
 });
 
-// Reiniciar
-document.getElementById('resetBtn').addEventListener('click',()=>{
-  clearInterval(timer);
-  timeLeft=300;
-  found=[]; selected=[];
-  document.getElementById('feedback').style.display='none';
-  document.querySelectorAll('textarea').forEach(t=>t.value='');
-  fillGrid();
-  timer=setInterval(()=>{
-    timeLeft--;
-    let min=Math.floor(timeLeft/60);
-    let sec=timeLeft%60;
-    document.getElementById('timer').textContent=`Tiempo restante: ${min}:${sec.toString().padStart(2,'0')}`;
-    if(timeLeft<=0){
-      clearInterval(timer);
-      document.getElementById('checkBtn').click();
-    }
-  },1000);
+document.querySelectorAll(".zona").forEach(z=>{
+  z.addEventListener("dragover", e=> e.preventDefault());
+  z.addEventListener("drop", e=>{
+    e.preventDefault();
+    const txt = e.dataTransfer.getData("text/plain");
+    z.textContent = txt;
+  });
 });
 
-fillGrid();
+/* SELECCION DE OPCIONES */
+function setRetro(el, ok, msg){
+  el.textContent = msg;
+  el.className = "retro " + (ok ? "ok" : "bad");
+}
+
+/* CALIFICAR */
+document.getElementById("grade").addEventListener("click", ()=>{
+  let score = 0;
+  const total = 10;
+
+  /* DRAG & DROP */
+  function checkDrag(id){
+    const box = document.querySelector("#"+id+" .zona");
+    const correct = document.querySelector("#"+id).dataset.correct;
+    const retro = document.querySelector("#"+id+" .retro");
+    if(box.textContent.trim() === correct){
+      score++; setRetro(retro,true,"Correcto");
+    } else setRetro(retro,false,"Incorrecto. Respuesta: "+correct);
+  }
+
+  checkDrag("p1");
+  checkDrag("p6");
+  checkDrag("p8");
+
+  /* MULTIPLE Y VF */
+  function checkChoice(id){
+    const q = document.getElementById(id);
+    const correct = q.dataset.correct;
+    const retro = q.querySelector(".retro");
+    const sel = q.querySelector("input:checked");
+    if(sel && sel.value === correct){
+      score++; setRetro(retro,true,"Correcto");
+    } else setRetro(retro,false,"Incorrecto. Respuesta: "+correct);
+  }
+
+  checkChoice("p2");
+  checkChoice("p3");
+  checkChoice("p4");
+  checkChoice("p5");
+  checkChoice("p7");
+  checkChoice("p9");
+  checkChoice("p10");
+
+  /* RESULTADO */
+  const res = document.getElementById("resultado");
+  res.textContent = "Puntuación: " + score + " / " + total;
+  res.style.color = score >= 7 ? "var(--good)" : "var(--bad)";
+});
+
+/* REINICIAR */
+document.getElementById("reset").addEventListener("click",()=>{
+  document.querySelectorAll(".zona").forEach(z=> z.textContent = "");
+  document.querySelectorAll("input:checked").forEach(i=> i.checked=false);
+  document.querySelectorAll(".retro").forEach(r=> r.textContent="");
+  document.getElementById("resultado").textContent="";
+});
 </script>
+
 </body>
 </html>
-
