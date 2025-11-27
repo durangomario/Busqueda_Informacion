@@ -1,233 +1,528 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Autoevaluación: Evaluación del Progreso (con retroalimentación)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Evaluación: Evaluar la Fiabilidad de Fuentes — 10 preguntas</title>
 <style>
-:root{
-  --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --muted:#64748b;
-  --accent:#2563eb; --good:#16a34a; --bad:#dc2626; --info:#0ea5e9;
-}
-body{
-  margin:0; font-family:Inter,system-ui,Arial;
-  background:linear-gradient(180deg,#eef6ff 0%, #f8fafc 100%);
-  color:var(--ink); padding:24px;
-}
-.container{max-width:940px; margin:0 auto;}
-.card{
-  background:var(--card); border-radius:16px; padding:24px;
-  box-shadow:0 8px 24px rgba(0,0,0,.08);
-}
-h1{font-size:22px; color:var(--accent); margin-bottom:10px;}
-.lead{color:var(--muted); font-size:14px; margin-bottom:20px;}
-.q{margin-bottom:22px; padding:12px; border-radius:10px; background:#fbfdff; border:1px solid #eef2ff;}
-.q h3{font-size:16px; margin-bottom:8px;}
-.q label{display:block; margin-bottom:6px; cursor:pointer;}
-.q input[type="text"]{
-  width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:8px;
-  font-family:inherit; margin-top:6px;
-}
-.btns{display:flex; gap:12px; margin-top:12px; align-items:center;}
-button{
-  padding:10px 16px; border:none; border-radius:8px; cursor:pointer;
-  font-weight:700; color:#fff; background:var(--accent);
-}
-button.secondary{background:#e2e8f0; color:var(--ink);}
-.feedback{margin-top:10px; padding:10px; border-radius:8px; display:none;}
-.feedback.ok{background:#ecfdf5; border:1px solid #bbf7d0; color:var(--good); display:block;}
-.feedback.bad{background:#fff1f2; border:1px solid #fecaca; color:var(--bad); display:block;}
-.feedback.info{background:#eff6ff; border:1px solid #bfdbfe; color:var(--info); display:block;}
-.score{font-weight:800; margin-top:8px;}
-.small{font-size:13px; color:var(--muted);}
+  :root{
+    --bg:#f5f8fb; --card:#ffffff; --accent:#1f6feb; --muted:#475569;
+    --ok:#059669; --bad:#dc2626; --border:#e6eef8;
+  }
+  body{background:var(--bg); font-family:Inter, system-ui, -apple-system, "Helvetica Neue", Arial; color:#0f172a; margin:0; padding:18px;}
+  .wrap{max-width:980px; margin:18px auto; padding:18px;}
+  .card{background:var(--card); border-radius:12px; padding:20px; box-shadow:0 8px 26px rgba(2,6,23,.06); border:1px solid var(--border);}
+  h1{margin:0 0 8px; color:var(--accent); font-size:22px;}
+  .lead{color:var(--muted); margin:0 0 12px;}
+
+  .question{border-radius:10px; padding:14px; background:#f8fbff; border:1px solid var(--border); margin-bottom:14px;}
+  .qtitle{font-weight:800; margin-bottom:8px;}
+  .context{background:#fff; border-radius:8px; padding:12px; border:1px dashed #e6eef8; color:var(--muted); white-space:pre-line; margin-bottom:10px; font-size:14px; line-height:1.45;}
+  .choices{margin-top:8px;}
+  .choices label{display:block; padding:8px 10px; border-radius:8px; background:white; border:1px solid #e6eef8; margin-bottom:8px; cursor:pointer;}
+  .choices input{margin-right:8px;}
+
+  /* Drag & Drop simple relation */
+  .dgrid{display:flex; gap:12px; flex-wrap:wrap; align-items:flex-start;}
+  .left, .right{flex:1 1 45%; min-width:220px; background:white; border-radius:8px; padding:12px; border:1px solid var(--border);}
+  .left .item{background:#eef6ff; padding:8px 10px; margin:6px 6px 6px 0; border-radius:8px; cursor:grab; display:inline-block;}
+  .right .drop{background:#f8fafc; border:2px dashed #dbeafc; padding:10px; min-height:46px; margin-bottom:10px; border-radius:8px; display:flex; align-items:center; justify-content:center; text-align:center;}
+  .right .drop.filled{border-style:solid; background:#e6f7ef; border-color:var(--ok);}
+  .small{font-size:13px; color:var(--muted); margin-bottom:6px;}
+
+  /* Classification (multiple items per drop) */
+  .class-grid{display:flex; gap:12px; flex-wrap:wrap;}
+  .class-cat{flex:1 1 30%; min-width:180px; background:#fff; border-radius:8px; padding:10px; border:1px solid var(--border);}
+  .class-cat h4{margin:6px 0; font-size:14px;}
+  .class-cat .bucket{min-height:60px; border:2px dashed #dbeafc; border-radius:8px; padding:6px; background:#f8fafc;}
+
+  .feedback{margin-top:8px; font-weight:700;}
+  .feedback.ok{color:var(--ok);}
+  .feedback.bad{color:var(--bad);}
+
+  .actions{display:flex; gap:12px; align-items:center; margin-top:10px;}
+  button{background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; font-weight:700; cursor:pointer;}
+  button.secondary{background:#eef6ff; color:var(--accent); border:1px solid #cfe0ff;}
+  #result{font-weight:800; margin-left:12px;}
+
+  footer.note{margin-top:14px; color:var(--muted); font-size:13px;}
+  @media (max-width:760px){ .dgrid{flex-direction:column;} .left,.right{flex-basis:100%} .class-grid{flex-direction:column} }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="card">
-    <h1>Autoevaluación: Evaluación del Progreso en el Aprendizaje</h1>
-    <div class="lead">Responde las preguntas. Al pulsar <b>Calificar</b> verás la retroalimentación específica por pregunta.</div>
+<div class="wrap">
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Evaluación: Evaluar la Fiabilidad de Fuentes</h1>
+    <p class="lead">Lee con atención. Responde las 10 preguntas. Usa arrastrar & soltar o seleccionar según corresponda. Al finalizar presiona <strong>Calificar</strong>.</p>
 
-    <form id="quiz">
-      <!-- 1 -->
-      <div class="q" data-answer="b" data-feedback-correct="Correcto. La evaluación del progreso busca acompañar y mejorar el proceso de aprendizaje, no solo medir un producto final." data-feedback-wrong="No exactamente. Aunque la calificación es parte del sistema, la evaluación del progreso se centra en mejorar el proceso, no solo en calificar.">
-        <h3>1️⃣ ¿Cuál es el propósito principal de la evaluación del progreso?</h3>
-        <label><input type="radio" name="q1" value="a"> Calificar los productos finales del estudiante.</label>
-        <label><input type="radio" name="q1" value="b"> Analizar y mejorar el proceso de aprendizaje continuamente.</label>
-        <label><input type="radio" name="q1" value="c"> Medir solo el conocimiento teórico del estudiante.</label>
-        <div class="feedback" id="fb-q1"></div>
+    <!-- Q1 MCQ (long paragraph >=8 lines) -->
+    <div class="question" id="q1" data-correct="b">
+      <div class="qtitle">1) (Selección única)</div>
+      <div class="context">
+Evaluar la fiabilidad de una fuente implica determinar si la información es verdadera, precisa, actual y relevante para el propósito de investigación. Para ello se analizan varios aspectos: la autoridad del autor o institución que publica, la precisión y evidencia presentada (referencias o datos verificables), la fecha de publicación y su actualización, la objetividad o posible sesgo del contenido, y el propósito del sitio (informar, vender o persuadir). Además, el diseño y la presentación del recurso ofrecen pistas sobre su profesionalismo: un sitio con errores, publicidad intrusiva y sin referencias suele ser menos confiable. Aplicar estos criterios reduce el riesgo de utilizar contenidos obsoletos o manipulados y protege el proceso de aprendizaje autónomo.
       </div>
-
-      <!-- 2 -->
-      <div class="q" data-answer="c" data-feedback-correct="Bien: la evaluación formativa acompaña el proceso y sirve para ajustar la enseñanza y el aprendizaje." data-feedback-wrong="No. La evaluación formativa no se realiza únicamente al final; acompaña el proceso para mejorarlo.">
-        <h3>2️⃣ Una evaluación formativa se caracteriza por:</h3>
-        <label><input type="radio" name="q2" value="a"> Realizarse únicamente al final del curso.</label>
-        <label><input type="radio" name="q2" value="b"> Ser cuantitativa y centrada en la nota.</label>
-        <label><input type="radio" name="q2" value="c"> Acompañar el proceso de aprendizaje para mejorar.</label>
-        <div class="feedback" id="fb-q2"></div>
+      <div class="choices" role="radiogroup" aria-label="q1">
+        <label><input type="radio" name="q1" value="a"> Revisar solo la popularidad del sitio (número de visitas) para decidir su fiabilidad.</label>
+        <label><input type="radio" name="q1" value="b"> Analizar autoridad, precisión, actualización, objetividad y propósito para decidir si la fuente es confiable.</label>
+        <label><input type="radio" name="q1" value="c"> Aceptar cualquier recurso que aparezca primero en buscadores sin más comprobaciones.</label>
       </div>
-
-      <!-- 3 -->
-      <div class="q" data-answer="falso" data-feedback-correct="Correcto. La evaluación del progreso incluye la participación activa del estudiante (auto/coevaluación)." data-feedback-wrong="Incorrecto. No debe ser exclusiva del docente: la autoevaluación y la coevaluación son partes importantes.">
-        <h3>3️⃣ (V/F) La evaluación del progreso solo debe realizarla el docente.</h3>
-        <label><input type="radio" name="q3" value="verdadero"> Verdadero</label>
-        <label><input type="radio" name="q3" value="falso"> Falso</label>
-        <div class="feedback" id="fb-q3"></div>
-      </div>
-
-      <!-- 4 -->
-      <div class="q" data-answer="a" data-feedback-correct="Exacto. El diario de progreso fomenta la autorreflexión sobre el propio aprendizaje." data-feedback-wrong="No. Un examen final no promueve la reflexión continua sobre el proceso; el diario sí.">
-        <h3>4️⃣ ¿Cuál de las siguientes estrategias fomenta la autorreflexión?</h3>
-        <label><input type="radio" name="q4" value="a"> Diario de progreso.</label>
-        <label><input type="radio" name="q4" value="b"> Examen final.</label>
-        <label><input type="radio" name="q4" value="c"> Evaluación numérica estandarizada.</label>
-        <div class="feedback" id="fb-q4"></div>
-      </div>
-
-      <!-- 5 -->
-      <div class="q" data-answer="b" data-feedback-correct="Correcto. Evaluación continua significa acompañar y valorar periódicamente el aprendizaje." data-feedback-wrong="No. La evaluación continua implica revisiones regulares a lo largo del proceso, no solo al inicio.">
-        <h3>5️⃣ ¿Qué significa una evaluación continua?</h3>
-        <label><input type="radio" name="q5" value="a"> Que se hace solo al inicio del proceso.</label>
-        <label><input type="radio" name="q5" value="b"> Que se realiza regularmente para acompañar el aprendizaje.</label>
-        <label><input type="radio" name="q5" value="c"> Que mide únicamente la participación.</label>
-        <div class="feedback" id="fb-q5"></div>
-      </div>
-
-      <!-- 6 -->
-      <div class="q" data-answer="a" data-feedback-correct="Verdadero. Una evaluación completa incluye conocimientos, habilidades y valores." data-feedback-wrong="Falso no sería correcto: una buena evaluación del progreso debe mirar más que solo conocimientos.">
-        <h3>6️⃣ (V/F) Una buena evaluación del progreso debe incluir aspectos cognitivos, habilidades y valores.</h3>
-        <label><input type="radio" name="q6" value="a"> Verdadero</label>
-        <label><input type="radio" name="q6" value="b"> Falso</label>
-        <div class="feedback" id="fb-q6"></div>
-      </div>
-
-      <!-- 7 -->
-      <div class="q" data-answer="c" data-feedback-correct="Bien: el portafolio permite ver evidencias a lo largo del tiempo y analizar la evolución." data-feedback-wrong="No. Aunque una lista de chequeo ayuda, el portafolio es la herramienta que muestra la evolución acumulada." >
-        <h3>7️⃣ ¿Qué herramienta permite al estudiante ver su evolución a lo largo del tiempo?</h3>
-        <label><input type="radio" name="q7" value="a"> Prueba objetiva.</label>
-        <label><input type="radio" name="q7" value="b"> Lista de chequeo.</label>
-        <label><input type="radio" name="q7" value="c"> Portafolio de evidencias.</label>
-        <div class="feedback" id="fb-q7"></div>
-      </div>
-
-      <!-- 8 -->
-      <div class="q" data-answer="b" data-feedback-correct="Correcto. La autoevaluación fortalece la autorregulación y autonomía." data-feedback-wrong="No. Su propósito no es fomentar la competencia entre compañeros, sino la autorregulación del propio aprendiz.">
-        <h3>8️⃣ La autoevaluación promueve principalmente:</h3>
-        <label><input type="radio" name="q8" value="a"> La competencia entre compañeros.</label>
-        <label><input type="radio" name="q8" value="b"> La autorregulación y la autonomía.</label>
-        <label><input type="radio" name="q8" value="c"> La memorización de contenidos.</label>
-        <div class="feedback" id="fb-q8"></div>
-      </div>
-
-      <!-- 9 (abierta) -->
-      <div class="q" data-answer="abierta" data-feedback-correct="Muy bien. Esa es una característica clave: una evaluación del progreso debe ser formativa, reflexiva o continua (entre otras)." data-feedback-wrong="Intenta una respuesta que indique que la evaluación del progreso es formativa, continua, reflexiva o individualizada.">
-        <h3>9️⃣ Escribe una característica esencial de una buena evaluación del progreso:</h3>
-        <input type="text" name="q9" placeholder="Ej: formativa, reflexiva...">
-        <div class="feedback" id="fb-q9"></div>
-      </div>
-
-      <!-- 10 (abierta) -->
-      <div class="q" data-answer="abierta" data-feedback-correct="Perfecto. Las estrategias como diario de progreso, portafolio o rúbrica son ejemplos válidos y útiles." data-feedback-wrong="Intenta mencionar una estrategia práctica: diario de progreso, portafolio, rúbrica, autoevaluación, checklist, etc.">
-        <h3>🔟 Menciona una estrategia que podrías usar para evaluar tu propio aprendizaje.</h3>
-        <input type="text" name="q10" placeholder="Ej: diario reflexivo, rúbrica, portafolio...">
-        <div class="feedback" id="fb-q10"></div>
-      </div>
-    </form>
-
-    <div class="btns">
-      <button id="checkBtn">Calificar</button>
-      <button class="secondary" id="resetBtn" type="button">Reiniciar</button>
-      <div class="small" id="info">Cada pregunta de opción vale 1 punto. Cada pregunta abierta vale 0.5 puntos (evaluada automáticamente por extensión).</div>
+      <div class="feedback" id="fb-q1"></div>
     </div>
 
-    <div class="score" id="result" aria-live="polite"></div>
+    <!-- Q2 VF (long paragraph) -->
+    <div class="question" id="q2" data-correct="V">
+      <div class="qtitle">2) (Verdadero / Falso)</div>
+      <div class="context">
+Una fuente primaria se considera la más cercana al dato u obra original: artículos científicos originales, documentación técnica oficial, datos estadísticos, entrevistas y reportes de primera mano. En contextos académicos y técnicos, estas fuentes son valiosas porque proporcionan evidencia directa y permiten verificar metodología y resultados. Emplearlas en trabajos y proyectos favorece la precisión y la credibilidad de las conclusiones.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q2" value="V"> Verdadero</label>
+        <label><input type="radio" name="q2" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q2"></div>
+    </div>
+
+    <!-- Q3 MCQ (long paragraph) -->
+    <div class="question" id="q3" data-correct="a">
+      <div class="qtitle">3) (Selección única)</div>
+      <div class="context">
+Al evaluar la precisión de un contenido, se revisa si presenta datos verificables, referencias, citas a estudios o fuentes primarias y si muestra consistencia conceptual. La presencia de errores ortográficos o conceptuales no es un criterio definitivo, pero puede alertar sobre falta de revisión. Verificar enlaces, referencias y pruebas aumenta la confianza en la información y permite al lector contrastarla eficientemente.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q3" value="a"> Buscar referencias, datos verificables y consistencia para validar la precisión.</label>
+        <label><input type="radio" name="q3" value="b"> Evaluar precisión únicamente por la longitud del artículo.</label>
+        <label><input type="radio" name="q3" value="c"> Aceptar afirmaciones técnicas sin contrastarlas cuando son populares.</label>
+      </div>
+      <div class="feedback" id="fb-q3"></div>
+    </div>
+
+    <!-- Q4 DRAG (relation - 3 pairs) -->
+    <div class="question" id="q4" data-correct='["Autoridad","Precisión","Actualización"]'>
+      <div class="qtitle">4) (Arrastrar y soltar — relacionar 3 pares)</div>
+      <div class="context">
+Relaciona cada criterio con la descripción correcta. Arrastra el término desde la izquierda y suéltalo en la zona con la descripción apropiada.
+      </div>
+
+      <div class="dgrid" id="drag4">
+        <div class="left">
+          <div class="item" draggable="true">Autoridad</div>
+          <div class="item" draggable="true">Precisión</div>
+          <div class="item" draggable="true">Actualización</div>
+        </div>
+        <div class="right">
+          <div class="drop" data-accept="Autoridad">¿Quién firma el contenido y qué experiencia o afiliación tiene?</div>
+          <div class="drop" data-accept="Precisión">¿Presenta datos verificables, referencias y evidencia?</div>
+          <div class="drop" data-accept="Actualización">¿Cuándo se publicó y si el contenido está al día?</div>
+        </div>
+      </div>
+
+      <div class="feedback" id="fb-q4"></div>
+    </div>
+
+    <!-- Q5 VF -->
+    <div class="question" id="q5" data-correct="F">
+      <div class="qtitle">5) (Verdadero / Falso)</div>
+      <div class="context">
+Las fuentes terciarias (como enciclopedias o agregadores) nunca son útiles en la investigación. No aportan valor porque siempre contienen información errónea o no verificable.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q5" value="V"> Verdadero</label>
+        <label><input type="radio" name="q5" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q5"></div>
+    </div>
+
+    <!-- Q6 DRAG (relation - 4 pairs) -->
+    <div class="question" id="q6" data-correct='["Whois Lookup","Google Scholar","Wayback Machine","Snopes"]'>
+      <div class="qtitle">6) (Arrastrar y soltar — relacionar 4 pares)</div>
+      <div class="context">
+Existen herramientas que ayudan a evaluar la fiabilidad de un sitio o contenido. Relaciona cada herramienta con su función principal (traslada el nombre a la descripción correcta).
+      </div>
+
+      <div class="dgrid" id="drag6">
+        <div class="left">
+          <div class="item" draggable="true">Whois Lookup</div>
+          <div class="item" draggable="true">Google Scholar</div>
+          <div class="item" draggable="true">Wayback Machine</div>
+          <div class="item" draggable="true">Snopes</div>
+        </div>
+        <div class="right">
+          <div class="drop" data-accept="Whois Lookup">Permite ver quién registró un dominio y datos de su propietario.</div>
+          <div class="drop" data-accept="Google Scholar">Buscador de literatura académica revisada por pares.</div>
+          <div class="drop" data-accept="Wayback Machine">Muestra el historial y cambios de un sitio web a través del tiempo.</div>
+          <div class="drop" data-accept="Snopes">Sitio que ayuda a verificar rumores y desinformación (fact-checking).</div>
+        </div>
+      </div>
+
+      <div class="feedback" id="fb-q6"></div>
+    </div>
+
+    <!-- Q7 MCQ (long paragraph) -->
+    <div class="question" id="q7" data-correct="a">
+      <div class="qtitle">7) (Selección única)</div>
+      <div class="context">
+Al trabajar en proyectos técnicos (por ejemplo, un sistema o una página web), es recomendable priorizar documentación oficial y fuentes con reputación técnica. Los tutoriales pueden ser complementarios, pero si contienen errores o carecen de referencias, pueden introducir malas prácticas. Verificar soluciones en comunidades (como Stack Overflow) implica revisar votos, comentarios y referencias antes de adoptar el código.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q7" value="a"> Priorizar documentación oficial y contrastar tutoriales con fuentes confiables.</label>
+        <label><input type="radio" name="q7" value="b"> Copiar código sin revisarlo si funciona en el primer intento.</label>
+        <label><input type="radio" name="q7" value="c"> Usar únicamente contenido viral de redes sociales.</label>
+      </div>
+      <div class="feedback" id="fb-q7"></div>
+    </div>
+
+    <!-- Q8 DRAG (classification: multiple items per category) -->
+    <div class="question" id="q8" data-correct='{"Primaria":["Artículo científico","Documentación técnica"],"Secundaria":["Tutorial","Artículo de opinión"],"Terciaria":["Enciclopedia","Agregador"]}'>
+      <div class="qtitle">8) (Clasificar — arrastrar múltiples ítems)</div>
+      <div class="context">
+Arrastra cada elemento desde la lista de la izquierda y suéltalo en la categoría correcta: Fuentes Primarias, Secundarias o Terciarias. Esta pregunta acepta varios elementos dentro de la misma categoría.
+      </div>
+
+      <div class="dgrid" id="drag8">
+        <div class="left">
+          <div class="item" draggable="true">Artículo científico</div>
+          <div class="item" draggable="true">Tutorial</div>
+          <div class="item" draggable="true">Enciclopedia</div>
+          <div class="item" draggable="true">Documentación técnica</div>
+          <div class="item" draggable="true">Artículo de opinión</div>
+          <div class="item" draggable="true">Agregador</div>
+        </div>
+        <div class="right class-grid">
+          <div class="class-cat">
+            <h4>Fuentes Primarias</h4>
+            <div class="bucket drop-multi" data-accept="Primaria"></div>
+          </div>
+          <div class="class-cat">
+            <h4>Fuentes Secundarias</h4>
+            <div class="bucket drop-multi" data-accept="Secundaria"></div>
+          </div>
+          <div class="class-cat">
+            <h4>Fuentes Terciarias</h4>
+            <div class="bucket drop-multi" data-accept="Terciaria"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback" id="fb-q8"></div>
+    </div>
+
+    <!-- Q9 VF -->
+    <div class="question" id="q9" data-correct="V">
+      <div class="qtitle">9) (Verdadero / Falso)</div>
+      <div class="context">
+Triangular la información (consultar al menos tres fuentes confiables) reduce la probabilidad de aceptar datos falsos o incompletos y fortalece la veracidad de las conclusiones. Esta práctica es especialmente importante cuando la información es técnica o tiene implicaciones prácticas.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q9" value="V"> Verdadero</label>
+        <label><input type="radio" name="q9" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q9"></div>
+    </div>
+
+    <!-- Q10 MCQ (long paragraph) -->
+    <div class="question" id="q10" data-correct="c">
+      <div class="qtitle">10) (Selección única)</div>
+      <div class="context">
+El método CRAAP —Currency, Relevance, Authority, Accuracy, Purpose— es una guía práctica y sencilla para evaluar rápidamente la fiabilidad de una fuente. Aplicarlo ayuda a decidir si un recurso es adecuado para apoyar un trabajo académico o técnico, y promueve una actitud crítica frente a la información disponible en línea.
+      </div>
+      <div class="choices">
+        <label><input type="radio" name="q10" value="a"> CRAAP es una herramienta para optimizar buscadores y mejorar SEO.</label>
+        <label><input type="radio" name="q10" value="b"> CRAAP es un estilo de citación como APA o IEEE.</label>
+        <label><input type="radio" name="q10" value="c"> CRAAP es un método para evaluar actualidad, relevancia, autoridad, precisión y propósito.</label>
+      </div>
+      <div class="feedback" id="fb-q10"></div>
+    </div>
+
+    <div class="actions">
+      <button id="grade">Calificar</button>
+      <button id="reset" class="secondary">Reiniciar</button>
+      <div id="result" aria-live="polite"></div>
+    </div>
+
+    <footer class="note">Trabaja con honestidad. Esta evaluación busca fortalecer tu criterio para seleccionar fuentes confiables.</footer>
   </div>
 </div>
 
 <script>
-const totalQuestions = document.querySelectorAll('.q').length;
-const optionQuestions = Array.from(document.querySelectorAll('.q')).filter(q => q.dataset.answer!=='abierta').length;
-const openQuestions = totalQuestions - optionQuestions;
+/* -------------------------
+   Drag & Drop core
+   - simple single-drop (q4, q6)
+   - multi-drop (q8) allows multiple items appended
+   - click-select + click-drop supported for accessibility
+   ------------------------- */
 
-document.getElementById('checkBtn').addEventListener('click', () => {
-  let correct = 0;
-  // Evitar volver a calificar varias veces
-  document.getElementById('checkBtn').disabled = true;
+function makeDraggable(containerId){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const items = container.querySelectorAll('.item');
+  const drops = container.querySelectorAll('.drop');
+  const multis = container.querySelectorAll('.drop-multi');
 
-  document.querySelectorAll('.q').forEach((q, idx) => {
-    const ans = q.dataset.answer; // 'a'/'b'/'c'/'verdadero'/'falso'/'abierta'
-    const fbEl = q.querySelector('.feedback');
-    fbEl.style.display = 'none';
-    fbEl.className = 'feedback';
+  items.forEach(it=>{
+    it.addEventListener('dragstart', e=>{
+      e.dataTransfer.setData('text/plain', it.textContent);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    it.addEventListener('click', ()=>{
+      // select for keyboard placement
+      container.querySelectorAll('.item').forEach(x=> x.classList.remove('selected'));
+      it.classList.add('selected');
+    });
+  });
 
-    if (ans === 'abierta') {
-      const input = q.querySelector('input[type="text"]');
-      const val = (input.value || '').trim();
-      // Criterio simple: dar medio punto si la respuesta tiene >3 caracteres y al menos una palabra significativa
-      if (val.length > 3) {
-        correct += 0.5;
-        fbEl.textContent = q.dataset.feedbackCorrect || q.dataset.feedbackCorrect === undefined ? q.dataset.feedbackCorrect || 'Buena respuesta.' : '';
-        fbEl.classList.add('ok');
-      } else {
-        fbEl.textContent = q.dataset.feedbackWrong || 'Respuesta demasiado corta. Intenta ser más específico.';
-        fbEl.classList.add('bad');
+  // single-answer drops
+  drops.forEach(d=>{
+    d.addEventListener('dragover', e=> e.preventDefault());
+    d.addEventListener('drop', e=>{
+      e.preventDefault();
+      const val = e.dataTransfer.getData('text/plain');
+      d.textContent = val;
+      d.classList.add('filled');
+    });
+    d.addEventListener('click', ()=>{
+      const sel = container.querySelector('.item.selected');
+      if(sel){
+        d.textContent = sel.textContent;
+        d.classList.add('filled');
+        sel.classList.remove('selected');
       }
-      fbEl.style.display = 'block';
+    });
+  });
+
+  // multi-answer drops (append items)
+  multis.forEach(m=>{
+    m.addEventListener('dragover', e=> e.preventDefault());
+    m.addEventListener('drop', e=>{
+      e.preventDefault();
+      const val = e.dataTransfer.getData('text/plain');
+      appendToBucket(m, val);
+    });
+    m.addEventListener('click', ()=>{
+      const sel = container.querySelector('.item.selected');
+      if(sel) {
+        appendToBucket(m, sel.textContent);
+        sel.classList.remove('selected');
+      }
+    });
+  });
+
+  function appendToBucket(bucket, text){
+    // prevent duplicates
+    const existing = Array.from(bucket.querySelectorAll('.chip')).map(c=> c.textContent);
+    if(existing.includes(text)) return;
+    const span = document.createElement('span');
+    span.className = 'chip';
+    span.textContent = text;
+    span.style.display='inline-block';
+    span.style.padding='6px 8px';
+    span.style.margin='4px';
+    span.style.background='#e8f0ff';
+    span.style.border='1px solid #bcd9ff';
+    span.style.borderRadius='8px';
+    bucket.appendChild(span);
+  }
+}
+
+/* initialize draggables */
+makeDraggable('drag4');
+makeDraggable('drag6');
+makeDraggable('drag8');
+
+/* -------------------------
+   Scoring & feedback
+   ------------------------- */
+
+function setFB(qid, ok, msg){
+  const el = document.getElementById('fb-'+qid);
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'feedback ' + (ok ? 'ok' : 'bad');
+}
+
+document.getElementById('grade').addEventListener('click', ()=> {
+  let score = 0;
+  const total = 10;
+
+  // Q1 MCQ
+  (function(){
+    const q = document.getElementById('q1');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q1"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q1', true, '✅ Correcto. Aplicaste criterios centrales.');
     } else {
-      // Preguntas de opción
-      const name = q.querySelector('input')?.name;
-      const selected = document.querySelector(`input[name="${name}"]:checked`);
-      if (!selected) {
-        fbEl.textContent = '⚠️ No respondiste esta pregunta. ' + (q.dataset.feedbackWrong || '');
-        fbEl.classList.add('bad');
-        fbEl.style.display = 'block';
-      } else if (selected.value === ans) {
-        correct += 1;
-        fbEl.textContent = q.dataset.feedbackCorrect || 'Correcto.';
-        fbEl.classList.add('ok');
-        fbEl.style.display = 'block';
-      } else {
-        fbEl.textContent = q.dataset.feedbackWrong || 'Incorrecto.';
-        fbEl.classList.add('bad');
-        fbEl.style.display = 'block';
-      }
+      setFB('q1', false, '❌ Incorrecto. Respuesta correcta: ' + correct);
+    }
+  })();
+
+  // Q2 VF
+  (function(){
+    const q = document.getElementById('q2');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q2"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q2', true, '✅ Correcto. Las fuentes primarias son originales y valiosas.');
+    } else {
+      setFB('q2', false, '❌ Incorrecto. Respuesta correcta: ' + (correct==='V'?'Verdadero':'Falso'));
+    }
+  })();
+
+  // Q3 MCQ
+  (function(){
+    const q = document.getElementById('q3');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q3"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q3', true, '✅ Correcto. Buscar referencias y datos es clave.');
+    } else {
+      setFB('q3', false, '❌ Incorrecto. Respuesta correcta: ' + correct);
+    }
+  })();
+
+  // Q4 Drag relation (3 pairs)
+  (function(){
+    const q = document.getElementById('q4');
+    const expected = JSON.parse(q.dataset.correct); // ["Autoridad","Precisión","Actualización"]
+    const drops = q.querySelectorAll('.drop');
+    let ok = true;
+    drops.forEach((d,i)=>{
+      const txt = (d.textContent||'').trim();
+      if(txt !== expected[i]) ok = false;
+    });
+    if(ok){ score++; setFB('q4', true, '✅ Correcto. Criterios bien relacionados.'); }
+    else { setFB('q4', false, '❌ Incorrecto. Debe coincidir Autoridad, Precisión, Actualización con las descripciones.'); }
+  })();
+
+  // Q5 VF
+  (function(){
+    const q = document.getElementById('q5');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q5"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q5', true, '✅ Correcto. Las terciarias pueden ser útiles como resumen o punto de partida.');
+    } else {
+      setFB('q5', false, '❌ Incorrecto. Respuesta correcta: ' + (correct==='V'?'Verdadero':'Falso'));
+    }
+  })();
+
+  // Q6 Drag (4 pairs)
+  (function(){
+    const q = document.getElementById('q6');
+    const expected = JSON.parse(q.dataset.correct); // array of 4 expected in order of drops
+    const drops = q.querySelectorAll('#drag6 .drop');
+    let ok = true;
+    drops.forEach((d,i)=>{
+      const txt = (d.textContent||'').trim();
+      if(txt !== expected[i]) ok = false;
+    });
+    if(ok){ score++; setFB('q6', true, '✅ Correcto. Herramientas bien relacionadas.'); }
+    else { setFB('q6', false, '❌ Incorrecto. Revisa las funciones: Whois, Google Scholar, Wayback, Snopes.'); }
+  })();
+
+  // Q7 MCQ
+  (function(){
+    const q = document.getElementById('q7');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q7"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q7', true, '✅ Correcto. Documentación oficial es prioritaria.');
+    } else {
+      setFB('q7', false, '❌ Incorrecto. Respuesta correcta: ' + correct);
+    }
+  })();
+
+  // Q8 Classification (multi)
+  (function(){
+    const q = document.getElementById('q8');
+    const expectedObj = JSON.parse(q.dataset.correct);
+    const expected = {
+      "Primaria": expectedObj["Primaria"] || [],
+      "Secundaria": expectedObj["Secundaria"] || [],
+      "Terciaria": expectedObj["Terciaria"] || []
+    };
+    // gather actuals
+    const buckets = q.querySelectorAll('.drop-multi');
+    const actual = { "Primaria": [], "Secundaria": [], "Terciaria": [] };
+    buckets.forEach(b=>{
+      const key = b.dataset.accept; // Primaria / Secundaria / Terciaria
+      const chips = Array.from(b.querySelectorAll('.chip')).map(c=> c.textContent.trim());
+      // Normalize names to match expected wording (we'll accept partial matches by mapping)
+      actual[key] = chips;
+    });
+
+    // define mapping between item labels and expected canonical labels
+    function normalize(label){
+      return label.trim();
     }
 
-    // Mostrar la retroalimentación detallada ya aplicada.
-  });
+    // For grading require that all expected items exist in actual bucket (order not important)
+    let ok = true;
+    Object.keys(expected).forEach(k=>{
+      const expectedList = expected[k].map(s=>s.trim());
+      // map actual items to simplified forms (we'll accept that "Documentación técnica" matches "Documentación técnica")
+      const actualList = actual[k].map(normalize);
+      expectedList.forEach(req=>{
+        if(!actualList.includes(req)) ok = false;
+      });
+    });
 
-  // Bloquear inputs tras calificar (evita cambiar respuestas)
-  document.querySelectorAll('#quiz input').forEach(i => i.disabled = true);
+    if(ok){
+      score++; setFB('q8', true, '✅ Correcto. Clasificación adecuada de fuentes.');
+    } else {
+      // Provide hint showing expected sets
+      const expStr = Object.entries(expected).map(([k,v])=> `${k}: ${v.join(', ')}`).join(' | ');
+      setFB('q8', false, '❌ Incorrecto. Esperado — ' + expStr);
+    }
+  })();
 
-  const maxScore = optionQuestions + openQuestions * 0.5;
-  const pct = Math.round((correct / maxScore) * 100);
-  const resultEl = document.getElementById('result');
-  resultEl.textContent = `Puntuación: ${correct.toFixed(1)} / ${maxScore}  —  ${pct}%`;
+  // Q9 VF
+  (function(){
+    const q = document.getElementById('q9');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q9"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q9', true, '✅ Correcto. Triangulación fortalece la validez.');
+    } else {
+      setFB('q9', false, '❌ Incorrecto. Respuesta correcta: ' + (correct==='V'?'Verdadero':'Falso'));
+    }
+  })();
 
-  // Mensaje general
-  let general = '';
-  if (pct >= 90) general = '🌟 Excelente trabajo. Demuestras buen dominio del tema.';
-  else if (pct >= 70) general = '👍 Buen trabajo, pero revisa las retroalimentaciones para mejorar.';
-  else general = '📘 Revisa las explicaciones por pregunta y vuelve a intentarlo para mejorar tu comprensión.';
-  resultEl.textContent += ' — ' + general;
+  // Q10 MCQ
+  (function(){
+    const q = document.getElementById('q10');
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q10"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFB('q10', true, '✅ Correcto. CRAAP evalúa esos criterios.');
+    } else {
+      setFB('q10', false, '❌ Incorrecto. Respuesta correcta: ' + correct);
+    }
+  })();
+
+  // Final result
+  const res = document.getElementById('result');
+  res.textContent = `Puntuación final: ${score} / ${total}`;
+  res.style.color = score >= Math.ceil(total*0.7) ? 'var(--ok)' : 'var(--bad)';
 });
 
-// Reiniciar completamente
-document.getElementById('resetBtn').addEventListener('click', () => {
-  // Habilitar botones e inputs
-  document.getElementById('checkBtn').disabled = false;
-  document.querySelectorAll('#quiz input').forEach(i => {
-    i.disabled = false;
-    if (i.type === 'radio') i.checked = false;
-    else if (i.type === 'text') i.value = '';
-  });
-  document.querySelectorAll('.feedback').forEach(f => {
-    f.style.display = 'none';
-    f.className = 'feedback';
-    f.textContent = '';
-  });
+/* Reset */
+document.getElementById('reset').addEventListener('click', ()=>{
+  // clear radios
+  document.querySelectorAll('input[type="radio"]').forEach(i=> i.checked = false);
+  // clear drops (single)
+  document.querySelectorAll('.drop').forEach(d=> { d.textContent = d.getAttribute('data-accept-placeholder') || ''; d.classList.remove('filled'); });
+  // clear buckets
+  document.querySelectorAll('.drop-multi').forEach(b=> b.innerHTML = '');
+  // clear feedbacks
+  document.querySelectorAll('.feedback').forEach(f=> f.textContent = '');
   document.getElementById('result').textContent = '';
+  // unselect items
+  document.querySelectorAll('.item').forEach(i=> i.classList.remove('selected'));
 });
+
+/* Initialize drop placeholders (optional) */
+document.querySelectorAll('.drop').forEach(d=> { if(!d.textContent.trim()) d.setAttribute('data-accept-placeholder',''); });
 </script>
+</div>
 </body>
 </html>
