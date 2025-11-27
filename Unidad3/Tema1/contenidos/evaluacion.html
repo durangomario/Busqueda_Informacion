@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación: Fuentes de Información Tecnológica</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f7fb;
+      padding: 20px;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #004aad;
+    }
+    .instruction {
+      background-color: #e6f0ff;
+      border-left: 6px solid #004aad;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .progress-bar {
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .progress-bar-inner {
+      height: 12px;
+      width: 0%;
+      background-color: #004aad;
+      border-radius: 8px;
+      transition: width 0.3s;
+    }
+    .question {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    p.context {
+      font-style: italic;
+      color: #555;
+    }
+    button {
+      background-color: #004aad;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background-color: #003a8c; }
+    .feedback { font-weight: bold; margin-top: 10px; }
+    #score { font-size: 20px; text-align: center; margin-top: 20px; color: #004aad; }
+  </style>
+</head>
+<body>
+
+  <h2>Evaluación: Fuentes de Información para la Actualización Tecnológica</h2>
+
+  <div class="instruction">
+    📺 <b>Instrucción:</b> primero vea el video arriba, luego responda cada una de las preguntas que se presentan.  
+    Al finalizar, haga clic en <b>“Verificar respuestas”</b> para conocer su calificación.
+  </div>
+
+  <!-- VIDEO -->
+  <div style="text-align:center; margin-bottom: 30px;">
+    <iframe width="640" height="360"
+      src="https://www.youtube.com/embed/xpGYo2cTRMI"
+      title="Fuentes de información (Tipos, usos y cómo encontrarlas)"
+      frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-bar-inner" id="progressInner"></div>
+  </div>
+
+  <!-- PREGUNTAS -->
+  <!-- Pregunta 1 -->
+  <div class="question" data-q="1">
+    <p class="context">En el campo de la programación web, los desarrolladores deben mantenerse actualizados con las nuevas herramientas, frameworks y lenguajes.</p>
+    <p><b>1.</b> ¿Cuál de las siguientes fuentes se considera <b>primaria</b> en el contexto tecnológico?</p>
+    <label><input type="radio" name="q1" value="a"> Un video tutorial en YouTube</label><br>
+    <label><input type="radio" name="q1" value="b"> Un artículo científico sobre inteligencia artificial</label><br>
+    <label><input type="radio" name="q1" value="c"> Una entrada de blog sobre HTML</label><br>
+    <div class="feedback" id="f1"></div>
+  </div>
+
+  <!-- Pregunta 2 -->
+  <div class="question" data-q="2">
+    <p class="context">Las fuentes pueden presentarse en distintos formatos, dependiendo de su medio de publicación o acceso.</p>
+    <p><b>2.</b> Un <b>podcast</b> sobre inteligencia artificial se clasifica como fuente:</p>
+    <label><input type="radio" name="q2" value="a"> Impresa</label><br>
+    <label><input type="radio" name="q2" value="b"> Audiovisual</label><br>
+    <label><input type="radio" name="q2" value="c"> Humana</label><br>
+    <div class="feedback" id="f2"></div>
+  </div>
+
+  <!-- Pregunta 3 -->
+  <div class="question" data-q="3">
+    <p class="context">Un estudiante de programación busca información sobre las mejores prácticas de diseño web.</p>
+    <p><b>3.</b> ¿Qué fuente sería la más adecuada para obtener información confiable y actualizada?</p>
+    <label><input type="radio" name="q3" value="a"> Foro sin moderación</label><br>
+    <label><input type="radio" name="q3" value="b"> Documentación oficial de W3C</label><br>
+    <label><input type="radio" name="q3" value="c"> Publicación sin autor ni fecha</label><br>
+    <div class="feedback" id="f3"></div>
+  </div>
+
+  <!-- Pregunta 4 -->
+  <div class="question" data-q="4">
+    <p class="context">En la búsqueda de información, es esencial aplicar criterios de selección que garanticen la fiabilidad de las fuentes.</p>
+    <p><b>4.</b> ¿Qué pregunta permite evaluar la <b>fiabilidad</b> de una fuente?</p>
+    <label><input type="radio" name="q4" value="a"> ¿Qué colores usa la página web?</label><br>
+    <label><input type="radio" name="q4" value="b"> ¿Quién es el autor y cuál es su experiencia?</label><br>
+    <label><input type="radio" name="q4" value="c"> ¿Cuántos comentarios tiene el artículo?</label><br>
+    <div class="feedback" id="f4"></div>
+  </div>
+
+  <!-- Pregunta 5 -->
+  <div class="question" data-q="5">
+    <p class="context">Las fuentes académicas son útiles para investigaciones profundas y especializadas.</p>
+    <p><b>5.</b> ¿Cuál de las siguientes opciones corresponde a una fuente <b>académica</b>?</p>
+    <label><input type="radio" name="q5" value="a"> Publicación revisada por pares</label><br>
+    <label><input type="radio" name="q5" value="b"> Video en TikTok sobre programación</label><br>
+    <label><input type="radio" name="q5" value="c"> Foro de videojuegos</label><br>
+    <div class="feedback" id="f5"></div>
+  </div>
+
+  <!-- Pregunta 6 -->
+  <div class="question" data-q="6">
+    <p class="context">Los blogs y sitios técnicos permiten compartir conocimientos y experiencias entre desarrolladores.</p>
+    <p><b>6.</b> ¿Cuál de las siguientes plataformas es reconocida por su comunidad de desarrolladores?</p>
+    <label><input type="radio" name="q6" value="a"> Dev.to</label><br>
+    <label><input type="radio" name="q6" value="b"> Instagram</label><br>
+    <label><input type="radio" name="q6" value="c"> Netflix</label><br>
+    <div class="feedback" id="f6"></div>
+  </div>
+
+  <!-- Pregunta 7 -->
+  <div class="question" data-q="7">
+    <p class="context">Un estudiante consulta la fecha de actualización de un artículo sobre React.js para asegurarse de que la información sea reciente.</p>
+    <p><b>7.</b> El estudiante está evaluando el criterio de:</p>
+    <label><input type="radio" name="q7" value="a"> Objetividad</label><br>
+    <label><input type="radio" name="q7" value="b"> Actualización</label><br>
+    <label><input type="radio" name="q7" value="c"> Relevancia</label><br>
+    <div class="feedback" id="f7"></div>
+  </div>
+
+  <!-- Pregunta 8 -->
+  <div class="question" data-q="8">
+    <p class="context">Para elegir una fuente confiable, es importante reconocer si presenta intereses comerciales o publicitarios.</p>
+    <p><b>8.</b> Este aspecto corresponde al criterio de:</p>
+    <label><input type="radio" name="q8" value="a"> Objetividad</label><br>
+    <label><input type="radio" name="q8" value="b"> Accesibilidad</label><br>
+    <label><input type="radio" name="q8" value="c"> Relevancia</label><br>
+    <div class="feedback" id="f8"></div>
+  </div>
+
+  <!-- Pregunta 9 -->
+  <div class="question" data-q="9">
+    <p class="context">La actualización tecnológica es un proceso continuo que fortalece las competencias profesionales.</p>
+    <p><b>9.</b> ¿Cuál de las siguientes prácticas contribuye directamente a la actualización profesional?</p>
+    <label><input type="radio" name="q9" value="a"> Evitar el uso de redes profesionales</label><br>
+    <label><input type="radio" name="q9" value="b"> Participar en cursos y webinars tecnológicos</label><br>
+    <label><input type="radio" name="q9" value="c"> Usar siempre la misma fuente sin actualizarla</label><br>
+    <div class="feedback" id="f9"></div>
+  </div>
+
+  <!-- Pregunta 10 -->
+  <div class="question" data-q="10">
+    <p class="context">El pensamiento crítico permite analizar y cuestionar la información disponible en internet.</p>
+    <p><b>10.</b> ¿Qué acción demuestra un pensamiento crítico frente a una fuente?</p>
+    <label><input type="radio" name="q10" value="a"> Creer en la información sin verificarla</label><br>
+    <label><input type="radio" name="q10" value="b"> Comparar diferentes fuentes antes de aceptar una información</label><br>
+    <label><input type="radio" name="q10" value="c"> Compartir cualquier información en redes sociales</label><br>
+    <div class="feedback" id="f10"></div>
+  </div>
+
+  <div style="text-align:center;">
+    <button onclick="checkAnswers()">Verificar respuestas</button>
+  </div>
+
+  <p id="score"></p>
+
+  <script>
+    const totalQuestions = 10;
+    const correct = {
+      q1: "b", q2: "b", q3: "b", q4: "b", q5: "a",
+      q6: "a", q7: "b", q8: "a", q9: "b", q10: "b"
+    };
+
+    function updateProgress() {
+      const answered = Array.from(document.querySelectorAll("input[type='radio']:checked")).length;
+      const percent = Math.min(Math.round((answered / totalQuestions) * 100), 100);
+      document.getElementById("progressInner").style.width = percent + "%";
+    }
+
+    document.querySelectorAll("input[type='radio']").forEach(input => {
+      input.addEventListener("change", updateProgress);
+    });
+
+    function checkAnswers() {
+      let score = 0;
+      for (let i = 1; i <= totalQuestions; i++) {
+        const name = `q${i}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const feedback = document.getElementById(`f${i}`);
+        if (selected) {
+          if (selected.value === correct[name]) {
+            score++;
+            feedback.textContent = "✅ Correcto";
+            feedback.style.color = "green";
+          } else {
+            feedback.textContent = "❌ Incorrecto";
+            feedback.style.color = "red";
+          }
+        } else {
+          feedback.textContent = "⚠️ No seleccionaste ninguna respuesta";
+          feedback.style.color = "orange";
+        }
+      }
+      document.getElementById("score").textContent = `Tu calificación: ${score}/${totalQuestions}`;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Actividad: Aprendizaje continuo (Sopa + 9 preguntas)</title>
+<style>
+  :root{
+    --bg:#f3f4f6; --card:#ffffff; --ink:#1f2937; --muted:#4b5563;
+    --accent:#2563eb; --good:#059669; --bad:#dc2626;
+  }
+  body{margin:0; background:var(--bg); font-family:system-ui; color:var(--ink); padding:20px;}
+  .wrap{max-width:1100px; margin:12px auto; padding:18px;}
+  .card{background:var(--card); padding:18px; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.04);}
+  h1{margin:0 0 6px; color:var(--accent);}
+  p.lead{color:var(--muted); margin-top:0;}
+  .section{margin-top:18px;}
+  .preg{background:#f9fafb; border-radius:10px; padding:12px; margin-bottom:12px; border:1px solid #e8eef5;}
+  .preg h3{margin:0 0 8px; font-size:16px;}
+  .retro{margin-top:8px; font-weight:700;}
+  .ok{color:var(--good)} .bad{color:var(--bad)}
+
+  /* SOPA */
+  .sopa-wrap{display:flex; gap:18px; flex-wrap:wrap; align-items:flex-start;}
+  .grid-sopa{
+    display:grid;
+    grid-template-columns:repeat(15,34px);
+    grid-auto-rows:34px;
+    gap:4px;
+    background:#e6f2ff;
+    padding:12px;
+    border-radius:8px;
+  }
+  .cel{
+    width:34px; height:34px; background:white; display:flex; align-items:center; justify-content:center;
+    border-radius:6px; cursor:pointer; user-select:none; font-weight:700; font-size:14px;
+    border:1px solid #dbe7f7;
+  }
+  .cel.selected{ background:#fde68a } /* amarillo */
+  .cel.found{ background:#bbf7d0 } /* verde */
+  .palabras-list{min-width:240px;}
+  .palabras-list ul{padding-left:18px; margin:6px 0;}
+  .palabras-list li.found{ text-decoration:line-through; color:var(--good); font-weight:700; }
+
+  /* Drag & drop */
+  .zona{ border:2px dashed #cbd5e1; padding:12px; border-radius:8px; min-height:46px; background:white;}
+  .opciones{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;}
+  .op{ background:#e8f0ff; padding:8px 10px; border-radius:8px; border:1px solid #bcd9ff; cursor:grab; }
+
+  /* Multiple choice */
+  .choices label{display:block; padding:8px; background:white; border-radius:8px; border:1px solid #e6eef7; margin-top:6px; cursor:pointer;}
+
+  /* botones y nota */
+  .actions{display:flex; gap:10px; margin-top:12px; align-items:center;}
+  button{background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:700;}
+  button.secondary{background:#eef2ff; color:var(--accent); border:1px solid #dbe7f7;}
+  #resultado{font-weight:800; margin-top:10px;}
+  @media (max-width:760px){ .sopa-wrap{flex-direction:column; align-items:center;} .palabras-list{min-width:unset;}}
+</style>
+</head>
+<body>
+<div class="wrap card">
+  <h1>Actividad: Aprendizaje continuo</h1>
+  <p class="lead">Resuelve la sopa de letras (pregunta 1) y las 9 preguntas siguientes. Cada pregunta muestra retroalimentación. Al finalizar, presiona "Calificar" para obtener tu puntaje.</p>
+
+  <!-- PREGUNTA 1: SOPA DE LETRAS 15x15 -->
+  <div class="section preg" id="p1">
+    <h3>1) Sopa de letras (15×15)</h3>
+    <p>Encuentra las palabras relacionadas con estrategias del aprendizaje continuo:</p>
+    <p><strong>APRENDIZAJE, CONTINUO, MOTIVACION, OBJETIVOS, AUTONOMIA, PROYECTOS, RUTINA, COMUNIDAD, REFLEXION, BITACORA, PLATAFORMAS, HABITOS</strong></p>
+
+    <div class="sopa-wrap">
+      <div id="grid" class="grid-sopa" aria-label="Sopa de letras"></div>
+
+      <div class="palabras-list">
+        <h4>Palabras a buscar</h4>
+        <ul id="wordList"></ul>
+        <div class="retro" id="retro1"></div>
+      </div>
+    </div>
+    <p style="margin-top:8px; color:var(--muted)">Instrucciones: Haz clic en la primera letra de la palabra y luego haz clic en las letras contiguas en la misma fila (derecha o izquierda) para seleccionar la palabra completa. La selección debe ser contigua y en la misma fila.</p>
+  </div>
+
+  <!-- PREGUNTA 2: Drag & Drop -->
+  <div class="preg" id="p2" data-correct="Proceso permanente de actualización y mejora personal">
+    <h3>2) Arrastra la respuesta correcta</h3>
+    <p>¿Qué describe mejor el aprendizaje continuo?</p>
+    <div class="zona" data-accept=""></div>
+    <div class="opciones">
+      <div class="op" draggable="true">Proceso permanente de actualización y mejora personal</div>
+      <div class="op" draggable="true">Estudiar solo para aprobar exámenes</div>
+      <div class="op" draggable="true">Aprender únicamente en el aula</div>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 3: Multiple choice -->
+  <div class="preg" id="p3" data-correct="a">
+    <h3>3) Opción múltiple</h3>
+    <p>¿Por qué es importante el aprendizaje continuo en programación web?</p>
+    <div class="choices">
+      <label><input type="radio" name="p3" value="a"> Porque las tecnologías y herramientas cambian rápidamente.</label>
+      <label><input type="radio" name="p3" value="b"> Porque aprender una vez basta para toda la vida.</label>
+      <label><input type="radio" name="p3" value="c"> Porque evita enfrentarse a nuevos retos.</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 4: Verdadero/Falso -->
+  <div class="preg" id="p4" data-correct="V">
+    <h3>4) Verdadero / Falso</h3>
+    <p>La mala gestión del tiempo es una barrera común para el aprendizaje continuo.</p>
+    <div class="choices">
+      <label><input type="radio" name="p4" value="V"> Verdadero</label>
+      <label><input type="radio" name="p4" value="F"> Falso</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 5: Multiple choice -->
+  <div class="preg" id="p5" data-correct="a">
+    <h3>5) Opción múltiple</h3>
+    <p>Elija la plataforma que es un recurso de aprendizaje online:</p>
+    <div class="choices">
+      <label><input type="radio" name="p5" value="a"> Coursera</label>
+      <label><input type="radio" name="p5" value="b"> Plataforma de memes sin contenido educativo</label>
+      <label><input type="radio" name="p5" value="c"> Sitio de streaming de películas</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 6: Drag & drop -->
+  <div class="preg" id="p6" data-correct="Evernote">
+    <h3>6) Arrastra la herramienta adecuada</h3>
+    <p>Selecciona la herramienta digital útil para tomar notas y mantener registros:</p>
+    <div class="zona" data-accept=""></div>
+    <div class="opciones">
+      <div class="op" draggable="true">GitHub</div>
+      <div class="op" draggable="true">Evernote</div>
+      <div class="op" draggable="true">Anki</div>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 7: Multiple -->
+  <div class="preg" id="p7" data-correct="a">
+    <h3>7) Opción múltiple</h3>
+    <p>¿Cuál es una buena actividad del aprendizaje basado en proyectos?</p>
+    <div class="choices">
+      <label><input type="radio" name="p7" value="a"> Crear una página web real</label>
+      <label><input type="radio" name="p7" value="b"> Leer sin practicar</label>
+      <label><input type="radio" name="p7" value="c"> Evitar aplicar lo aprendido</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 8: Verdadero/Falso -->
+  <div class="preg" id="p8" data-correct="V">
+    <h3>8) Verdadero / Falso</h3>
+    <p>Mantener una bitácora de aprendizaje ayuda a consolidar lo aprendido.</p>
+    <div class="choices">
+      <label><input type="radio" name="p8" value="V"> Verdadero</label>
+      <label><input type="radio" name="p8" value="F"> Falso</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 9: Drag -->
+  <div class="preg" id="p9" data-correct="Leer artículos técnicos diariamente">
+    <h3>9) Arrastra la acción correcta</h3>
+    <p>Selecciona una acción que ayuda a integrar el aprendizaje continuo en la vida diaria:</p>
+    <div class="zona" data-accept=""></div>
+    <div class="opciones">
+      <div class="op" draggable="true">Leer artículos técnicos diariamente</div>
+      <div class="op" draggable="true">No aprender nada nuevo</div>
+      <div class="op" draggable="true">Evitar la tecnología</div>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <!-- PREGUNTA 10: Multiple -->
+  <div class="preg" id="p10" data-correct="a">
+    <h3>10) Opción múltiple</h3>
+    <p>¿Cuál es una señal de que el aprendizaje continuo está dando resultados?</p>
+    <div class="choices">
+      <label><input type="radio" name="p10" value="a"> Puedes aplicar nuevos conocimientos en tus proyectos</label>
+      <label><input type="radio" name="p10" value="b"> Olvidas lo aprendido inmediatamente</label>
+      <label><input type="radio" name="p10" value="c"> Evitas retos y cambios</label>
+    </div>
+    <div class="retro"></div>
+  </div>
+
+  <div class="actions">
+    <button id="grade">Calificar</button>
+    <button id="reset" class="secondary">Reiniciar</button>
+    <div id="resultado" style="margin-left:16px;"></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+/* ==============================
+   SOPA DE LETRAS (15x15)
+   - words placed horizontally in different rows
+   - selection: click first letter, then click adjacent letters in same row
+   - allows left→right and right→left
+   ============================== */
+
+const words = [
+  "APRENDIZAJE","CONTINUO","MOTIVACION","OBJETIVOS","AUTONOMIA",
+  "PROYECTOS","RUTINA","COMUNIDAD","REFLEXION","BITACORA",
+  "PLATAFORMAS","HABITOS"
+];
+
+// Grid rows (15 chars each) - all words placed horizontally (one per row)
+const rows = [
+  "APRENDIZAJEBZPQ",  // APRENDIZAJE (row 0 cols 0-10)
+  "PLATAFORMASQWEX",  // PLATAFORMAS (row1 cols 0-10)
+  "BITACORAXYUIOP",   // BITACORA (row2 cols 0-7)
+  "OBJETIVOSASDFG",   // OBJETIVOS (row3 cols 0-8)
+  "CONTINUOQWERTY",   // CONTINUO (row4 cols 0-7)
+  "MOTIVACIONZXCVB",  // MOTIVACION (row5 cols 0-9)
+  "AUTONOMIAQWERT",   // AUTONOMIA (row6 cols 0-8)
+  "PROYECTOSYHNBG",   // PROYECTOS (row7 cols 0-7)
+  "RUTINAMNBVCXZQ",   // RUTINA (row8 cols 0-5)
+  "COMUNIDADASDFG",   // COMUNIDAD (row9 cols 0-8)
+  "REFLEXIONPLKJH",   // REFLEXION (row10 cols 0-8)
+  "HABITOSQWERTYU",   // HABITOS (row11 cols 0-6)
+  "ZXCVBNMASDFGHJK",  // filler
+  "QWERTYUIOPASDFG",  // filler
+  "LKJHGFDSAMNBVCX"   // filler
+];
+
+const gridEl = document.getElementById("grid");
+const wordListEl = document.getElementById("wordList");
+const retro1 = document.getElementById("retro1");
+
+let gridCells = []; // array of elements
+let selectedCells = []; // {r,c,el}
+let foundWords = new Set();
+
+// build grid DOM
+for(let r=0;r<15;r++){
+  let row = rows[r] || " ".repeat(15);
+  for(let c=0;c<15;c++){
+    const ch = row[c] || " ";
+    const div = document.createElement("div");
+    div.className = "cel";
+    div.dataset.r = r;
+    div.dataset.c = c;
+    div.textContent = ch.toUpperCase();
+    gridEl.appendChild(div);
+    gridCells.push(div);
+  }
+}
+
+// list words to find
+words.forEach(w=>{
+  const li = document.createElement("li");
+  li.textContent = w;
+  li.id = "word-"+w;
+  wordListEl.appendChild(li);
+});
+
+// helper: get cell element by r,c
+function cellAt(r,c){
+  return gridEl.querySelector(`.cel[data-r="${r}"][data-c="${c}"]`);
+}
+
+// click selection logic
+gridEl.addEventListener("click", e=>{
+  const el = e.target;
+  if(!el.classList.contains("cel")) return;
+  // if already found, ignore
+  if(el.classList.contains("found")) return;
+
+  const r = parseInt(el.dataset.r,10);
+  const c = parseInt(el.dataset.c,10);
+
+  if(selectedCells.length === 0){
+    // start new selection
+    selectedCells.push({r,c,el});
+    el.classList.add("selected");
+  } else {
+    // must be in the same row as first
+    const first = selectedCells[0];
+    if(r !== first.r){
+      // reset and start new
+      clearSelection();
+      selectedCells.push({r,c,el});
+      el.classList.add("selected");
+      return;
+    }
+    const last = selectedCells[selectedCells.length-1];
+    // allow extend to left or right contiguous only
+    if(Math.abs(c - last.c) === 1){
+      // ensure contiguous direction: either increasing or decreasing
+      // also allow if selecting previously unselected positions
+      // check that this cell not already selected (prevent duplicates)
+      if(!selectedCells.some(s=>s.r===r && s.c===c)){
+        selectedCells.push({r,c,el});
+        el.classList.add("selected");
+      }
+    } else {
+      // if clicked non-adjacent in same row, reset and start new
+      clearSelection();
+      selectedCells.push({r,c,el});
+      el.classList.add("selected");
+      return;
+    }
+  }
+
+  // After each click, check current selected string left→right and right→left
+  const row = selectedCells[0].r;
+  // build sequence sorted by column ascending to get both orders
+  const byColAsc = [...selectedCells].sort((a,b)=>a.c-b.c);
+  const ascStr = byColAsc.map(s=>s.el.textContent).join("");
+  const descStr = ascStr.split("").reverse().join("");
+  // but selection might be in left→right or right→left; build actual order as clicked
+  const clickedOrder = selectedCells.map(s=>s.el.textContent).join("");
+  // check any match in words or reversed
+  const candidates = [ascStr, descStr, clickedOrder];
+  let matched = null;
+  for(const w of words){
+    if(candidates.includes(w)){
+      matched = w; break;
+    }
+  }
+  if(matched){
+    markWordFound(matched);
+    clearSelection();
+    if(foundWords.size === words.length){
+      retro1.textContent = "¡Excelente! Encontraste todas las palabras.";
+      retro1.className = "retro ok";
+    } else {
+      retro1.textContent = `Palabras encontradas: ${foundWords.size} / ${words.length}`;
+      retro1.className = "retro ok";
+    }
+  }
+});
+
+function clearSelection(){
+  selectedCells.forEach(s=> s.el.classList.remove("selected"));
+  selectedCells = [];
+}
+
+function markWordFound(word){
+  // find where the word is in rows (left-to-right or right-to-left)
+  const uword = word.toUpperCase();
+  for(let r=0;r<15;r++){
+    const row = (rows[r]||" ".repeat(15)).toUpperCase();
+    const idx = row.indexOf(uword);
+    if(idx !== -1){
+      // mark cells idx..idx+len-1
+      for(let c=idx;c<idx+uword.length;c++){
+        const cel = cellAt(r,c);
+        if(cel){ cel.classList.add("found"); }
+      }
+      foundWords.add(word);
+      const li = document.getElementById("word-"+word);
+      if(li) li.classList.add("found");
+      return;
+    }
+    // try reverse
+    const rev = uword.split("").reverse().join("");
+    const idx2 = row.indexOf(rev);
+    if(idx2 !== -1){
+      for(let c=idx2;c<idx2+rev.length;c++){
+        const cel = cellAt(r,c);
+        if(cel){ cel.classList.add("found"); }
+      }
+      foundWords.add(word);
+      const li = document.getElementById("word-"+word);
+      if(li) li.classList.add("found");
+      return;
+    }
+  }
+  // if not found by scanning rows, we still check clicked selection (shouldn't happen)
+  // fallback: mark selectedCells
+  selectedCells.forEach(s=> s.el.classList.add("found"));
+  foundWords.add(word);
+  const li = document.getElementById("word-"+word);
+  if(li) li.classList.add("found");
+}
+
+/* ==============================
+   Drag & drop behavior for preguntas p2, p6, p9
+   ============================== */
+document.querySelectorAll(".op").forEach(op=>{
+  op.addEventListener("dragstart", e=>{
+    e.dataTransfer.setData("text/plain", e.target.textContent);
+  });
+});
+
+document.querySelectorAll(".zona").forEach(zone=>{
+  zone.addEventListener("dragover", e=> e.preventDefault());
+  zone.addEventListener("drop", e=>{
+    e.preventDefault();
+    let text = e.dataTransfer.getData("text/plain");
+    // drop into this zone (replace content)
+    zone.textContent = text;
+  });
+  // keyboard accessibility: click to place a previously selected .op
+  zone.addEventListener("click", e=>{
+    const sel = document.querySelector(".op.selected");
+    if(sel) zone.textContent = sel.textContent;
+  });
+});
+
+/* allow clicking options to "select" them for keyboard users */
+document.querySelectorAll(".op").forEach(op=>{
+  op.addEventListener("click", e=>{
+    document.querySelectorAll(".op").forEach(x=>x.classList.remove("selected"));
+    op.classList.add("selected");
+  });
+});
+
+/* ==============================
+   Calificación y retroalimentación
+   ============================== */
+function setRetro(el, ok, msg){
+  el.textContent = msg;
+  el.className = "retro " + (ok ? "ok" : "bad");
+}
+
+document.getElementById("grade").addEventListener("click", ()=>{
+  let score = 0;
+  let total = 10;
+
+  // Q1: sopa
+  const retro1El = document.getElementById("retro1");
+  if(foundWords.size === words.length){
+    score++; setRetro(retro1El, true, "✅ Sopa completada: todas las palabras encontradas.");
+  } else {
+    setRetro(retro1El, false, `❌ Faltan palabras: encontradas ${foundWords.size} / ${words.length}.`);
+  }
+
+  // helper for multiple choice and VF (p3,p4,p5,p7,p8,p10)
+  function checkChoice(id){
+    const q = document.getElementById(id);
+    const correct = q.dataset.correct;
+    const sel = q.querySelector(`input[name="${id}"]:checked`);
+    const retro = q.querySelector(".retro");
+    if(sel && sel.value === correct){
+      score++; setRetro(retro, true, "✅ Correcto.");
+    } else {
+      setRetro(retro, false, `❌ Incorrecto. Respuesta correcta: ${correct}.`);
+    }
+  }
+
+  // p3
+  checkChoice("p3");
+  // p4 (VF)
+  checkChoice("p4");
+  // p5
+  checkChoice("p5");
+  // p7
+  checkChoice("p7");
+  // p8
+  checkChoice("p8");
+  // p10
+  checkChoice("p10");
+
+  // Drag checks: p2, p6, p9
+  function checkDrag(id){
+    const node = document.querySelector("#"+id+" .zona");
+    const expected = document.getElementById(id).dataset.correct;
+    const retro = document.querySelector("#"+id+" .retro");
+    if(node.textContent && node.textContent.trim() === expected){
+      score++; setRetro(retro, true, "✅ Correcto.");
+    } else {
+      setRetro(retro, false, `❌ Incorrecto. Respuesta correcta: "${expected}".`);
+    }
+  }
+
+  checkDrag("p2");
+  checkDrag("p6");
+  checkDrag("p9");
+
+  // show result
+  const res = document.getElementById("resultado");
+  res.textContent = `Puntuación: ${score} / ${total}`;
+  res.style.color = score >= Math.ceil(total*0.7) ? "var(--good)" : "var(--bad)";
+});
+
+/* Reset */
+document.getElementById("reset").addEventListener("click", ()=>{
+  // clear drop zones
+  document.querySelectorAll(".zona").forEach(z=> z.textContent = "");
+  // clear selections and found marks in sopa
+  document.querySelectorAll(".cel").forEach(c=>{ c.classList.remove("selected","found"); });
+  document.querySelectorAll("#wordList li").forEach(li=> li.classList.remove("found"));
+  foundWords.clear();
+  selectedCells = [];
+  document.getElementById("retro1").textContent = "";
+  // clear retro of questions
+  document.querySelectorAll(".preg .retro").forEach(r=> r.textContent = "");
+  document.getElementById("resultado").textContent = "";
+});
+
+</script>
+</body>
+</html>
+
+

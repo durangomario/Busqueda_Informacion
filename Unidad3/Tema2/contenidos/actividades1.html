@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad Interactiva de Autoaprendizaje Digital</title>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, #eef6ff 0%, #f8fafc 100%);
+    margin: 0;
+    padding: 0;
+    color: #0f172a;
+  }
+  .container {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+  h1, h2 {
+    color: #2563eb;
+    text-align: center;
+  }
+  .instructions {
+    background: #e0e7ff;
+    border-left: 5px solid #2563eb;
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .dropzone, .draggable {
+    border: 2px dashed #2563eb;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    min-width: 180px;
+    text-align: center;
+  }
+  .draggable {
+    background: #eff6ff;
+    cursor: grab;
+  }
+  .dropzone {
+    background: #fff;
+    min-height: 40px;
+  }
+  .feedback {
+    margin-top: 6px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .correct { color: #16a34a; }
+  .incorrect { color: #dc2626; }
+  .wordsearch {
+    text-align: center;
+    margin-top: 20px;
+  }
+  table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    user-select: none;
+  }
+  td {
+    border: 1px solid #cbd5e1;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  td.selected { background: #c7d2fe; }
+  td.found { background: #86efac; color: #065f46; }
+  input[type="text"] {
+    width: 80%;
+    padding: 6px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+  }
+  button {
+    background: #2563eb;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  button:hover { background: #1d4ed8; }
+  .final-score {
+    background: #eff6ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Actividad Interactiva de Autoaprendizaje Digital</h1>
+  <div class="instructions">
+    <p><strong>Instrucciones:</strong> arrastra las respuestas correctas, completa los espacios y encuentra las palabras en la sopa de letras. Recibirás retroalimentación inmediata. Al final verás tu puntaje total.</p>
+  </div>
+
+  <!-- Arrastrar y soltar -->
+  <h2> 1. Arrastra y suelta la respuesta correcta</h2>
+  <div id="dragdrop-section">
+    <div class="drag-container">
+      <div class="dropzone" data-answer="Aprendizaje autónomo">
+        1️⃣ Proceso donde el estudiante gestiona su propio aprendizaje.
+      </div>
+      <div class="dropzone" data-answer="Herramienta digital">
+        2️⃣ Aplicación o plataforma usada para facilitar tareas de aprendizaje.
+      </div>
+      <div class="dropzone" data-answer="Motivación">
+        3️⃣ Factor clave para mantener la constancia en el estudio en línea.
+      </div>
+      <div class="dropzone" data-answer="Colaboración">
+        4️⃣ Trabajo conjunto entre usuarios mediante plataformas tecnológicas.
+      </div>
+      <div class="dropzone" data-answer="Organización">
+        5️⃣ Habilidad para planificar tiempos, tareas y objetivos.
+      </div>
+    </div>
+
+    <div class="drag-container">
+      <div class="draggable" draggable="true">Aprendizaje autónomo</div>
+      <div class="draggable" draggable="true">Herramienta digital</div>
+      <div class="draggable" draggable="true">Motivación</div>
+      <div class="draggable" draggable="true">Colaboración</div>
+      <div class="draggable" draggable="true">Organización</div>
+    </div>
+  </div>
+
+  <!-- Sopa de letras -->
+  <h2> 2. Sopa de Letras</h2>
+  <div class="wordsearch">
+    <p>Encuentra las siguientes palabras: Coursera, Notion, GitHub, Stack, Udemy, Codecademy, edX, Slack, Trello, Freecodecamp</p>
+    <table id="sopa"></table>
+    <div id="found-words" class="feedback"></div>
+  </div>
+
+  <!-- Completar -->
+  <h2> 3. Completa las frases</h2>
+  <p>1️⃣ Una __________ digital es una aplicación o software que facilita el aprendizaje.</p>
+  <input type="text" id="c1">
+  <div id="f1" class="feedback"></div>
+
+  <p>2️⃣ La __________ permite al estudiante gestionar su propio progreso.</p>
+  <input type="text" id="c2">
+  <div id="f2" class="feedback"></div>
+
+  <p>3️⃣ Plataformas como Coursera y Udemy ofrecen cursos en línea llamados __________.</p>
+  <input type="text" id="c3">
+  <div id="f3" class="feedback"></div>
+
+  <p>4️⃣ La __________ ayuda a mantener el orden y cumplir metas.</p>
+  <input type="text" id="c4">
+  <div id="f4" class="feedback"></div>
+
+  <button onclick="checkAnswers()">Calificar actividad</button>
+  <div class="final-score" id="result"></div>
+</div>
+
+<script>
+// ----- DRAG & DROP -----
+let score = 0;
+let totalQuestions = 10;
+const draggables = document.querySelectorAll('.draggable');
+const dropzones = document.querySelectorAll('.dropzone');
+
+draggables.forEach(drag => {
+  drag.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('text', e.target.textContent);
+  });
+});
+
+dropzones.forEach(zone => {
+  zone.addEventListener('dragover', e => e.preventDefault());
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text');
+    zone.textContent = zone.textContent.split("—")[0] + " — " + data;
+    const fb = document.createElement("div");
+    fb.classList.add("feedback");
+    if (data === zone.dataset.answer) {
+      zone.style.borderColor = "green";
+      zone.style.background = "#dcfce7";
+      fb.textContent = "✅ Correcto";
+      fb.classList.add("correct");
+      zone.dataset.correct = "true";
+    } else {
+      zone.style.borderColor = "red";
+      zone.style.background = "#fee2e2";
+      fb.textContent = "❌ Incorrecto. Respuesta correcta: " + zone.dataset.answer;
+      fb.classList.add("incorrect");
+      zone.dataset.correct = "false";
+    }
+    zone.appendChild(fb);
+  });
+});
+
+// ----- SOPA DE LETRAS -----
+const words = ["COURSERA","NOTION","GITHUB","STACK","UDEMY","CODECADEMY","EDX","SLACK","TRELLO","FREECODECAMP"];
+const sopaContainer = document.getElementById("sopa");
+const size = 10;
+let selected = [];
+let foundWords = [];
+
+function createSopa() {
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let i = 0; i < size; i++) {
+    let row = document.createElement("tr");
+    for (let j = 0; j < size; j++) {
+      let cell = document.createElement("td");
+      cell.textContent = letters[Math.floor(Math.random() * letters.length)];
+      cell.addEventListener("mousedown", () => selectCell(cell));
+      row.appendChild(cell);
+    }
+    sopaContainer.appendChild(row);
+  }
+}
+function selectCell(cell) {
+  cell.classList.toggle("selected");
+  updateSelection();
+}
+function updateSelection() {
+  let text = "";
+  selected = Array.from(document.querySelectorAll("td.selected"));
+  selected.forEach(c => text += c.textContent);
+  words.forEach(w => {
+    if (text.toUpperCase().includes(w) && !foundWords.includes(w)) {
+      foundWords.push(w);
+      selected.forEach(c => c.classList.add("found"));
+      selected.forEach(c => c.classList.remove("selected"));
+    }
+  });
+  document.getElementById("found-words").textContent = "Palabras encontradas: " + foundWords.join(", ");
+}
+createSopa();
+
+// ----- COMPLETAR Y CALIFICAR -----
+function checkAnswers() {
+  score = 0;
+  // drag & drop
+  dropzones.forEach(z => {
+    if (z.dataset.correct === "true") score++;
+  });
+
+  // completar
+  const ans = ["herramienta", "autoaprendizaje", "mooc", "organización"];
+  ans.forEach((a, i) => {
+    const input = document.getElementById("c" + (i+1));
+    const feedback = document.getElementById("f" + (i+1));
+    if (input.value.trim().toLowerCase() === a) {
+      score++;
+      feedback.textContent = "✅ Correcto";
+      feedback.className = "feedback correct";
+    } else {
+      feedback.textContent = "❌ Incorrecto. Respuesta correcta: " + a;
+      feedback.className = "feedback incorrect";
+    }
+  });
+
+  const percent = Math.round((score / totalQuestions) * 100);
+  document.getElementById('result').innerHTML = `
+    <h3>Tu puntuación final:</h3>
+    <p>${score}/${totalQuestions} — ${percent}%</p>
+    <p>${percent >= 70 ? '🎉 ¡Excelente trabajo!' : '💪 Sigue practicando, puedes mejorar.'}</p>`;
+}
+</script>
+
+</body>
+</html>
+
+
+

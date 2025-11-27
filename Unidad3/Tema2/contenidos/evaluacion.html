@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Evaluación Interactiva – Herramientas Digitales para la Autoformación</title>
+<style>
+    body { font-family: Arial, sans-serif; background:#f4f7fa; padding:20px; }
+    h2{ color:#003366; }
+    .question-box{
+        background:#fff;
+        padding:20px;
+        border-radius:10px;
+        margin-bottom:20px;
+        box-shadow:0 2px 6px rgba(0,0,0,0.1);
+    }
+    .feedback{
+        margin-top:10px;
+        font-weight:bold;
+    }
+    .correct{ color:green; }
+    .incorrect{ color:red; }
+    .drag-container{
+        display:flex;
+        gap:20px;
+        margin-top:10px;
+    }
+    .drag-item{
+        background:#dbe9ff;
+        padding:8px;
+        margin:5px;
+        border-radius:5px;
+        cursor:grab;
+    }
+    .drop-zone{
+        background:#eee;
+        padding:20px;
+        min-height:60px;
+        border:2px dashed #888;
+        border-radius:8px;
+    }
+    #result{
+        font-size:22px;
+        font-weight:bold;
+        padding:15px;
+        background:#fff3cd;
+        border-radius:8px;
+        margin-top:20px;
+        display:none;
+    }
+    button{
+        padding:10px 20px;
+        background:#003366;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+</style>
+</head>
+<body>
+
+<h2>Evaluación Interactiva — Herramientas Digitales para la Autoformación</h2>
+<p><b>Instrucciones:</b> Lee cada párrafo y responde según lo aprendido. Algunas preguntas requieren seleccionar una única opción, otras varias, y también encontrarás actividades de arrastrar y soltar.</p>
+
+<form id="quizForm">
+
+<!-- QUESTION 1 -->
+<div class="question-box">
+<p><b>1. (Selección única)</b><br>
+Las herramientas digitales permiten que un estudiante avance a su propio ritmo y seleccione contenidos según sus intereses. Facilitan el aprendizaje autónomo al ofrecer aplicaciones, cursos en línea y comunidades en las que el usuario no depende de un docente presencial.</p>
+<p><b>Pregunta:</b> ¿Qué característica principal describe mejor este tipo de aprendizaje?</p>
+
+<label><input type="radio" name="q1" value="correct"> Autonomía del usuario sobre su proceso formativo</label><br>
+<label><input type="radio" name="q1" value="0"> Dependencia total de un tutor presencial</label><br>
+<label><input type="radio" name="q1" value="0"> Eliminación del uso de tecnología durante el aprendizaje</label><br>
+<label><input type="radio" name="q1" value="0"> Restricción del contenido solo a videos educativos</label>
+
+<div id="fb1" class="feedback"></div>
+</div>
+
+<!-- QUESTION 2 -->
+<div class="question-box">
+<p><b>2. (Selección única)</b><br>
+Las plataformas educativas deben ser accesibles, interactivas y estar actualizadas para garantizar una experiencia adecuada. Además, pueden incluir rutas personalizadas, evaluaciones y certificaciones opcionales.</p>
+<p><b>Pregunta:</b> ¿Cuál es una característica esencial de estas herramientas?</p>
+
+<label><input type="radio" name="q2" value="0"> Deben ser exclusivamente presenciales</label><br>
+<label><input type="radio" name="q2" value="correct"> Deben permitir interacción y personalización del aprendizaje</label><br>
+<label><input type="radio" name="q2" value="0"> No pueden incluir evaluaciones</label><br>
+<label><input type="radio" name="q2" value="0"> Solo funcionan en un tipo de dispositivo</label>
+
+<div id="fb2" class="feedback"></div>
+</div>
+
+<!-- QUESTION 3 -->
+<div class="question-box">
+<p><b>3. (Selección única)</b><br>
+Los MOOCs ofrecen cursos masivos gratuitos o pagos en diversas áreas. Plataformas como Coursera, Platzi o freeCodeCamp brindan acceso a contenido especializado desde cualquier lugar del mundo.</p>
+<p><b>Pregunta:</b> ¿A qué categoría pertenecen estas herramientas?</p>
+
+<label><input type="radio" name="q3" value="correct"> Plataformas de cursos en línea</label><br>
+<label><input type="radio" name="q3" value="0"> Herramientas de diseño gráfico</label><br>
+<label><input type="radio" name="q3" value="0"> Navegadores de internet</label><br>
+<label><input type="radio" name="q3" value="0"> Sistemas operativos</label>
+
+<div id="fb3" class="feedback"></div>
+</div>
+
+<!-- QUESTION 4 -->
+<div class="question-box">
+<p><b>4. (Selección única)</b><br>
+Documentación técnica, guías oficiales y manuales son fundamentales para el aprendizaje profesional. Sitios como MDN Web Docs o GitHub Docs ofrecen información confiable y actualizada para programadores.</p>
+<p><b>Pregunta:</b> ¿Qué tipo de herramienta representan estos sitios?</p>
+
+<label><input type="radio" name="q4" value="0"> Plataformas de gamificación</label><br>
+<label><input type="radio" name="q4" value="correct"> Repositorios de conocimiento técnico</label><br>
+<label><input type="radio" name="q4" value="0"> Editores de video</label><br>
+<label><input type="radio" name="q4" value="0"> Redes sociales informales</label>
+
+<div id="fb4" class="feedback"></div>
+</div>
+
+<!-- QUESTION 5 -->
+<div class="question-box">
+<p><b>5. (Selección múltiple)</b><br>
+Las plataformas de práctica interactiva ayudan al estudiante a desarrollar habilidades técnicas mediante ejercicios guiados, retos y simulaciones. Sitios como Codewars, HackerRank y Replit permiten practicar algoritmos o programar directamente en el navegador.</p>
+<p><b>Selecciona las opciones que describen correctamente este tipo de herramientas:</b></p>
+
+<label><input type="checkbox" name="q5" value="correct"> Permiten practicar con ejercicios en línea</label><br>
+<label><input type="checkbox" name="q5" value="correct"> Ofrecen retos progresivos para mejorar habilidades</label><br>
+<label><input type="checkbox" name="q5" value="0"> Solo funcionan sin internet</label><br>
+<label><input type="checkbox" name="q5" value="0"> Están diseñadas únicamente para redes sociales</label>
+
+<div id="fb5" class="feedback"></div>
+</div>
+
+<!-- QUESTION 6 -->
+<div class="question-box">
+<p><b>6. (Selección múltiple)</b><br>
+Las herramientas de organización permiten planificar tareas, establecer objetivos y hacer seguimiento del estudio. Notion, Trello o Google Calendar son algunas opciones usadas por estudiantes.</p>
+<p><b>Selecciona las opciones correctas:</b></p>
+
+<label><input type="checkbox" name="q6" value="correct"> Ayudan a planificar el aprendizaje</label><br>
+<label><input type="checkbox" name="q6" value="correct"> Facilitan el seguimiento de actividades</label><br>
+<label><input type="checkbox" name="q6" value="0"> Solo sirven para jugar en línea</label><br>
+<label><input type="checkbox" name="q6" value="0"> Reemplazan completamente al profesor</label>
+
+<div id="fb6" class="feedback"></div>
+</div>
+
+<!-- QUESTION 7 -->
+<div class="question-box">
+<p><b>7. (Selección múltiple)</b><br>
+La comunicación y colaboración son fundamentales en comunidades de aprendizaje. Plataformas como Discord, Slack o Reddit ayudan a resolver dudas, compartir recursos y conectar con expertos.</p>
+<p><b>¿Cuáles de estas opciones pertenecen a herramientas de comunicación?</b></p>
+
+<label><input type="checkbox" name="q7" value="correct"> Discord</label><br>
+<label><input type="checkbox" name="q7" value="correct"> Slack</label><br>
+<label><input type="checkbox" name="q7" value="0"> Photoshop</label><br>
+<label><input type="checkbox" name="q7" value="0"> Blender</label>
+
+<div id="fb7" class="feedback"></div>
+</div>
+
+<!-- QUESTION 8 (Drag & Drop) -->
+<div class="question-box">
+<p><b>8. (Arrastrar y soltar)</b><br>
+Relaciona cada tipo de herramienta con su función. Arrastra el concepto hacia la descripción correcta.</p>
+
+<div class="drag-container">
+    <div class="drag-item" draggable="true" id="d1">MOOCs</div>
+    <div class="drag-item" draggable="true" id="d2">Repositorios técnicos</div>
+    <div class="drag-item" draggable="true" id="d3">Herramientas de organización</div>
+</div>
+
+<p><b>Arrastra aquí:</b></p>
+<div class="drop-zone" id="z8a">Cursos masivos en línea</div>
+<div class="drop-zone" id="z8b">Documentación y guías</div>
+<div class="drop-zone" id="z8c">Gestión de tareas y tiempos</div>
+
+<div id="fb8" class="feedback"></div>
+</div>
+
+<!-- QUESTION 9 (Drag & Drop) -->
+<div class="question-box">
+<p><b>9. (Arrastrar y soltar)</b><br>
+Relaciona la herramienta con su aplicación en programación web.</p>
+
+<div class="drag-container">
+    <div class="drag-item" draggable="true" id="d4">GitHub Pages</div>
+    <div class="drag-item" draggable="true" id="d5">Codecademy</div>
+    <div class="drag-item" draggable="true" id="d6">Stack Overflow</div>
+</div>
+
+<p><b>Arrastra aquí:</b></p>
+<div class="drop-zone" id="z9a">Publicar portafolios</div>
+<div class="drop-zone" id="z9b">Aprender programación desde cero</div>
+<div class="drop-zone" id="z9c">Resolver dudas técnicas</div>
+
+<div id="fb9" class="feedback"></div>
+</div>
+
+<!-- QUESTION 10 (Drag & Drop) -->
+<div class="question-box">
+<p><b>10. (Arrastrar y soltar)</b><br>
+Ordena las estrategias recomendadas para un aprendizaje autónomo eficaz.</p>
+
+<div class="drag-container">
+    <div class="drag-item" draggable="true" id="d7">Planificación</div>
+    <div class="drag-item" draggable="true" id="d8">Evaluación continua</div>
+    <div class="drag-item" draggable="true" id="d9">Participación activa</div>
+</div>
+
+<p><b>Arrastra aquí:</b></p>
+<div class="drop-zone" id="z10a">Organización del estudio</div>
+<div class="drop-zone" id="z10b">Seguimiento del progreso</div>
+<div class="drop-zone" id="z10c">Interacción en comunidades</div>
+
+<div id="fb10" class="feedback"></div>
+</div>
+
+<button type="button" onclick="calificar()">Enviar evaluación</button>
+
+</form>
+
+<div id="result"></div>
+
+<script>
+// Arrastrar y soltar
+document.querySelectorAll('.drag-item').forEach(item=>{
+    item.addEventListener('dragstart',e=>{
+        e.dataTransfer.setData("text", e.target.id);
+    });
+});
+document.querySelectorAll('.drop-zone').forEach(zone=>{
+    zone.addEventListener('dragover',e=>e.preventDefault());
+    zone.addEventListener('drop',e=>{
+        e.preventDefault();
+        const data=e.dataTransfer.getData("text");
+        e.target.innerHTML=document.getElementById(data).textContent;
+        e.target.setAttribute("data-value",data);
+    });
+});
+
+// Calificación general
+function calificar(){
+    let score = 0;
+
+    function checkSingle(q, fb){
+        let selected = document.querySelector(`input[name="${q}"]:checked`);
+        if(!selected){ document.getElementById(fb).innerHTML="❗ Selecciona una opción"; return; }
+        if(selected.value==="correct"){ score++; document.getElementById(fb).innerHTML="<span class='correct'>✔ Correcto</span>"; }
+        else{ document.getElementById(fb).innerHTML="<span class='incorrect'>✘ Incorrecto</span>"; }
+    }
+
+    checkSingle("q1","fb1");
+    checkSingle("q2","fb2");
+    checkSingle("q3","fb3");
+    checkSingle("q4","fb4");
+
+    function checkMulti(q, fb){
+        let checks = document.querySelectorAll(`input[name="${q}"]`);
+        let correct = true;
+        checks.forEach(ch=>{
+            if(ch.value==="correct" && !ch.checked) correct=false;
+            if(ch.value==="0" && ch.checked) correct=false;
+        });
+        if(correct){ score++; document.getElementById(fb).innerHTML="<span class='correct'>✔ Correcto</span>"; }
+        else{ document.getElementById(fb).innerHTML="<span class='incorrect'>✘ Incorrecto</span>"; }
+    }
+
+    checkMulti("q5","fb5");
+    checkMulti("q6","fb6");
+    checkMulti("q7","fb7");
+
+    function checkDrop(id, expected){
+        let zone=document.getElementById(id);
+        return zone.getAttribute("data-value")===expected;
+    }
+
+    let dragCorrect =
+        checkDrop("z8a","d1") && checkDrop("z8b","d2") && checkDrop("z8c","d3") &&
+        checkDrop("z9a","d4") && checkDrop("z9b","d5") && checkDrop("z9c","d6") &&
+        checkDrop("z10a","d7")&& checkDrop("z10b","d8")&& checkDrop("z10c","d9");
+
+    if(dragCorrect){
+        score+=3;
+        document.getElementById("fb8").innerHTML="<span class='correct'>✔ Correcto</span>";
+        document.getElementById("fb9").innerHTML="<span class='correct'>✔ Correcto</span>";
+        document.getElementById("fb10").innerHTML="<span class='correct'>✔ Correcto</span>";
+    }else{
+        document.getElementById("fb8").innerHTML="<span class='incorrect'>✘ Revisa las relaciones</span>";
+        document.getElementById("fb9").innerHTML="<span class='incorrect'>✘ Revisa las relaciones</span>";
+        document.getElementById("fb10").innerHTML="<span class='incorrect'>✘ Revisa las relaciones</span>";
+    }
+
+    document.getElementById("result").style.display="block";
+    document.getElementById("result").innerHTML="Tu calificación es: <b>"+score+"/10</b>";
+}
+</script>
+
+</body>
+</html>

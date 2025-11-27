@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Evaluación: Aprendizaje Continuo (Tipo ICFES) — 10 preguntas</title>
+<style>
+  :root{
+    --bg:#f6f9fc; --card:#ffffff; --accent:#1f6feb; --muted:#475569;
+    --ok:#059669; --bad:#dc2626; --border:#e6eef8;
+  }
+  body{background:var(--bg); font-family:Inter, system-ui, -apple-system, "Helvetica Neue", Arial; color:#0f172a; margin:0; padding:20px;}
+  .wrap{max-width:1000px; margin:20px auto; padding:22px;}
+  .card{background:var(--card); border-radius:12px; padding:20px; box-shadow:0 8px 30px rgba(2,6,23,.06); border:1px solid var(--border);}
+  h1{margin:0 0 6px; color:var(--accent); font-size:22px;}
+  p.lead{margin:0 0 14px; color:var(--muted);}
+
+  .question{border-radius:10px; padding:14px; background:#f8fbff; border:1px solid var(--border); margin-bottom:14px;}
+  .qtitle{font-weight:700; margin-bottom:8px;}
+  .context{background:#ffffff; border-radius:8px; padding:10px 12px; border:1px dashed #e6eef8; color:var(--muted); white-space:pre-line; margin-bottom:10px; font-size:14px; line-height:1.45;}
+  .choices{display:block; margin-top:8px;}
+  .choices label{display:block; padding:8px 10px; border-radius:8px; background:white; border:1px solid #e6eef8; margin-bottom:8px; cursor:pointer;}
+  .choices input{margin-right:8px;}
+
+  /* Drag & Drop columns */
+  .dgrid{display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start;}
+  .left, .right{flex:1 1 45%; min-width:220px; background:white; border-radius:8px; padding:12px; border:1px solid var(--border);}
+  .left .item{background:#eef6ff; padding:8px 10px; margin:8px 6px 6px 0; border-radius:8px; cursor:grab; display:inline-block;}
+  .right .drop{background:#f8fafc; border:2px dashed #dbeafc; padding:12px; min-height:44px; margin-bottom:10px; border-radius:8px; display:flex; align-items:center; justify-content:center;}
+  .right .drop.filled{border-style:solid; background:#e6f7ef; border-color:var(--ok);}
+
+  .feedback{margin-top:8px; font-weight:700;}
+  .feedback.ok{color:var(--ok);}
+  .feedback.bad{color:var(--bad);}
+
+  .actions{display:flex; gap:12px; align-items:center; margin-top:10px;}
+  button{background:var(--accent); color:white; border:0; padding:10px 14px; border-radius:8px; font-weight:700; cursor:pointer;}
+  button.secondary{background:#eef6ff; color:var(--accent); border:1px solid #cfe0ff;}
+  #result{font-weight:800; margin-left:12px;}
+
+  footer.note{margin-top:18px; color:var(--muted); font-size:13px;}
+  @media (max-width:760px){ .dgrid{flex-direction:column;} .left,.right{flex-basis:100%} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" role="main" aria-labelledby="title">
+    <h1 id="title">Evaluación: Aprendizaje Continuo (10 preguntas)</h1>
+    <p class="lead">Lee cuidadosamente cada enunciado y responde. Al terminar, presiona <strong>Calificar</strong> para recibir retroalimentación y la nota final.</p>
+
+    <!-- Pregunta 1: párrafo largo + única respuesta (MCQ) -->
+    <div class="question" id="q1" data-type="mcq" data-correct="b">
+      <div class="qtitle">1) (Selección única)</div>
+      <div class="context">
+La idea central del aprendizaje continuo es que el proceso de formación no termina con la educación formal sino que debe prolongarse a lo largo de la vida. Esto involucra una actitud proactiva para buscar nuevas fuentes, actualizar conocimientos y practicar habilidades de modo sistemático. En contextos tecnológicos, como la programación web, la rapidez con que aparecen nuevas herramientas, frameworks y buenas prácticas convierte al aprendizaje permanente en una necesidad profesional. 
+Adicionalmente, el aprendizaje continuo promueve la autonomía del estudiante, la capacidad de autoevaluarse y la adaptación a cambios del mercado y la tecnología. 
+Los profesionales que adoptan esta filosofía suelen mejorar su empleabilidad, resolver problemas con mayor eficacia y enfrentan la incertidumbre tecnológica con mayor confianza. 
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q1">
+        <label><input type="radio" name="q1" value="a"> El aprendizaje continuo solo aplica a estudiantes universitarios y cursos formales.</label>
+        <label><input type="radio" name="q1" value="b"> Es un proceso permanente de actualización y autoformación que dura toda la vida y mejora la empleabilidad en áreas dinámicas como la programación web.</label>
+        <label><input type="radio" name="q1" value="c"> Significa evitar el uso de nuevas tecnologías para no complicarse.</label>
+      </div>
+      <div class="feedback" id="fb-q1"></div>
+    </div>
+
+    <!-- Pregunta 2: párrafo largo + VF -->
+    <div class="question" id="q2" data-type="vf" data-correct="V">
+      <div class="qtitle">2) (Verdadero / Falso)</div>
+      <div class="context">
+Una barrera frecuente para mantener una práctica de aprendizaje continuo es la falta de gestión del tiempo. Muchos estudiantes y profesionales desean actualizarse pero no organizan bloques específicos de estudio ni priorizan tareas. La creación de rutinas, la planificación de objetivos y el uso de herramientas como calendarios o apps para asignar tiempos de estudio son estrategias que permiten superar esta dificultad. Además, la ausencia de metas claras reduce la motivación, dificultando que el aprendizaje sea sostenido en el tiempo.
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q2">
+        <label><input type="radio" name="q2" value="V"> Verdadero</label>
+        <label><input type="radio" name="q2" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q2"></div>
+    </div>
+
+    <!-- Pregunta 3: párrafo largo + MCQ -->
+    <div class="question" id="q3" data-type="mcq" data-correct="c">
+      <div class="qtitle">3) (Selección única)</div>
+      <div class="context">
+Uno de los enfoques más efectivos para el aprendizaje en áreas prácticas es el "learning by doing" o aprendizaje por proyectos. Construir proyectos reales —como una página web personal, clonar una aplicación existente o participar en hackatones— obliga al estudiante a aplicar conceptos, investigar documentación oficial y resolver problemas reales. Este enfoque además facilita la retención, la integración de múltiples herramientas (control de versiones, testing, deploy) y la generación de evidencias concretas que ayudan a la empleabilidad.
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q3">
+        <label><input type="radio" name="q3" value="a"> Leer la documentación sin practicar es suficiente para dominar un framework.</label>
+        <label><input type="radio" name="q3" value="b"> Evitar crear proyectos reduce el riesgo de cometer errores.</label>
+        <label><input type="radio" name="q3" value="c"> Construir proyectos reales es una estrategia que refuerza el aprendizaje y sirve como evidencia práctica del dominio.</label>
+      </div>
+      <div class="feedback" id="fb-q3"></div>
+    </div>
+
+    <!-- Pregunta 4: párrafo largo + Drag & Drop (relacionar 3 pares) -->
+    <div class="question" id="q4" data-type="drag" data-correct='["Notion","Anki","GitHub"]'>
+      <div class="qtitle">4) (Arrastrar y soltar — relacionar)</div>
+      <div class="context">
+Las herramientas digitales facilitan la organización, la revisión y la conservación del conocimiento. Existen distintas soluciones para distintas funciones: aplicaciones de organización y planificación que permiten diseñar horarios y tareas; herramientas de tarjetas (flashcards) para la revisión espaciada; y plataformas de control de versiones para guardar proyectos y evidencias. Elegir la herramienta adecuada según la necesidad mejora notablemente la eficacia del aprendizaje continuo.
+      </div>
+
+      <div class="dgrid">
+        <div class="left" aria-label="elementos a arrastrar">
+          <div class="item" draggable="true">Notion</div>
+          <div class="item" draggable="true">Anki</div>
+          <div class="item" draggable="true">GitHub</div>
+        </div>
+        <div class="right" aria-label="zonas donde soltar">
+          <div class="drop" data-accept="Notion">Herramienta para organizar tareas y proyectos</div>
+          <div class="drop" data-accept="Anki">Herramienta para revisión espaciada y tarjetas</div>
+          <div class="drop" data-accept="GitHub">Plataforma para control de versiones y portafolio</div>
+        </div>
+      </div>
+      <div class="feedback" id="fb-q4"></div>
+    </div>
+
+    <!-- Pregunta 5: párrafo largo + MCQ -->
+    <div class="question" id="q5" data-type="mcq" data-correct="b">
+      <div class="qtitle">5) (Selección única)</div>
+      <div class="context">
+Curar contenidos digitales es una habilidad clave en el aprendizaje continuo: consiste en seleccionar, organizar y conservar los mejores recursos (tutoriales, artículos, videos) para facilitar su recuperación y estudio posterior. Esto evita la sobrecarga informativa y permite construir una biblioteca personal de recursos confiables. Herramientas como Pocket, Zotero o marcadores organizados ayudan en este proceso, y la curación deliberada mejora la eficiencia del tiempo de estudio.
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q5">
+        <label><input type="radio" name="q5" value="a"> Guardar todo sin filtrar.</label>
+        <label><input type="radio" name="q5" value="b"> Seleccionar, organizar y conservar recursos relevantes y fiables.</label>
+        <label><input type="radio" name="q5" value="c"> Depender únicamente de la primera búsqueda en Internet.</label>
+      </div>
+      <div class="feedback" id="fb-q5"></div>
+    </div>
+
+    <!-- Pregunta 6: párrafo largo + VF -->
+    <div class="question" id="q6" data-type="vf" data-correct="V">
+      <div class="qtitle">6) (Verdadero / Falso)</div>
+      <div class="context">
+Participar en comunidades de aprendizaje (foros, grupos, canales) es útil no solo para solicitar ayuda puntual, sino también para recibir retroalimentación, compartir recursos y colaborar en proyectos. Las comunidades facilitan el intercambio de experiencias y aceleran el aprendizaje, además de proporcionar apoyo emocional y profesional. Al integrarse activamente en redes, el estudiante encuentra mentores, compañeros de práctica y oportunidades de colaboración que enriquecen su práctica.
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q6">
+        <label><input type="radio" name="q6" value="V"> Verdadero</label>
+        <label><input type="radio" name="q6" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q6"></div>
+    </div>
+
+    <!-- Pregunta 7: párrafo largo + MCQ -->
+    <div class="question" id="q7" data-type="mcq" data-correct="c">
+      <div class="qtitle">7) (Selección única)</div>
+      <div class="context">
+Un plan personal de estudio debe incluir objetivos, cronograma y criterios de evaluación. Dividir metas grandes en pasos pequeños, asignar bloques de tiempo y revisar periódicamente permiten mantener consistencia y medir avance. Usar apps (Trello, Google Calendar, Notion) facilita la visualización de tareas y la gestión del tiempo. Además, la autoevaluación y los registros (bitácora) permiten ajustar el plan cuando sea necesario.
+      </div>
+
+      <div class="choices" role="radiogroup" aria-label="respuesta q7">
+        <label><input type="radio" name="q7" value="a"> Evitar planificar para ser más flexible.</label>
+        <label><input type="radio" name="q7" value="b"> Planificar solo los fines de semana.</label>
+        <label><input type="radio" name="q7" value="c"> Dividir objetivos, asignar bloques de tiempo y revisar el progreso periódicamente.</label>
+      </div>
+      <div class="feedback" id="fb-q7"></div>
+    </div>
+
+    <!-- Pregunta 8: párrafo largo + Drag & Drop (relacionar 3 pares) -->
+    <div class="question" id="q8" data-type="drag" data-correct='["Lectura","Podcast","Proyectos"]'>
+      <div class="qtitle">8) (Arrastrar y soltar — relacionar)</div>
+      <div class="context">
+Integrar el aprendizaje en la rutina diaria puede hacerse con pequeñas acciones: leer un artículo técnico al desayuno, escuchar un podcast mientras se camina o programar pequeños ejercicios por la noche. Estas micro-hábitos, sumados día a día, construyen una cultura del aprendizaje. Identifica qué formato corresponde a cada hábito práctico.
+      </div>
+
+      <div class="dgrid">
+        <div class="left">
+          <div class="item" draggable="true">Podcast</div>
+          <div class="item" draggable="true">Lectura</div>
+          <div class="item" draggable="true">Proyectos</div>
+        </div>
+        <div class="right">
+          <div class="drop" data-accept="Lectura">Leer un artículo técnico al desayuno</div>
+          <div class="drop" data-accept="Podcast">Escuchar contenido educativo mientras caminas</div>
+          <div class="drop" data-accept="Proyectos">Programar pequeños ejercicios y prácticas</div>
+        </div>
+      </div>
+      <div class="feedback" id="fb-q8"></div>
+    </div>
+
+    <!-- Pregunta 9: párrafo largo + VF -->
+    <div class="question" id="q9" data-type="vf" data-correct="F">
+      <div class="qtitle">9) (Verdadero / Falso)</div>
+      <div class="context">
+El uso pasivo de la tecnología (consumir solo videos y no practicar ni producir) es suficiente para consolidar habilidades técnicas complejas como la programación. La evidencia sugiere que el consumo pasivo sin práctica constante no genera las competencias necesarias para resolver problemas reales o construir proyectos complejos.
+      </div>
+
+      <div class="choices">
+        <label><input type="radio" name="q9" value="V"> Verdadero</label>
+        <label><input type="radio" name="q9" value="F"> Falso</label>
+      </div>
+      <div class="feedback" id="fb-q9"></div>
+    </div>
+
+    <!-- Pregunta 10: párrafo largo + MCQ -->
+    <div class="question" id="q10" data-type="mcq" data-correct="a">
+      <div class="qtitle">10) (Selección única)</div>
+      <div class="context">
+Evaluar el impacto del aprendizaje continuo implica medir si el estudiante ha aumentado su comprensión, puede explicar conceptos a otros, aplica nuevos conocimientos en proyectos y siente más confianza. Estas señales permiten ajustar estrategias y confirmar que las acciones (rutinas, bitácoras, proyectos) están funcionando. La autoevaluación periódica y la retroalimentación externa complementan este proceso.
+      </div>
+
+      <div class="choices">
+        <label><input type="radio" name="q10" value="a"> Aplicar nuevos conocimientos en proyectos y poder explicarlos a otros</label>
+        <label><input type="radio" name="q10" value="b"> No poder recordar lo aprendido</label>
+        <label><input type="radio" name="q10" value="c"> Evitar probar lo aprendido</label>
+      </div>
+      <div class="feedback" id="fb-q10"></div>
+    </div>
+
+    <div class="actions">
+      <button id="calificar">Calificar</button>
+      <button id="reiniciar" class="secondary" type="button">Reiniciar</button>
+      <div id="result" aria-live="polite"></div>
+    </div>
+
+    <footer class="note">Trabaja con honestidad. Esta evaluación está diseñada para revisar comprensión sobre estrategias de aprendizaje continuo.</footer>
+  </div>
+</div>
+
+<script>
+/* ------------- Helpers ------------- */
+function setFeedback(id, ok, msg){
+  const el = document.getElementById("fb-"+id);
+  if(!el) return;
+  el.textContent = msg;
+  el.className = "feedback " + (ok ? "ok" : "bad");
+}
+
+/* ------------- Drag & Drop generic (for all drag questions) ------------- */
+function enableDragDrop(containerId){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  const draggables = container.querySelectorAll(".item");
+  const drops = container.querySelectorAll(".drop");
+
+  draggables.forEach(d=>{
+    d.addEventListener("dragstart", e=>{
+      e.dataTransfer.setData("text/plain", e.target.textContent);
+      // small effect
+      e.dataTransfer.effectAllowed = "move";
+    });
+    // also make keyboard selectable
+    d.addEventListener("click", ()=>{
+      // toggle selected
+      container.querySelectorAll(".item").forEach(x=>x.classList.remove("selected"));
+      d.classList.add("selected");
+    });
+  });
+
+  drops.forEach(z=>{
+    z.addEventListener("dragover", e=> e.preventDefault());
+    z.addEventListener("drop", e=>{
+      e.preventDefault();
+      const text = e.dataTransfer.getData("text/plain");
+      z.textContent = text;
+      z.classList.add("filled");
+    });
+    // click-to-place from selected draggable (accessibility)
+    z.addEventListener("click", ()=>{
+      const sel = container.querySelector(".item.selected");
+      if(sel){
+        z.textContent = sel.textContent;
+        z.classList.add("filled");
+        sel.classList.remove("selected");
+      }
+    });
+  });
+}
+
+/* enable drag & drop for q4 and q8 */
+enableDragDrop("q4");
+enableDragDrop("q8");
+
+/* ------------- Scoring ------------- */
+document.getElementById("calificar").addEventListener("click", ()=>{
+  let score = 0;
+  const total = 10;
+
+  // Q1 (mcq)
+  (function(){
+    const q = document.getElementById("q1");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q1"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q1", true, "✅ Correcto. El aprendizaje continuo es un proceso permanente que mejora la empleabilidad y adaptación.");
+    } else {
+      setFeedback("q1", false, `❌ Incorrecto. Respuesta correcta: "${correct}".`);
+    }
+  })();
+
+  // Q2 (vf)
+  (function(){
+    const q = document.getElementById("q2");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q2"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q2", true, "✅ Correcto. La mala gestión del tiempo es una barrera común.");
+    } else {
+      setFeedback("q2", false, `❌ Incorrecto. Respuesta correcta: ${correct === "V" ? "Verdadero" : "Falso"}.`);
+    }
+  })();
+
+  // Q3
+  (function(){
+    const q = document.getElementById("q3");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q3"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q3", true, "✅ Correcto. El aprendizaje por proyectos consolida habilidades y evidencia resultados.");
+    } else {
+      setFeedback("q3", false, `❌ Incorrecto. Respuesta correcta: opción ${correct}.`);
+    }
+  })();
+
+  // Q4 drag (expect all correct)
+  (function(){
+    const q = document.getElementById("q4");
+    const expected = JSON.parse(q.dataset.correct);
+    const drops = q.querySelectorAll(".drop");
+    let ok = true;
+    if(drops.length !== expected.length){ ok = false; }
+    else{
+      drops.forEach((d,i)=>{
+        const v = (d.textContent || "").trim();
+        if(v !== expected[i]) ok = false;
+      });
+    }
+    if(ok){
+      score++; setFeedback("q4", true, "✅ Correcto. Buen uso de herramientas digitales según su función.");
+    } else {
+      setFeedback("q4", false, "❌ Incorrecto. Orden esperado: Notion, Anki, GitHub (según cada descripción).");
+    }
+  })();
+
+  // Q5
+  (function(){
+    const q = document.getElementById("q5");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q5"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q5", true, "✅ Correcto. Curar recursos implica seleccionar y organizar lo relevante.");
+    } else {
+      setFeedback("q5", false, `❌ Incorrecto. Respuesta correcta: opción ${correct}.`);
+    }
+  })();
+
+  // Q6 VF
+  (function(){
+    const q = document.getElementById("q6");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q6"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q6", true, "✅ Correcto. Las comunidades aportan soporte técnico y emocional.");
+    } else {
+      setFeedback("q6", false, `❌ Incorrecto. Respuesta correcta: ${correct === "V" ? "Verdadero" : "Falso"}.`);
+    }
+  })();
+
+  // Q7
+  (function(){
+    const q = document.getElementById("q7");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q7"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q7", true, "✅ Correcto. Planificar por pasos y revisar el progreso es clave.");
+    } else {
+      setFeedback("q7", false, `❌ Incorrecto. Respuesta correcta: opción ${correct}.`);
+    }
+  })();
+
+  // Q8 drag
+  (function(){
+    const q = document.getElementById("q8");
+    const expected = JSON.parse(q.dataset.correct);
+    const drops = q.querySelectorAll(".drop");
+    let ok = true;
+    if(drops.length !== expected.length) ok = false;
+    else{
+      drops.forEach((d,i)=>{
+        const v = (d.textContent || "").trim();
+        if(v !== expected[i]) ok = false;
+      });
+    }
+    if(ok){
+      score++; setFeedback("q8", true, "✅ Correcto. Buenas prácticas para integrar el aprendizaje a la rutina.");
+    } else {
+      setFeedback("q8", false, "❌ Incorrecto. Respuestas esperadas: Lectura, Podcast, Proyectos (en las descripciones dadas).");
+    }
+  })();
+
+  // Q9 VF (note: correct "F" per dataset)
+  (function(){
+    const q = document.getElementById("q9");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q9"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q9", true, "✅ Correcto. El consumo pasivo no sustituye la práctica activa.");
+    } else {
+      setFeedback("q9", false, `❌ Incorrecto. Respuesta correcta: ${correct === "V" ? "Verdadero" : "Falso"}.`);
+    }
+  })();
+
+  // Q10 MCQ
+  (function(){
+    const q = document.getElementById("q10");
+    const correct = q.dataset.correct;
+    const sel = q.querySelector('input[name="q10"]:checked');
+    if(sel && sel.value === correct){
+      score++; setFeedback("q10", true, "✅ Correcto. Aplicar conocimientos en proyectos demuestra impacto real.");
+    } else {
+      setFeedback("q10", false, `❌ Incorrecto. Respuesta correcta: opción ${correct}.`);
+    }
+  })();
+
+  // show final result
+  const res = document.getElementById("result");
+  res.textContent = `Puntuación final: ${score} / ${total}`;
+  res.style.color = score >= Math.ceil(total*0.7) ? getComputedStyle(document.documentElement).getPropertyValue('--ok') : getComputedStyle(document.documentElement).getPropertyValue('--bad');
+});
+
+/* Reiniciar */
+document.getElementById("reiniciar").addEventListener("click", ()=>{
+  // clear inputs
+  document.querySelectorAll('input[type="radio"]').forEach(i=> i.checked = false);
+  // clear drag drop zones
+  document.querySelectorAll(".drop").forEach(z=>{
+    z.textContent = z.getAttribute("data-placeholder") || ""; // maybe empty
+    z.classList.remove("filled");
+  });
+  // clear feedback
+  document.querySelectorAll(".feedback").forEach(f=> f.textContent = "");
+  document.getElementById("result").textContent = "";
+  // deselect any selected drag items
+  document.querySelectorAll(".item").forEach(x=> x.classList.remove("selected"));
+});
+
+/* Initialize drop descriptions with placeholders (so clicking shows empty area) */
+document.querySelectorAll(".drop").forEach(z=>{
+  if(!z.textContent.trim()) z.setAttribute("data-placeholder","");
+});
+
+/* Accessibility: allow keyboard selection of draggable items (spacebar) */
+document.querySelectorAll(".item").forEach(it=>{
+  it.tabIndex = 0;
+  it.addEventListener("keydown", e=>{
+    if(e.key === " " || e.key === "Enter"){
+      e.preventDefault();
+      // toggle selected
+      const container = it.closest(".question");
+      container.querySelectorAll(".item").forEach(x=> x.classList.remove("selected"));
+      it.classList.add("selected");
+    }
+  });
+});
+</script>
+</body>
+</html>
+
